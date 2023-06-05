@@ -3,70 +3,57 @@ package com.voider.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.voider.game.TileMap;
 
 public class FirstLevelScreen implements Screen {
-    final Voider game;
-    private OrthographicCamera camera;
+    private TileMap tileMap;
 
-    private TiledMap firstLevelTiledMap;
-    private OrthogonalTiledMapRenderer tiledMapRenderer;
-
-
-
-    public FirstLevelScreen(final Voider game) {
-        this.game = game;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        firstLevelTiledMap = new TmxMapLoader().load("test.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(firstLevelTiledMap);
-
+    public FirstLevelScreen() {
+        tileMap = new TileMap("map/dungeon1/test-map.tmx");
     }
 
     @Override
     public void show() {
-
+        // Initialize resources or perform any setup
     }
 
     @Override
     public void render(float delta) {
+        // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Update the camera
-        camera.update();
+        // Update and render the tile map
+        tileMap.render();
 
-        // Render the tiled map
-        tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render();
+        // Other rendering logic
     }
 
     @Override
     public void resize(int width, int height) {
-
+        // Resize the tile map viewport
+        tileMap.resize(width, height);
     }
 
     @Override
     public void pause() {
-
+        // Pause the screen (if needed)
     }
 
     @Override
     public void resume() {
-
+        // Resume the screen (if needed)
     }
 
     @Override
     public void hide() {
-
+        // Dispose of resources or perform any cleanup
     }
 
     @Override
     public void dispose() {
-        firstLevelTiledMap.dispose();
-        tiledMapRenderer.dispose();
+        // Dispose of resources
+        tileMap.dispose();
     }
 }
+

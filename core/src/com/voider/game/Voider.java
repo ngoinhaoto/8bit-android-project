@@ -16,7 +16,7 @@ public class Voider extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new MenuScreen(this));
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override
