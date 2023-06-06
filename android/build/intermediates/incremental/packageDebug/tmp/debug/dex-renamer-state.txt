@@ -1,4 +1,4 @@
-#Mon Jun 05 22:30:36 ICT 2023
-base.0=D\:\\8bit-android-project2\\android\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
+#Tue Jun 06 19:03:04 ICT 2023
+base.0=/Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/build/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
+path.0=classes.dex
