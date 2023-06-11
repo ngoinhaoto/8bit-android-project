@@ -92,14 +92,19 @@ public class FirstLevelScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 // Get the joystick position
                 float knobPercentX = touchpad.getKnobPercentX();
-
+                float knobPercentY = touchpad.getKnobPercentY();
                 // Set the state of the character based on the joystick position
-                if (knobPercentX > 0.2f) {
-                    // Move character right
-                    character.setState("RIGHT");
-                } else if (knobPercentX < -0.2f) {
-                    // Move character left
-                    character.setState("LEFT");
+                if (knobPercentY > 0f || knobPercentY < 0f) {
+                    if (knobPercentX > 0f) {
+                        // Move character right
+                        character.setState("RIGHT");
+                    } else if (knobPercentX < -0f) {
+                        // Move character left
+                        character.setState("LEFT");
+                    } else {
+                        // Idle state
+                        character.setState("IDLE");
+                    }
                 } else {
                     // Idle state
                     character.setState("IDLE");
