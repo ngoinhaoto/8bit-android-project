@@ -15,7 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class TileMap {
-    private static final float DEFAULT_ZOOM = 0.2f; // Adjust this value to change the initial zoom level
+    private static final float DEFAULT_ZOOM = 0.17f; // Adjust this value to change the initial zoom level
     private TiledMap tiledMap;
     private MapRenderer mapRenderer;
     private OrthographicCamera camera;
@@ -42,7 +42,7 @@ public class TileMap {
 
         // Assuming the boundary tiles are in the first layer
 
-        TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
+        TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
         int mapWidthInTiles = tileLayer.getWidth();
         int mapHeightInTiles = tileLayer.getHeight();
 

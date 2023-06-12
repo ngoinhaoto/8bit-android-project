@@ -54,7 +54,7 @@ public class Character extends Sprite {
 
         // Check if the desired position collides with any boundary tile
         if (!isColliding(desiredX, position.y)) {
-            position.x = desiredX; // Horizontal movement along the wall
+            position.x = desiredX; // Horizontal movement
         }
 
         if (!isColliding(position.x, desiredY)) {
