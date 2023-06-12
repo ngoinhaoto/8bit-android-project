@@ -15,6 +15,7 @@ import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.voider.game.TileMap;
 
 public class FirstLevelScreen implements Screen {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
@@ -61,7 +62,8 @@ public class FirstLevelScreen implements Screen {
 
     public void loadCharacter() {
         batch = new SpriteBatch();
-        character = new Character();
+        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
+        character = new Character(tileMap);
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 

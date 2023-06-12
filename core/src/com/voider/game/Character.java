@@ -25,10 +25,12 @@ public class Character extends Sprite {
     public float speed;
     private boolean isLeft = false;
 
-    public Character() {
+    private TileMap tileMap;
+    public Character(TileMap tileMap) {
         textureAtlas = new TextureAtlas(Gdx.files.internal("char/character.atlas"));
         this.position = new Vector2();
         this.speed = 100f;
+
 
         currentState = State.IDLING;
         previousState = State.IDLING;
@@ -38,6 +40,8 @@ public class Character extends Sprite {
 
         charIdle.setFrameDuration(FRAME_TIME);
         charWalk.setFrameDuration(FRAME_TIME);
+
+        this.tileMap = tileMap;
     }
 
     public void update(float delta, float joystickX, float joystickY) {
@@ -47,8 +51,32 @@ public class Character extends Sprite {
         position.x += deltaX;
         position.y += deltaY;
 
+        // Calculate the desired position based on input and speed
+        float desiredX = position.x + deltaX;
+        float desiredY = position.y + deltaY;
+
+        // Check if the desired position collides with any boundary tile
+        if (!isColliding(desiredX, desiredY)) {
+            position.x = desiredX;
+            position.y = desiredY;
+        }
+
+
+
         // Increment the stateTime for animation
         stateTime += delta;
+    }
+
+    public boolean isColliding(float x, float y) {
+        int tileX = (int) (x / tileMap.getTileWidth());
+        int tileY = (int) (y / tileMap.getTileHeight());
+
+        if (tileX < 0 || tileX >= tileMap.getWidth() || tileY < 0 || tileY >= tileMap.getHeight()) {
+            // The position is outside the boundary of the tilemap
+            return true;
+        }
+
+        return tileMap.isBoundary(tileX, tileY);
     }
 
     public TextureRegion getFrame(float deltaTime) {
