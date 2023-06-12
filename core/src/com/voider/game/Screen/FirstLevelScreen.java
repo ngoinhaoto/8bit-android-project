@@ -94,23 +94,6 @@ public class FirstLevelScreen implements Screen {
                 float knobPercentX = touchpad.getKnobPercentX();
                 float knobPercentY = touchpad.getKnobPercentY();
                 // Set the state of the character based on the joystick position
-<<<<<<< HEAD
-<<<<<<< HEAD
-                if (knobPercentX > 0.1f) {
-                    // Move character right
-                    character.setState("RIGHT");
-                } else if (knobPercentX < -0.1f) {
-=======
-=======
->>>>>>> parent of 361f1a8 (Revert "update")
-                if (knobPercentX > 0.2f) {
-                    // Move character right
-                    character.setState("RIGHT");
-                } else if (knobPercentX < -0.2f) {
->>>>>>> parent of 76d9fb7 (Update animation (Operate success))
-                    // Move character left
-                    character.setState("LEFT");
-=======
                 if (knobPercentY > 0f || knobPercentY < 0f) {
                     if (knobPercentX > 0f) {
                         // Move character right
@@ -122,7 +105,6 @@ public class FirstLevelScreen implements Screen {
                         // Idle state
                         character.setState("IDLE");
                     }
->>>>>>> 76d9fb74ec5139dbc4a48e6ae0f3c3cef223a245
                 } else {
                     // Idle state
                     character.setState("IDLE");
@@ -138,36 +120,32 @@ public class FirstLevelScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Update and render the tile map
-        mapRenderer.setView(gameCam);
-        mapRenderer.render();
-        // Other rendering logic
-
-        // Rendering character
-        batch.setProjectionMatrix(gameCam.combined);
-        batch.begin();
-<<<<<<< HEAD
-        if(character.getState() == Character.State.WALKING_LEFT) {
-=======
-<<<<<<< HEAD
-        if (character.getState() == Character.State.WALKING_LEFT) {
->>>>>>> parent of 361f1a8 (Revert "update")
-            character.render(batch, true);
-        } else {
-            character.render(batch, false);
-        }
-=======
-        character.render(batch);
->>>>>>> 76d9fb74ec5139dbc4a48e6ae0f3c3cef223a245
-        batch.end();
-
+        // Update the character's position and state based on the joystick input
         float joystickX = touchpad.getKnobPercentX();
         float joystickY = touchpad.getKnobPercentY();
         character.update(delta, joystickX, joystickY);
 
+        // Update the camera's position to center on the character
+        float cameraX = character.getPosition().x; // Adjust this if necessary
+        float cameraY = character.getPosition().y; // Adjust this if necessary
+        gameCam.position.set(cameraX, cameraY, 0);
+        gameCam.update();
+
+        // Render the tile map
+        mapRenderer.setView(gameCam);
+        mapRenderer.render();
+
+        // Render the character
+        batch.setProjectionMatrix(gameCam.combined);
+        batch.begin();
+        character.render(batch);
+        batch.end();
+
+        // Update and render the joystick
         stage.act(delta);
         stage.draw();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -204,4 +182,5 @@ public class FirstLevelScreen implements Screen {
         stage.dispose();
     }
 }
+
 

@@ -36,29 +36,8 @@ public class Character extends Sprite {
         charIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
         charWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
 
-<<<<<<< HEAD
-        //Walk Animation
-//        for (int i = 1; i < 4; i++) {
-//            frame1.add(new TextureRegion(new Texture("char/idle/idle_spritesheet.png"), i*32, 32,32, 32));
-//        }
-        frame1.add(new Texture("char/walk/char32x32 walk1.png"));
-        frame1.add(new Texture("char/walk/char32x32 walk3.png"));
-        frame1.add(new Texture("char/walk/char32x32 walk2.png"));
-        charWalk = new Animation<Texture>(0.1f, frame1);
-
-        Array<Texture> frame2 = new Array<Texture>();
-        //Idle Animation
-        frame2.add(new Texture("char/idle/char32x32 idle 1.png"));
-        frame2.add(new Texture("char/idle/char32x32 idle 2.png"));
-<<<<<<< HEAD
-        charIdle = new Animation<Texture>(0.1f, frame2);
-=======
-        charIdle = new Animation<Texture>(0.4f, frame2);
-=======
         charIdle.setFrameDuration(FRAME_TIME);
         charWalk.setFrameDuration(FRAME_TIME);
->>>>>>> 76d9fb74ec5139dbc4a48e6ae0f3c3cef223a245
->>>>>>> parent of 361f1a8 (Revert "update")
     }
 
     public void update(float delta, float joystickX, float joystickY) {
@@ -150,3 +129,4 @@ public class Character extends Sprite {
 
     }
 }
+
