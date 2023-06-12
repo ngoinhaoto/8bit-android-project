@@ -26,6 +26,7 @@ public class Character extends Sprite {
     private boolean isLeft = false;
 
     private TileMap tileMap;
+
     public Character(TileMap tileMap) {
         textureAtlas = new TextureAtlas(Gdx.files.internal("char/character.atlas"));
         this.position = new Vector2();
@@ -48,10 +49,6 @@ public class Character extends Sprite {
         // Update the character's position based on input or game logic
         float deltaX = joystickX * speed * delta;
         float deltaY = joystickY * speed * delta;
-        position.x += deltaX;
-        position.y += deltaY;
-
-        // Calculate the desired position based on input and speed
         float desiredX = position.x + deltaX;
         float desiredY = position.y + deltaY;
 
@@ -59,12 +56,15 @@ public class Character extends Sprite {
         if (!isColliding(desiredX, desiredY)) {
             position.x = desiredX;
             position.y = desiredY;
+        } else {
+            // If colliding, set the desired position to the current position to stop movement
+            desiredX = position.x;
+            desiredY = position.y;
         }
-
-
 
         // Increment the stateTime for animation
         stateTime += delta;
+
     }
 
     public boolean isColliding(float x, float y) {
