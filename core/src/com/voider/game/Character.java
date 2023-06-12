@@ -32,16 +32,17 @@ public class Character extends Sprite {
 //        for (int i = 1; i < 4; i++) {
 //            frame1.add(new TextureRegion(new Texture("char/idle/idle_spritesheet.png"), i*32, 32,32, 32));
 //        }
+
         frame1.add(new Texture("char/walk/char32x32 walk1.png"));
-        frame1.add(new Texture("char/walk/char32x32 walk3.png"));
         frame1.add(new Texture("char/walk/char32x32 walk2.png"));
-        charWalk = new Animation<Texture>(0.1f, frame1);
+        frame1.add(new Texture("char/walk/char32x32 walk3.png"));
+        charWalk = new Animation<Texture>(0.4f, frame1);
 
         Array<Texture> frame2 = new Array<Texture>();
         //Idle Animation
         frame2.add(new Texture("char/idle/char32x32 idle 1.png"));
         frame2.add(new Texture("char/idle/char32x32 idle 2.png"));
-        charIdle = new Animation<Texture>(0.1f, frame2);
+        charIdle = new Animation<Texture>(0.4f, frame2);
     }
     public void update(float delta, float joystickX, float joystickY) {
         // Update the character's position based on input or game logic
