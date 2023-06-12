@@ -42,7 +42,7 @@ public class TileMap {
 
         // Assuming the boundary tiles are in the first layer
 
-        TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
+        TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
         int mapWidthInTiles = tileLayer.getWidth();
         int mapHeightInTiles = tileLayer.getHeight();
 
