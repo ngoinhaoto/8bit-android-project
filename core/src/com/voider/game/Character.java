@@ -53,31 +53,41 @@ public class Character extends Sprite {
         float desiredY = position.y + deltaY;
 
         // Check if the desired position collides with any boundary tile
-        if (!isColliding(desiredX, desiredY)) {
-            position.x = desiredX;
-            position.y = desiredY;
-        } else {
-            // If colliding, set the desired position to the current position to stop movement
-            desiredX = position.x;
-            desiredY = position.y;
+        if (!isColliding(desiredX, position.y)) {
+            position.x = desiredX; // Horizontal movement along the wall
+        }
+
+        if (!isColliding(position.x, desiredY)) {
+            position.y = desiredY; // Vertical movement
         }
 
         // Increment the stateTime for animation
         stateTime += delta;
-
     }
 
-    public boolean isColliding(float x, float y) {
-        int tileX = (int) (x / tileMap.getTileWidth());
-        int tileY = (int) (y / tileMap.getTileHeight());
 
-        if (tileX < 0 || tileX >= tileMap.getWidth() || tileY < 0 || tileY >= tileMap.getHeight()) {
+    public boolean isColliding(float x, float y) {
+        int tileXStart = (int) (x / tileMap.getTileWidth());
+        int tileXEnd = (int) ((x + getWidth()) / tileMap.getTileWidth());
+        int tileYStart = (int) (y / tileMap.getTileHeight());
+        int tileYEnd = (int) ((y + getHeight()) / tileMap.getTileHeight());
+
+        if (tileXStart < 0 || tileXEnd >= tileMap.getWidth() || tileYStart < 0 || tileYEnd >= tileMap.getHeight()) {
             // The position is outside the boundary of the tilemap
             return true;
         }
 
-        return tileMap.isBoundary(tileX, tileY);
+        for (int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
+            for (int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
+                if (tileMap.isBoundary(tileX, tileY)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
+
 
     public TextureRegion getFrame(float deltaTime) {
         currentState = getState();
