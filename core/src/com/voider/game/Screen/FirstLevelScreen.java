@@ -21,7 +21,7 @@ public class FirstLevelScreen implements Screen {
     private float initialCameraX = 470; // Adjust this value to set the initial x-coordinate of the camera
     private float initialCameraY = 935; // Adjust this value to set the initial y-coordinate of the camera
     private OrthographicCamera gameCam;
-    //    private HUD hud;
+//    private HUD hud;
     private SpriteBatch batch;
 
     private TiledMap tiledMap;
@@ -43,9 +43,9 @@ public class FirstLevelScreen implements Screen {
         loadCharacter();
         loadJoystick();
     }
-    @Override
+     @Override
     public void show() {
-        // Initialize resources or perform any setup
+         // Initialize resources or perform any setup
     }
 
     public void loadCamera() {
@@ -92,28 +92,14 @@ public class FirstLevelScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 // Get the joystick position
                 float knobPercentX = touchpad.getKnobPercentX();
-                float knobPercentY = touchpad.getKnobPercentY();
+
                 // Set the state of the character based on the joystick position
-<<<<<<< HEAD
                 if (knobPercentX > 0.2f) {
                     // Move character right
                     character.setState("RIGHT");
                 } else if (knobPercentX < -0.2f) {
                     // Move character left
                     character.setState("LEFT");
-=======
-                if (knobPercentY > 0f || knobPercentY < 0f) {
-                    if (knobPercentX > 0f) {
-                        // Move character right
-                        character.setState("RIGHT");
-                    } else if (knobPercentX < -0f) {
-                        // Move character left
-                        character.setState("LEFT");
-                    } else {
-                        // Idle state
-                        character.setState("IDLE");
-                    }
->>>>>>> 76d9fb74ec5139dbc4a48e6ae0f3c3cef223a245
                 } else {
                     // Idle state
                     character.setState("IDLE");
@@ -147,15 +133,11 @@ public class FirstLevelScreen implements Screen {
         // Render the character
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
-<<<<<<< HEAD
         if (character.getState() == Character.State.WALKING_LEFT) {
             character.render(batch, true);
         } else {
             character.render(batch, false);
         }
-=======
-        character.render(batch);
->>>>>>> 76d9fb74ec5139dbc4a48e6ae0f3c3cef223a245
         batch.end();
 
         // Update and render the joystick
