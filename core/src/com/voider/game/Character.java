@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite {
     private static final float FRAME_TIME = 0.2f;
     public enum State { IDLING, WALKING_RIGHT, WALKING_LEFT }
     public State currentState;
+
     public State previousState;
     public TextureAtlas textureAtlas;
     public Vector2 position;
@@ -23,7 +25,7 @@ public class Character extends Sprite {
     private boolean isLeft = false;
 
     private TileMap tileMap;
-
+    private Array<Bullet> bullets;
     public Character(TileMap tileMap) {
         textureAtlas = new TextureAtlas(Gdx.files.internal("char/character.atlas"));
         this.position = new Vector2();
@@ -40,6 +42,8 @@ public class Character extends Sprite {
 
         this.tileMap = tileMap;
 
+
+        bullets = new Array<>();
     }
 
     public void update(float delta, float joystickX, float joystickY) {
@@ -60,6 +64,31 @@ public class Character extends Sprite {
 
         // Increment the stateTime for animation
         stateTime += delta;
+
+        // Update the bullets' positions and check for collision with boundaries
+        for (int i = bullets.size - 1; i >= 0; i--) {
+            Bullet bullet = bullets.get(i);
+            bullet.update(delta);
+
+            if (isColliding(bullet.getPosition().x, bullet.getPosition().y)) {
+                // Handle bullet collision with boundaries or other objects
+                bullets.removeIndex(i);
+            } else if (isBulletOffScreen(bullet)) {
+                bullets.removeIndex(i);
+            }
+        }
+    }
+
+    private boolean isBulletOffScreen(Bullet bullet) {
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float bulletWidth = bullet.getBulletTexture().getRegionWidth();
+        float bulletHeight = bullet.getBulletTexture().getRegionHeight();
+
+        float bulletX = bullet.getPosition().x;
+        float bulletY = bullet.getPosition().y;
+
+        return bulletX < -bulletWidth || bulletX > screenWidth || bulletY < -bulletHeight || bulletY > screenHeight;
     }
 
     public void shoot() {
@@ -68,19 +97,29 @@ public class Character extends Sprite {
         float velocityX = 0;
         float velocityY = 0;
 
-        if (getState().equals("RIGHT")) {
+        if (currentState == State.WALKING_RIGHT) {
             velocityX = bulletSpeed;
-        } else if (getState().equals("LEFT")) {
+        } else if (currentState == State.WALKING_LEFT) {
             velocityX = -bulletSpeed;
-        } else if (getState().equals("UP")) {
-            velocityY = bulletSpeed;
-        } else if (getState().equals("DOWN")) {
-            velocityY = -bulletSpeed;
+        } else if (currentState == State.IDLING) {
+            // Determine the direction based on the previous state
+            if (previousState == State.WALKING_RIGHT) {
+                velocityX = bulletSpeed;
+            } else if (previousState == State.WALKING_LEFT) {
+                velocityX = -bulletSpeed;
+            }
+            else {
+                velocityX = bulletSpeed;
+            }
         }
 
-        // Create a new bullet
-        Bullet bullet = new Bullet(getPosition().x, getPosition().y, velocityX, velocityY);
+        // Create a new bullet,
+
+        // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
+        Bullet bullet = new Bullet(getPosition().x, getPosition().y + 10, velocityX, velocityY);
+        bullets.add(bullet);
     }
+
 
     public boolean isColliding(float x, float y) {
         int tileXStart = (int) (x / tileMap.getTileWidth());
@@ -158,7 +197,16 @@ public class Character extends Sprite {
         } else {
             spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
         }
+
+        // Render the bullets
+        for (Bullet bullet : bullets) {
+            bullet.render(spriteBatch);
+        }
     }
+    public Array<Bullet> getBullets() {
+        return bullets;
+    }
+
 
     public Vector2 getPosition() {
         return position;

@@ -12,11 +12,12 @@ public class Bullet {
 
     private TextureRegion bulletTexture;
 
-
+    private float bulletSpeed = 300; // Declare bullet speed
     // constructor
-    public Bullet(float x, float y, float velocityX, float velocityY ) {
+// constructor
+    public Bullet(float x, float y, float velocityX, float velocityY) {
         position = new Vector2(x, y);
-        velocity = new Vector2(velocityX, velocityY);
+        velocity = new Vector2(velocityX, velocityY).nor().scl(bulletSpeed);
         bulletTexture = new TextureRegion(new Texture("bullet/bullet 5.png"));
     }
 
@@ -33,6 +34,10 @@ public class Bullet {
 
     public void render(SpriteBatch batch) {
         batch.draw(bulletTexture, position.x, position.y);
+    }
+
+    public TextureRegion getBulletTexture() {
+        return bulletTexture;
     }
 
 }

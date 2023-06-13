@@ -33,9 +33,4 @@ public class ShootingButton extends ImageButton {
 
         return buttonStyle;
     }
-
-    private void shoot() {
-        // Implement your shooting logic here
-        System.out.println("Shoot button pressed!");
-    }
 }

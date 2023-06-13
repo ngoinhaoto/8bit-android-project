@@ -11,6 +11,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
+import com.voider.game.Bullet;
 import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -36,10 +38,13 @@ public class FirstLevelScreen implements Screen {
 
     private ShootingButton shootingButton;
 
+    private Array<Bullet> bullets;
     public FirstLevelScreen() {
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/test-map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+        bullets = new Array<>();
         loadCamera();
 //        HUD
 //        hud = new HUD(batch);
@@ -145,6 +150,8 @@ public class FirstLevelScreen implements Screen {
         mapRenderer.setView(gameCam);
         mapRenderer.render();
 
+
+
         // Render the character
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
@@ -155,6 +162,15 @@ public class FirstLevelScreen implements Screen {
         // Update and render the controls
         stage.act(delta);
         stage.draw();
+
+
+        // Update and render the bullets
+        batch.begin();
+        for (Bullet bullet : character.getBullets()) {
+            bullet.render(batch); // Render bullet
+        }
+        batch.end();
+
     }
 
 
