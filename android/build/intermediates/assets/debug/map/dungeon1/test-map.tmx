@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="112" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="39">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="112" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="40">
  <tileset firstgid="1" source="t1.tsx"/>
  <layer id="1" name="BG" width="112" height="80">
   <data encoding="csv">
@@ -257,47 +257,42 @@
   <properties>
    <property name="boundary" value="true"/>
   </properties>
-  <object id="1" x="249.5" y="240.5" width="204.5" height="14">
+  <object id="1" x="246.323" y="240.961" width="198.017" height="14">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="2" x="245.216" y="253.742" width="10" height="206.5">
+  <object id="2" x="238.849" y="245.47" width="10" height="215.561">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="3" x="255.5" y="450" width="198" height="9.5">
+  <object id="3" x="241.343" y="453" width="212.157" height="9.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="4" x="449.06" y="254.5" width="6" height="49.5">
+  <object id="5" x="435.575" y="241.107" width="12.6055" height="78.3054">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="5" x="448.621" y="385" width="6" height="63">
+  <object id="6" x="448.557" y="304" width="286.943" height="15.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="6" x="449.5" y="304" width="286" height="15.5">
+  <object id="7" x="445.493" y="388.95" width="290.687" height="11.6397">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="7" x="449.5" y="384" width="285.5" height="14">
+  <object id="9" x="716.707" y="208.44" width="15" height="94">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="9" x="720.707" y="208.44" width="15" height="94">
-   <properties>
-    <property name="boundary" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="10" x="729" y="399.5" width="6.5" height="254.5">
+  <object id="10" x="717.199" y="401.27" width="11.2206" height="254.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
@@ -307,12 +302,12 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="12" x="736" y="208" width="295" height="15.5">
+  <object id="12" x="728.919" y="208" width="302.081" height="15.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="14" x="736" y="642.5" width="191.5" height="11.5">
+  <object id="14" x="730" y="642.5" width="191.5" height="11.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
@@ -322,17 +317,17 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="18" x="1013.57" y="208.879" width="15" height="446.06">
+  <object id="18" x="1009.93" y="209.668" width="15" height="446.06">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="20" x="911.5" y="653.5" width="16" height="258.5">
+  <object id="20" x="905.5" y="653.5" width="16" height="258.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="21" x="993.5" y="656" width="14" height="255">
+  <object id="21" x="980.033" y="656" width="14" height="255">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
@@ -342,72 +337,77 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="24" x="807" y="911" width="24.5" height="254.5">
+  <object id="24" x="800" y="911" width="24.5" height="254.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="25" x="831" y="1152" width="360.5" height="12.5">
+  <object id="25" x="822.149" y="1160" width="369.351" height="10">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="26" x="1007.5" y="896.5" width="182.5" height="14.5">
+  <object id="26" x="985.415" y="896.5" width="204.585" height="14.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="27" x="1185.5" y="912" width="16.5" height="142">
+  <object id="27" x="1182.73" y="911.434" width="16.5" height="142">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="28" x="1186" y="1039.5" width="189.5" height="15">
+  <object id="28" x="1186" y="1042.5" width="189.5" height="15">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="29" x="1184.5" y="1121" width="7.5" height="40">
+  <object id="29" x="1184.52" y="1120.55" width="14.8617" height="40">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="30" x="1193.5" y="1121.5" width="255" height="11.5">
+  <object id="30" x="1190.34" y="1120.71" width="255" height="11.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="31" x="1440.5" y="737.5" width="9.5" height="381.5">
+  <object id="31" x="1432.19" y="739.078" width="9.5" height="381.5">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="32" x="1370" y="737.5" width="4.5" height="301">
+  <object id="32" x="1359" y="737.5" width="8.69111" height="305.191">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="33" x="1210" y="735.5" width="164" height="14">
+  <object id="33" x="1204" y="735.5" width="164" height="14">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="35" x="1199" y="326" width="16" height="439">
+  <object id="35" x="1192" y="326" width="16" height="439">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="36" x="1651" y="324" width="16" height="425">
+  <object id="36" x="1638.38" y="324" width="16" height="425">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="37" x="1445" y="737" width="221" height="15">
+  <object id="37" x="1432.85" y="737" width="233.146" height="15">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="38" x="1193" y="336" width="473" height="14">
+  <object id="38" x="1193" y="338" width="473" height="14">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="39" x="436.429" y="389.984" width="12.1611" height="64.57">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>

@@ -1,7 +1,10 @@
 package com.voider.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapRenderer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -37,33 +40,46 @@ public class TileMap {
         camera.position.set(mapWidth / 2f, mapHeight / 2f, 0);
         camera.update();
 
+        MapLayer objectLayer = tiledMap.getLayers().get("ActualWall");
 
-        // Initialise boundary array
-
-        // Assuming the boundary tiles are in the first layer
-
+        // Get the tile size from the tile layer
         TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
-        int mapWidthInTiles = tileLayer.getWidth();
-        int mapHeightInTiles = tileLayer.getHeight();
-
         tileWidth = tileLayer.getTileWidth();
         tileHeight = tileLayer.getTileHeight();
 
-        boundaryTiles = new boolean[mapWidthInTiles][mapHeightInTiles];
+        boundaryTiles = new boolean[tileLayer.getWidth()][tileLayer.getHeight()];
 
-        for (int y = 0; y < mapHeightInTiles; y++) {
-            for (int x = 0; x < mapWidthInTiles; x++) {
-                TiledMapTileLayer.Cell cell = tileLayer.getCell(x, y);
+        for (MapObject object : objectLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                RectangleMapObject rectangleObject = (RectangleMapObject) object;
+                float x = rectangleObject.getRectangle().getX();
+                float y = rectangleObject.getRectangle().getY();
+                float width = rectangleObject.getRectangle().getWidth();
+                float height = rectangleObject.getRectangle().getHeight();
 
-                if (cell != null && cell.getTile() != null) {
-                    // Assuming the boundary tiles have a property named "boundary" set to true
-                    boolean isBoundary = cell.getTile().getProperties().get("boundary", true, Boolean.class);
-                    boundaryTiles[x][y] = isBoundary;
+                // Check if the object has the "boundary" property set to true
+                boolean isBoundary = false;
+                if (rectangleObject.getProperties().containsKey("boundary")) {
+                    isBoundary = rectangleObject.getProperties().get("boundary", Boolean.class);
+                }
+
+                if (isBoundary) {
+                    // Convert object coordinates to tile coordinates
+                    int startX = (int) (x / tileWidth);
+                    int startY = (int) (y / tileHeight);
+                    int endX = (int) ((x + width) / tileWidth);
+                    int endY = (int) ((y + height) / tileHeight);
+
+                    // Mark the corresponding tiles as boundary tiles
+                    for (int tileX = startX; tileX <= endX; tileX++) {
+                        for (int tileY = startY; tileY <= endY; tileY++) {
+                            boundaryTiles[tileX][tileY] = true;
+                        }
+                    }
                 }
             }
         }
     }
-
 
 
     public void render() {
@@ -90,6 +106,7 @@ public class TileMap {
         }
         return boundaryTiles[x][y];
     }
+
 
     public int getWidth() {
         return boundaryTiles.length;
