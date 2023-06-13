@@ -1,10 +1,10 @@
 {
     "activeFile": "test-map.tmx",
     "expandedProjectPaths": [
-        "tilemap",
         "tileset",
-        "."
+        "tilemap"
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "D:/8bit-android-project/assets/map/Tileset1.tsx": {
             "scaleInDock": 1
@@ -19,6 +19,17 @@
         },
         "D:/8bit-android-project/assets/map/tileset/t1.tsx": {
             "scaleInDock": 1
+        },
+        "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/t1.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/test-map.tmx": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 511.3333333333333,
+                "y": 155.83333333333331
+            }
         },
         "D:/Artwork/8bit/map/Tileset1.tsx": {
             "scaleInDock": 1
@@ -39,11 +50,11 @@
             "scaleInEditor": 1
         },
         "test-map.tmx": {
-            "scale": 0.40671874999999996,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 843.3346139070303,
-                "y": 1146.9842489435266
+                "x": 1481.3333333333333,
+                "y": 824.6666666666667
             }
         },
         "tilemap/map/dungeon1/tileset/t1.tsx": {
@@ -69,8 +80,10 @@
         "test-map.tmx"
     ],
     "project": "dungeon1.tiled-project",
+    "property.type": "object",
     "recentFiles": [
         "test-map.tmx",
+        "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/test-map.tmx",
         "D:/8bit-android-project/assets/map/test.tmx",
         "D:/Artwork/8bit/map/test.tmx",
         "t1.tsx",
