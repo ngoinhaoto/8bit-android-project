@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ShootingButton extends ImageButton {
     private Character character;
-    public ShootingButton(Character character) {
+    public ShootingButton(final Character character) {
         super(createButtonStyle());
         setPosition(Gdx.graphics.getWidth() - getWidth() - 150, 150); // Adjust the position as needed
 

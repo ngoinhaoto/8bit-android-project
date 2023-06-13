@@ -17,7 +17,7 @@ public class Bullet {
     public Bullet(float x, float y, float velocityX, float velocityY ) {
         position = new Vector2(x, y);
         velocity = new Vector2(velocityX, velocityY);
-        bulletTexture = new TextureRegion(new Texture(""));
+        bulletTexture = new TextureRegion(new Texture("bullet/bullet 5.png"));
     }
 
     // Update the bullet's position
