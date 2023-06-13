@@ -49,8 +49,8 @@ public class Character extends Sprite {
         // Update the character's position based on input or game logic
         float deltaX = joystickX * speed * delta;
         float deltaY = joystickY * speed * delta;
-        float desiredX = position.x + deltaX;
-        float desiredY = position.y + deltaY;
+        float desiredX = position.x + deltaX - getWidth() / 2;
+        float desiredY = position.y + deltaY - getHeight() / 2;
 
         // Check if the desired position collides with any boundary tile
         if (!isColliding(desiredX, position.y)) {
@@ -68,25 +68,20 @@ public class Character extends Sprite {
 
     public boolean isColliding(float x, float y) {
         int tileXStart = (int) (x / tileMap.getTileWidth());
-        int tileXEnd = (int) ((x + getWidth()) / tileMap.getTileWidth());
+        int tileXEnd = (int) ((x + 16) / tileMap.getTileWidth());
         int tileYStart = (int) (y / tileMap.getTileHeight());
-        int tileYEnd = (int) ((y + getHeight()) / tileMap.getTileHeight());
+        int tileYEnd = (int) ((y + 16) / tileMap.getTileHeight());
 
-        if (tileXStart < 0 || tileXEnd >= tileMap.getWidth() || tileYStart < 0 || tileYEnd >= tileMap.getHeight()) {
-            // The position is outside the boundary of the tilemap
-            return true;
-        }
+        // Check collisions for each corner of the character
+        boolean topLeft = tileMap.isBoundary(tileXStart, tileYEnd);
+        boolean topRight = tileMap.isBoundary(tileXEnd, tileYEnd);
+        boolean bottomLeft = tileMap.isBoundary(tileXStart, tileYStart);
+        boolean bottomRight = tileMap.isBoundary(tileXEnd, tileYStart);
 
-        for (int tileX = tileXStart; tileX <= tileXEnd; tileX++) {
-            for (int tileY = tileYStart; tileY <= tileYEnd; tileY++) {
-                if (tileMap.isBoundary(tileX, tileY)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        // Return true if any corner collides with a boundary tile
+        return topLeft || topRight || bottomLeft || bottomRight;
     }
+
 
 
     public TextureRegion getFrame(float deltaTime) {
