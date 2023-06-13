@@ -9,13 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ShootingButton extends ImageButton {
-    public ShootingButton() {
+    private Character character;
+    public ShootingButton(Character character) {
         super(createButtonStyle());
         setPosition(Gdx.graphics.getWidth() - getWidth() - 150, 150); // Adjust the position as needed
+
+        this.character = character;
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                shoot();
+                character.shoot();
             }
         });
     }

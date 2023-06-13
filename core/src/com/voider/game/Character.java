@@ -1,16 +1,13 @@
 package com.voider.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite {
     private static final float FRAME_TIME = 0.2f;
@@ -32,7 +29,6 @@ public class Character extends Sprite {
         this.position = new Vector2();
         this.speed = 100f;
 
-
         currentState = State.IDLING;
         previousState = State.IDLING;
 
@@ -43,6 +39,7 @@ public class Character extends Sprite {
         charWalk.setFrameDuration(FRAME_TIME);
 
         this.tileMap = tileMap;
+
     }
 
     public void update(float delta, float joystickX, float joystickY) {
@@ -65,6 +62,25 @@ public class Character extends Sprite {
         stateTime += delta;
     }
 
+    public void shoot() {
+        float bulletSpeed = 300;
+
+        float velocityX = 0;
+        float velocityY = 0;
+
+        if (getState().equals("RIGHT")) {
+            velocityX = bulletSpeed;
+        } else if (getState().equals("LEFT")) {
+            velocityX = -bulletSpeed;
+        } else if (getState().equals("UP")) {
+            velocityY = bulletSpeed;
+        } else if (getState().equals("DOWN")) {
+            velocityY = -bulletSpeed;
+        }
+
+        // Create a new bullet
+        Bullet bullet = new Bullet(getPosition().x, getPosition().y, velocityX, velocityY);
+    }
 
     public boolean isColliding(float x, float y) {
         int tileXStart = (int) (x / tileMap.getTileWidth());
@@ -87,7 +103,6 @@ public class Character extends Sprite {
 
         return false;
     }
-
 
     public TextureRegion getFrame(float deltaTime) {
         currentState = getState();
@@ -146,14 +161,10 @@ public class Character extends Sprite {
         if (isLeft) {
             spriteBatch.draw(currentFrame, position.x + textureWidth, position.y,
                     -textureWidth, textureHeight);
-            Gdx.app.log("Txt", String.valueOf(textureWidth));
         } else {
             spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
-            Gdx.app.log("Txt", String.valueOf(textureWidth));
         }
     }
-
-
 
     public Vector2 getPosition() {
         return position;
@@ -164,7 +175,6 @@ public class Character extends Sprite {
     }
 
     public void dispose() {
-
+        // Dispose of any resources here if needed
     }
 }
-

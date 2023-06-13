@@ -79,7 +79,7 @@ public class FirstLevelScreen implements Screen {
         stage.addActor(touchpad);
 
         // Create the shooting button
-        shootingButton = new ShootingButton();
+        shootingButton = new ShootingButton(character);
         stage.addActor(shootingButton);
 
         Gdx.input.setInputProcessor(stage);
