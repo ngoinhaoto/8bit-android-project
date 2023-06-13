@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite {
     private static final float FRAME_TIME = 0.2f;
-    public enum State { IDLING, WALKING_RIGHT, WALKING_LEFT }
+    public enum State { IDLING, WALKING_RIGHT, WALKING_LEFT, SHOOTING }
     public State currentState;
 
     public State previousState;
@@ -20,6 +20,7 @@ public class Character extends Sprite {
     public Vector2 position;
     private Animation<TextureRegion> charIdle;
     private Animation<TextureRegion> charWalk;
+    private Animation<TextureRegion> charShoot;
     private float stateTime;
     public float speed;
     private boolean isLeft = false;
@@ -36,12 +37,13 @@ public class Character extends Sprite {
 
         charIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
         charWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+        charShoot = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("shoot"));
 
         charIdle.setFrameDuration(FRAME_TIME);
         charWalk.setFrameDuration(FRAME_TIME);
+        charShoot.setFrameDuration(FRAME_TIME);
 
         this.tileMap = tileMap;
-
 
         bullets = new Array<>();
     }
@@ -97,26 +99,36 @@ public class Character extends Sprite {
         float velocityX = 0;
         float velocityY = 0;
 
-        if (currentState == State.WALKING_RIGHT) {
+//        if (currentState == State.WALKING_RIGHT) {
+//            velocityX = bulletSpeed;
+//        } else if (currentState == State.WALKING_LEFT) {
+//            velocityX = -bulletSpeed;
+//        } else if (currentState == State.IDLING) {
+//            // Determine the direction based on the previous state
+//            if (previousState == State.WALKING_RIGHT) {
+//                velocityX = bulletSpeed;
+//            } else if (previousState == State.WALKING_LEFT) {
+//                velocityX = -bulletSpeed;
+//            }
+//            else {
+//                velocityX = bulletSpeed;
+//            }
+//        }
+
+        if (!isLeft) {
             velocityX = bulletSpeed;
-        } else if (currentState == State.WALKING_LEFT) {
+        } else {
             velocityX = -bulletSpeed;
-        } else if (currentState == State.IDLING) {
-            // Determine the direction based on the previous state
-            if (previousState == State.WALKING_RIGHT) {
-                velocityX = bulletSpeed;
-            } else if (previousState == State.WALKING_LEFT) {
-                velocityX = -bulletSpeed;
-            }
-            else {
-                velocityX = bulletSpeed;
-            }
         }
 
         // Create a new bullet,
-
+        Bullet bullet;
         // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
-        Bullet bullet = new Bullet(getPosition().x, getPosition().y + 10, velocityX, velocityY);
+        if (!isLeft) {
+            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY);
+        } else {
+            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY);
+        }
         bullets.add(bullet);
     }
 
@@ -152,6 +164,9 @@ public class Character extends Sprite {
                 region = charWalk.getKeyFrame(stateTime, true);
                 this.isLeft = false;
                 break;
+            case SHOOTING:
+                region = charShoot.getKeyFrame(stateTime, true);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currentState);
         }
@@ -181,6 +196,10 @@ public class Character extends Sprite {
                 this.previousState = currentState;
                 currentState = State.WALKING_RIGHT;
                 break;
+            case "SHOOT":
+                // Code to set the character to shoot state
+                this.previousState = currentState;
+                currentState = State.SHOOTING;
             default:
                 break;
         }
