@@ -15,7 +15,9 @@ import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
+
 
 public class FirstLevelScreen implements Screen {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
@@ -32,6 +34,7 @@ public class FirstLevelScreen implements Screen {
     private Touchpad touchpad;
     private Stage stage;
 
+    private ShootingButton shootingButton;
 
     public FirstLevelScreen() {
         //Get map
@@ -42,11 +45,63 @@ public class FirstLevelScreen implements Screen {
 //        hud = new HUD(batch);
 
         loadCharacter();
-        loadJoystick();
+//        loadJoystick();
+//        loadShootingButton();
+        loadControls();
     }
     @Override
     public void show() {
         // Initialize resources or perform any setup
+    }
+
+
+    //loadcontrols() = loadjoystick + loadshootingbutton
+
+    // only allowing one stage so we have to load both in one function
+
+    public void loadControls() {
+        stage = new Stage();
+
+        // Create the joystick
+        Texture touchpadBackground = new Texture("joystick/joystickbackground.png");
+        Texture touchpadKnob = new Texture("joystick/joystickknob.png");
+
+        Skin touchpadSkin = new Skin();
+        touchpadSkin.add("touchpadBackground", touchpadBackground);
+        touchpadSkin.add("touchpadKnob", touchpadKnob);
+
+        Touchpad.TouchpadStyle touchpadStyle = new Touchpad.TouchpadStyle();
+        touchpadStyle.background = touchpadSkin.getDrawable("touchpadBackground");
+        touchpadStyle.knob = touchpadSkin.getDrawable("touchpadKnob");
+
+        touchpad = new Touchpad(10, touchpadStyle);
+        touchpad.setBounds(120, 120, 250, 250);
+        stage.addActor(touchpad);
+
+        // Create the shooting button
+        shootingButton = new ShootingButton();
+        stage.addActor(shootingButton);
+
+        Gdx.input.setInputProcessor(stage);
+        touchpad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float knobPercentX = touchpad.getKnobPercentX();
+                float knobPercentY = touchpad.getKnobPercentY();
+
+                if (knobPercentY > 0f || knobPercentY < 0f) {
+                    if (knobPercentX > 0f) {
+                        character.setState("RIGHT");
+                    } else if (knobPercentX < -0f) {
+                        character.setState("LEFT");
+                    } else {
+                        character.setState("IDLE");
+                    }
+                } else {
+                    character.setState("IDLE");
+                }
+            }
+        });
     }
 
     public void loadCamera() {
@@ -67,53 +122,6 @@ public class FirstLevelScreen implements Screen {
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 
-    public void loadJoystick() {
-        stage = new Stage();
-        Texture touchpadBackground = new Texture("joystick/joystickbackground.png");
-        Texture touchpadKnob = new Texture("joystick/joystickknob.png");
-
-        Skin touchpadSkin = new Skin();
-
-        touchpadSkin.add("touchpadBackground", touchpadBackground);
-        touchpadSkin.add("touchpadKnob", touchpadKnob);
-
-        Touchpad.TouchpadStyle touchpadStyle = new Touchpad.TouchpadStyle();
-        touchpadStyle.background = touchpadSkin.getDrawable("touchpadBackground");
-        touchpadStyle.knob = touchpadSkin.getDrawable("touchpadKnob");
-
-        touchpad = new Touchpad(10, touchpadStyle);
-
-        touchpad.setBounds(120, 120, 250, 250);
-
-        stage.addActor(touchpad);
-
-        Gdx.input.setInputProcessor(stage);
-
-        touchpad.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                // Get the joystick position
-                float knobPercentX = touchpad.getKnobPercentX();
-                float knobPercentY = touchpad.getKnobPercentY();
-                // Set the state of the character based on the joystick position
-                if (knobPercentY > 0f || knobPercentY < 0f) {
-                    if (knobPercentX > 0f) {
-                        // Move character right
-                        character.setState("RIGHT");
-                    } else if (knobPercentX < -0f) {
-                        // Move character left
-                        character.setState("LEFT");
-                    } else {
-                        // Idle state
-                        character.setState("IDLE");
-                    }
-                } else {
-                    // Idle state
-                    character.setState("IDLE");
-                }
-            }
-        });
-    }
 
 
     @Override
@@ -143,7 +151,8 @@ public class FirstLevelScreen implements Screen {
         character.render(batch);
         batch.end();
 
-        // Update and render the joystick
+
+        // Update and render the controls
         stage.act(delta);
         stage.draw();
     }
