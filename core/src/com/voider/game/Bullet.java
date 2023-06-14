@@ -9,13 +9,15 @@ public class Bullet {
 
     private Vector2 position;
     private Vector2 velocity;
+    private boolean isLeft;
 
     private TextureRegion bulletTexture;
 
     private float bulletSpeed = 300; // Declare bullet speed
     // constructor
 // constructor
-    public Bullet(float x, float y, float velocityX, float velocityY) {
+    public Bullet(float x, float y, float velocityX, float velocityY, boolean left) {
+        this.isLeft = left;
         position = new Vector2(x, y);
         velocity = new Vector2(velocityX, velocityY).nor().scl(bulletSpeed);
         bulletTexture = new TextureRegion(new Texture("bullet/bullet 5.png"));
@@ -33,7 +35,12 @@ public class Bullet {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(bulletTexture, position.x, position.y);
+
+        if (!isLeft) {
+            batch.draw(bulletTexture, position.x, position.y);
+        } else {
+            batch.draw(bulletTexture, position.x + bulletTexture.getRegionWidth(), position.y, -bulletTexture.getRegionWidth(), bulletTexture.getRegionHeight());
+        }
     }
 
     public TextureRegion getBulletTexture() {

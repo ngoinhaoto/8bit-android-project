@@ -125,9 +125,9 @@ public class Character extends Sprite {
         Bullet bullet;
         // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
         if (!isLeft) {
-            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY);
+            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false);
         } else {
-            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY);
+            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true);
         }
         bullets.add(bullet);
     }
@@ -135,9 +135,9 @@ public class Character extends Sprite {
 
     public boolean isColliding(float x, float y) {
         int tileXStart = (int) (x / tileMap.getTileWidth());
-        int tileXEnd = (int) ((x + 16) / tileMap.getTileWidth());
+        int tileXEnd = (int) ((x+16) / tileMap.getTileWidth());
         int tileYStart = (int) (y / tileMap.getTileHeight());
-        int tileYEnd = (int) ((y + 16) / tileMap.getTileHeight());
+        int tileYEnd = (int) ((y+16) / tileMap.getTileHeight());
 
         // Check collisions for each corner of the character
         boolean topLeft = tileMap.isBoundary(tileXStart, tileYEnd);
