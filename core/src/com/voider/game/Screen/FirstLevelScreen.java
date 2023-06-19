@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -17,6 +18,7 @@ import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.voider.game.Mob;
 import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
 
@@ -39,6 +41,8 @@ public class FirstLevelScreen implements Screen {
     private ShootingButton shootingButton;
 
     private Array<Bullet> bullets;
+
+    private Array<Mob> mobs;
     public FirstLevelScreen() {
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/test-map.tmx");
@@ -46,12 +50,7 @@ public class FirstLevelScreen implements Screen {
 
         bullets = new Array<>();
         loadCamera();
-//        HUD
-//        hud = new HUD(batch);
-
         loadCharacter();
-//        loadJoystick();
-//        loadShootingButton();
         loadControls();
     }
     @Override
@@ -107,6 +106,10 @@ public class FirstLevelScreen implements Screen {
                 }
             }
         });
+
+
+        initialiseMobs();
+
     }
 
     public void loadCamera() {
@@ -127,7 +130,19 @@ public class FirstLevelScreen implements Screen {
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 
+    private void initialiseMobs() {
+        mobs = new Array<>();
+        TextureRegion[] mobSprites = new TextureRegion[1];  // Create an array to hold the sprites
+        mobSprites[0] = new TextureRegion(new Texture("mobs/chort/idle/chort_idle_anim_f0.png"));
 
+        Mob mob1 = new Mob(mobSprites, "chort");
+        // ta tạm set ở đây vì t k biết đặt placement của mod ở trên tiledmap kiểu gì. m làm tiếp ở đây hì,
+        // t đi làm web, sáng mai t làm tiếp @@ tại team t có 2 ngừoi làm web thôi ấy
+
+        mob1.setPosition(initialCameraX - 137, initialCameraY - 10);
+
+        mobs.add(mob1);
+    }
 
     @Override
     public void render(float delta) {
@@ -168,6 +183,15 @@ public class FirstLevelScreen implements Screen {
         batch.begin();
         for (Bullet bullet : character.getBullets()) {
             bullet.render(batch); // Render bullet
+        }
+        batch.end();
+
+
+
+        // Render the mobs
+        batch.begin();
+        for (Mob mob : mobs) {
+            mob.draw(batch, 1);
         }
         batch.end();
 
