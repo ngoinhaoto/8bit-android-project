@@ -207,6 +207,7 @@ public class Character extends Sprite {
                 this.previousState = currentState;
                 currentState = State.SHOOTING;
             default:
+                currentState = State.IDLING;
                 break;
         }
     }
@@ -248,7 +249,7 @@ public class Character extends Sprite {
     public int getMaxHP() {
         return this.maxHP;
     }
-    public int getHealth() {
+    public int getCurrentHP() {
         return this.currentHP;
     }
 
@@ -256,8 +257,8 @@ public class Character extends Sprite {
         this.currentARM = newArmor;
     }
 
-    public int getARM() {
-        return this.currentHP;
+    public int getCurrentARM() {
+        return this.currentARM;
     }
 
     public void dispose() {

@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.voider.game.Mob;
+import com.voider.game.Scene.HUD;
 import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
 
@@ -30,10 +31,10 @@ public class FirstLevelScreen implements Screen {
     private float initialCameraX = 470; // Adjust this value to set the initial x-coordinate of the camera
     private float initialCameraY = 935; // Adjust this value to set the initial y-coordinate of the camera
     private OrthographicCamera gameCam;
-    //    private HUD hud;
     private SpriteBatch batch;
 
     private TiledMap tiledMap;
+    private HUD hud;
 
     private OrthogonalTiledMapRenderer mapRenderer;
     private Character character;
@@ -55,7 +56,7 @@ public class FirstLevelScreen implements Screen {
         loadCharacter();
         loadControls();
         initialiseMobs();
-
+        loadHUD();
     }
     @Override
     public void show() {
@@ -69,6 +70,8 @@ public class FirstLevelScreen implements Screen {
 
     public void loadControls() {
         stage = new Stage();
+
+        Gdx.input.setInputProcessor(stage);
 
         // Create the joystick
         Texture touchpadBackground = new Texture("joystick/joystickbackground.png");
@@ -112,6 +115,13 @@ public class FirstLevelScreen implements Screen {
         });
     }
 
+    private void loadHUD() {
+        hud = new HUD(character);
+        hud.setPosition(10, Gdx.graphics.getHeight() - 10);
+
+        stage.addActor(hud);
+    }
+
     public void loadCamera() {
         gameCam = new OrthographicCamera();
         gameCam.setToOrtho(false);
@@ -134,7 +144,6 @@ public class FirstLevelScreen implements Screen {
         mobs = new Array<>();
         TextureRegion[] mobSprites = new TextureRegion[1];
         mobSprites[0] = new TextureRegion(new Texture("mobs/chort/idle/chort_idle_anim_f0.png"));
-//        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
         TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
         MapObjects objects = tiledMap.getLayers().get("ChortPosition").getObjects();
         for (MapObject object : objects) {
@@ -170,13 +179,11 @@ public class FirstLevelScreen implements Screen {
         mapRenderer.render();
 
 
-
 // Render the character
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         character.render(batch);
         batch.end();
-
 
 // Update and render the controls
         stage.act(delta);
