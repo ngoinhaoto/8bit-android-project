@@ -37,7 +37,7 @@ public class Mob extends Actor {
     public void update(float delta) {
         float playerX = player.getX();
         float playerY = player.getY();
-        float distance = Math.abs(getX() - playerX);
+        float distance = (float) Math.sqrt(Math.pow(getX() - playerX, 2) + Math.pow(getY() - playerY, 2));
 
         // mob would move toward player if they are in the radius
         if (distance <= radius) {
@@ -68,12 +68,13 @@ public class Mob extends Actor {
 
         // Calculate the movement speed along the x-axis and y-axis
         float speedX = movementSpeed * MathUtils.cos(angle) * delta;
-        float speedY = movementSpeed * MathUtils.sin(angle) * delta ;
+        float speedY = movementSpeed * MathUtils.sin(angle) * delta;
 
         // Move towards the target position
         setX(getX() + speedX * delta);
         setY(getY() + speedY * delta);
     }
+
 
     public void draw(SpriteBatch batch, float parentAlpha) {
         TextureRegion sprite = sprites[0];  // Default sprite

@@ -141,7 +141,7 @@ public class FirstLevelScreen implements Screen {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(mobSprites, "chort", 1000, character);
+            Mob mob = new Mob(mobSprites, "chort", 500, character);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
