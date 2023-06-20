@@ -12,12 +12,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite {
     //Stat
-    private int maxHP = 5;
-    private int maxARM = 3;
+    private final int maxHP = 5;
+    private final int maxARM = 3;
     private int currentHP;
     private int currentARM;
-    private static final float FRAME_TIME = 0.2f;
-    public enum State { IDLING, WALKING_RIGHT, WALKING_LEFT, SHOOTING }
+    private static final float FRAME_TIME = 0.18f;
+    private enum State { IDLING, WALKING_RIGHT, WALKING_LEFT, SHOOTING }
     public State currentState;
 
     public State previousState;
@@ -155,7 +155,7 @@ public class Character extends Sprite {
         return topLeft || topRight || bottomLeft || bottomRight;
     }
 
-    public TextureRegion getFrame(float deltaTime) {
+    private TextureRegion getFrame(float deltaTime) {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
@@ -257,6 +257,9 @@ public class Character extends Sprite {
         this.currentARM = newArmor;
     }
 
+    public int getMaxARM() {
+        return this.maxARM;
+    }
     public int getCurrentARM() {
         return this.currentARM;
     }

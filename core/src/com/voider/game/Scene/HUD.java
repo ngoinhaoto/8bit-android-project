@@ -49,6 +49,6 @@ public class HUD extends Actor {
         return  String.valueOf(Math.round(this.character.getCurrentHP() / this.character.getMaxHP()) *100);
     }
     public String loadCurrentARM() {
-        return  String.valueOf(Math.round(this.character.getCurrentHP() / this.character.getMaxHP()) *100);
+        return  String.valueOf(Math.round(this.character.getCurrentARM() / this.character.getMaxARM()) *100);
     }
 }

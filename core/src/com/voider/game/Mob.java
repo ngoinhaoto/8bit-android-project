@@ -1,31 +1,56 @@
     package com.voider.game;
 
+    import com.badlogic.gdx.Gdx;
+    import com.badlogic.gdx.graphics.g2d.Animation;
     import com.badlogic.gdx.graphics.g2d.Batch;
     import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+    import com.badlogic.gdx.graphics.g2d.TextureAtlas;
     import com.badlogic.gdx.graphics.g2d.TextureRegion;
     import com.badlogic.gdx.math.MathUtils;
+    import com.badlogic.gdx.math.Vector2;
     import com.badlogic.gdx.scenes.scene2d.Actor;
 
     public class Mob extends Actor {
+        private enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING };
         private TileMap tileMap;
-        private TextureRegion[] sprites;
         private String mobType;
         private float radius; // if player enters their radius, they will follow player
         private Character player;
         private float movementSpeed;
+        private float position_x;
+        private float position_y;
 
         private float distanceToMove;
         private boolean movingRight;
+        private State currentState;
 
-        public Mob(TileMap tileMap, TextureRegion[] sprites, String mobType, float radius, Character player) {
+        private State previousState;
+        public TextureAtlas textureAtlas;
+        private Animation<TextureRegion> mIdle;
+        private Animation<TextureRegion> mWalk;
+        private Animation<TextureRegion> mAttack;
+        private static final float FRAME_TIME = 0.15f;
+        private float stateTime;
+
+        public Mob(TileMap tileMap, float x, float y, String mobType, float radius, Character player) {
             this.tileMap = tileMap;
-            this.sprites = sprites;
             this.mobType = mobType;
             this.radius = radius;
             this.player = player;
-            setSize(sprites[0].getRegionWidth(), sprites[0].getRegionHeight());
+            movementSpeed = 40;
 
-            movementSpeed = 30;
+            currentState = State.IDLING;
+            previousState = State.IDLING;
+
+            textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/chort/animation_chort.atlas"));
+
+            mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+            mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+//            mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
+
+            mIdle.setFrameDuration(FRAME_TIME);
+            mWalk.setFrameDuration(FRAME_TIME);
+//            mAttack.setFrameDuration(FRAME_TIME);
         }
 
         @Override
@@ -36,6 +61,7 @@
         }
 
         public void update(float delta) {
+            stateTime += delta;
             // Check if the mob is colliding
             boolean isColliding = isColliding(getX(), getY());
 
@@ -69,6 +95,7 @@
 
 
         public void randomMovement(float delta) {
+            State previousState = currentState; // Store the previous state before updating
             // Check if the mob is currently moving right
             if (movingRight) {
                 // Move right
@@ -109,21 +136,31 @@
                     distanceToMove = MathUtils.random(50, 200);
                 }
             }
-        }
 
-
-        public void draw(SpriteBatch batch, float parentAlpha) {
-            TextureRegion sprite = sprites[0];  // Default sprite
-
-            // Retrieve the appropriate sprite based on mobType
-            if (mobType.equals("Type1")) {
-                sprite = sprites[1];
-            } else if (mobType.equals("Type2")) {
-                sprite = sprites[2];
+            // Set the current state based on movement direction
+            if (movingRight) {
+                currentState = State.WALKING_RIGHT;
+            } else {
+                currentState = State.WALKING_LEFT;
             }
 
-            batch.setColor(1, 1, 1, parentAlpha);  // Set the batch color with parent alpha
-            batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
+            // Check if the state has changed
+            if (currentState != previousState) {
+                stateTime = 0; // Reset the state time when the state changes
+            }
+        }
+
+        public void render(SpriteBatch spriteBatch) {
+            TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+            // Render the character at its current position
+            float textureWidth = 32; // Set the desired texture width
+            float textureHeight = 32; // Set the desired texture height
+            if (!movingRight) {
+                spriteBatch.draw(currentFrame, getX() + textureWidth, getY(),
+                        -textureWidth, textureHeight);
+            } else {
+                spriteBatch.draw(currentFrame, getX(), getY(), textureWidth, textureHeight);
+            }
         }
 
         public boolean isColliding(float x, float y) {
@@ -140,5 +177,33 @@
 
             // Return true if any corner collides with a boundary tile
             return topLeft || topRight || bottomLeft || bottomRight;
+        }
+
+        public TextureRegion getFrame(float deltaTime) {
+            currentState = getState();
+            TextureRegion region;
+            switch (currentState) {
+                case IDLING:
+                    region = mIdle.getKeyFrame(stateTime, true);
+                    break;
+                case WALKING_LEFT:
+                    region = mWalk.getKeyFrame(stateTime, true);
+                    this.movingRight = false;
+                    break;
+                case WALKING_RIGHT:
+                    region = mWalk.getKeyFrame(stateTime, true);
+                    this.movingRight = true;
+                    break;
+                case ATTACKING:
+                    region = mAttack.getKeyFrame(stateTime, true);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + currentState);
+            }
+            return region;
+        }
+
+        private State getState() {
+            return this.currentState;
         }
     }
