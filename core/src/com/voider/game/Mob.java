@@ -16,6 +16,10 @@ public class Mob extends Actor {
     private float targetY;
     private float originalX;
 
+
+    private float distanceToMove;
+    private boolean movingRight;
+
     public Mob(TextureRegion[] sprites, String mobType, float radius, Character player) {
         this.sprites = sprites;
         this.mobType = mobType;
@@ -23,7 +27,7 @@ public class Mob extends Actor {
         this.player = player;
         setSize(sprites[0].getRegionWidth(), sprites[0].getRegionHeight());
 
-        movementSpeed = 350;
+        movementSpeed = 30;
         originalX = getX();
     }
 
@@ -35,46 +39,59 @@ public class Mob extends Actor {
     }
 
     public void update(float delta) {
-        float playerX = player.getX();
-        float playerY = player.getY();
-        float distance = (float) Math.sqrt(Math.pow(getX() - playerX, 2) + Math.pow(getY() - playerY, 2));
+        // Check the distance between the mob and the player
+        float distanceToPlayerX = player.getPosition().x - getX();
+        float distanceToPlayerY = player.getPosition().y - getY();
+        float totalDistanceToPlayer = (float) Math.sqrt(distanceToPlayerX * distanceToPlayerX + distanceToPlayerY * distanceToPlayerY);
 
-        // mob would move toward player if they are in the radius
-        if (distance <= radius) {
-            targetX = playerX - getWidth() / 2;
-            targetY = playerY - getHeight() / 2;
+        // Check if the player is within the mob's radius
+        if (totalDistanceToPlayer <= radius) {
+            // Move towards the player
+            float directionX = distanceToPlayerX / totalDistanceToPlayer;
+            float directionY = distanceToPlayerY / totalDistanceToPlayer;
+
+            float distanceMovedX = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerX));
+            float distanceMovedY = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerY));
+
+            setX(getX() + distanceMovedX * directionX);
+            setY(getY() + distanceMovedY * directionY);
         } else {
-            // Random movement if player is outside the radius
-            float threshold = 1f; // Adjust this threshold as needed
-            if (MathUtils.isEqual(getX(), originalX, threshold) || MathUtils.isEqual(getX(), targetX, threshold)) {
-                // Generate a random target position within a range
-                float minX = originalX - 100; // Adjust the range as needed
-                float maxX = originalX + 100;
-                targetX = MathUtils.random(minX, maxX);
-
-                // Generate a random target position along the y-axis within a range
-                float minY = getY() - 100; // Adjust the range as needed
-                float maxY = getY() + 100;
-                targetY = MathUtils.random(minY, maxY);
-            }
+            // Perform random left and right movement
+            randomMovement(delta);
         }
-
-        // Calculate the difference between the current position and the target position
-        float deltaX = targetX - getX();
-        float deltaY = targetY - getY();
-
-        // Calculate the angle between the current position and the target position
-        float angle = MathUtils.atan2(deltaY, deltaX);
-
-        // Calculate the movement speed along the x-axis and y-axis
-        float speedX = movementSpeed * MathUtils.cos(angle) * delta;
-        float speedY = movementSpeed * MathUtils.sin(angle) * delta;
-
-        // Move towards the target position
-        setX(getX() + speedX * delta);
-        setY(getY() + speedY * delta);
     }
 
+
+
+
+    public void randomMovement(float delta) {
+        // Check if the mob is currently moving right
+        if (movingRight) {
+            // Move right
+            float distanceMoved = Math.min(movementSpeed * delta, distanceToMove);
+            setX(getX() + distanceMoved);
+            distanceToMove -= distanceMoved;
+
+            // Check if the distance has been covered
+            if (distanceToMove <= 0) {
+                // Change direction to left
+                movingRight = false;
+                distanceToMove = MathUtils.random(50, 200);
+            }
+        } else {
+            // Move left
+            float distanceMoved = Math.min(movementSpeed * delta, distanceToMove);
+            setX(getX() - distanceMoved);
+            distanceToMove -= distanceMoved;
+
+            // Check if the distance has been covered
+            if (distanceToMove <= 0) {
+                // Change direction to right
+                movingRight = true;
+                distanceToMove = MathUtils.random(50, 200);
+            }
+        }
+    }
 
     public void draw(SpriteBatch batch, float parentAlpha) {
         TextureRegion sprite = sprites[0];  // Default sprite
