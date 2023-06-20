@@ -72,7 +72,7 @@ public class Character extends Sprite {
             Bullet bullet = bullets.get(i);
             bullet.update(delta);
 
-            if (isColliding(bullet.getPosition().x, bullet.getPosition().y)) {
+            if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y-4)) {
                 // Handle bullet collision with boundaries or other objects
                 bullets.removeIndex(i);
             } else if (isBulletOffScreen(bullet)) {
@@ -94,26 +94,10 @@ public class Character extends Sprite {
     }
 
     public void shoot() {
-        float bulletSpeed = 300;
+        float bulletSpeed = 500;
 
         float velocityX = 0;
         float velocityY = 0;
-
-//        if (currentState == State.WALKING_RIGHT) {
-//            velocityX = bulletSpeed;
-//        } else if (currentState == State.WALKING_LEFT) {
-//            velocityX = -bulletSpeed;
-//        } else if (currentState == State.IDLING) {
-//            // Determine the direction based on the previous state
-//            if (previousState == State.WALKING_RIGHT) {
-//                velocityX = bulletSpeed;
-//            } else if (previousState == State.WALKING_LEFT) {
-//                velocityX = -bulletSpeed;
-//            }
-//            else {
-//                velocityX = bulletSpeed;
-//            }
-//        }
 
         if (!isLeft) {
             velocityX = bulletSpeed;
@@ -132,6 +116,21 @@ public class Character extends Sprite {
         bullets.add(bullet);
     }
 
+    public boolean isColliding_b(float x, float y) {
+        int tileXStart = (int) (x / tileMap.getTileWidth());
+        int tileXEnd = (int) ((x) / tileMap.getTileWidth());
+        int tileYStart = (int) (y / tileMap.getTileHeight());
+        int tileYEnd = (int) ((y) / tileMap.getTileHeight());
+
+        // Check collisions for each corner of the character
+        boolean topLeft = tileMap.isBoundary(tileXStart, tileYEnd);
+        boolean topRight = tileMap.isBoundary(tileXEnd, tileYEnd);
+        boolean bottomLeft = tileMap.isBoundary(tileXStart, tileYStart);
+        boolean bottomRight = tileMap.isBoundary(tileXEnd, tileYStart);
+
+        // Return true if any corner collides with a boundary tile
+        return topLeft || topRight || bottomLeft || bottomRight;
+    }
 
     public boolean isColliding(float x, float y) {
         int tileXStart = (int) (x / tileMap.getTileWidth());
