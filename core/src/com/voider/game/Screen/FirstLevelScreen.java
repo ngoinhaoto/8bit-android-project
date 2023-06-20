@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -52,6 +54,8 @@ public class FirstLevelScreen implements Screen {
         loadCamera();
         loadCharacter();
         loadControls();
+        initialiseMobs();
+
     }
     @Override
     public void show() {
@@ -106,10 +110,6 @@ public class FirstLevelScreen implements Screen {
                 }
             }
         });
-
-
-        initialiseMobs();
-
     }
 
     public void loadCamera() {
@@ -132,71 +132,73 @@ public class FirstLevelScreen implements Screen {
 
     private void initialiseMobs() {
         mobs = new Array<>();
-        TextureRegion[] mobSprites = new TextureRegion[1];  // Create an array to hold the sprites
+        TextureRegion[] mobSprites = new TextureRegion[1];
         mobSprites[0] = new TextureRegion(new Texture("mobs/chort/idle/chort_idle_anim_f0.png"));
+//        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
 
-        Mob mob1 = new Mob(mobSprites, "chort");
-        // ta tạm set ở đây vì t k biết đặt placement của mod ở trên tiledmap kiểu gì. m làm tiếp ở đây hì,
-        // t đi làm web, sáng mai t làm tiếp @@ tại team t có 2 ngừoi làm web thôi ấy
+        MapObjects objects = tiledMap.getLayers().get("ChortPosition").getObjects();
+        for (MapObject object : objects) {
+            float x = object.getProperties().get("x", Float.class);
+            float y = object.getProperties().get("y", Float.class);
 
-        mob1.setPosition(initialCameraX - 137, initialCameraY - 10);
-
-        mobs.add(mob1);
+            Mob mob = new Mob(mobSprites, "chort", 1000, character);
+            mob.setPosition(x, y);
+            mobs.add(mob);
+        }
     }
+
 
     @Override
     public void render(float delta) {
-        // Clear the screen
+// Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Update the character's position and state based on the joystick input
+// Update the character's position and state based on the joystick input
         float joystickX = touchpad.getKnobPercentX();
         float joystickY = touchpad.getKnobPercentY();
         character.update(delta, joystickX, joystickY);
 
-        // Update the camera's position to center on the character
+// Update the camera's position to center on the character
         float cameraX = character.getPosition().x; // Adjust this if necessary
         float cameraY = character.getPosition().y; // Adjust this if necessary
         gameCam.position.set(cameraX, cameraY, 0);
         gameCam.update();
 
-        // Render the tile map
+// Render the tile map
         mapRenderer.setView(gameCam);
         mapRenderer.render();
 
 
 
-        // Render the character
+// Render the character
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         character.render(batch);
         batch.end();
 
 
-        // Update and render the controls
+// Update and render the controls
         stage.act(delta);
         stage.draw();
 
 
-        // Update and render the bullets
+// Update and render the bullets
         batch.begin();
         for (Bullet bullet : character.getBullets()) {
             bullet.render(batch); // Render bullet
         }
         batch.end();
 
-
-
-        // Render the mobs
+// Render the mobs
         batch.begin();
         for (Mob mob : mobs) {
+            mob.act(delta);
             mob.draw(batch, 1);
         }
         batch.end();
 
     }
-
 
     @Override
     public void resize(int width, int height) {
