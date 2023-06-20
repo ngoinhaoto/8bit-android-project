@@ -11,6 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite {
+    //Stat
+    private int maxHP = 5;
+    private int maxARM = 3;
+    private int currentHP;
+    private int currentARM;
     private static final float FRAME_TIME = 0.2f;
     public enum State { IDLING, WALKING_RIGHT, WALKING_LEFT, SHOOTING }
     public State currentState;
@@ -28,6 +33,8 @@ public class Character extends Sprite {
     private TileMap tileMap;
     private Array<Bullet> bullets;
     public Character(TileMap tileMap) {
+        this.currentHP = this.maxHP;
+        this.currentARM = this.maxARM;
         textureAtlas = new TextureAtlas(Gdx.files.internal("char/character.atlas"));
         this.position = new Vector2();
         this.speed = 100f;
@@ -232,6 +239,25 @@ public class Character extends Sprite {
 
     public void setPosition(float x, float y) {
         position.set(x, y);
+    }
+
+    public void setHP(int newHP) {
+        this.currentHP = newHP;
+    }
+
+    public int getMaxHP() {
+        return this.maxHP;
+    }
+    public int getHealth() {
+        return this.currentHP;
+    }
+
+    public void setARM(int newArmor) {
+        this.currentARM = newArmor;
+    }
+
+    public int getARM() {
+        return this.currentHP;
     }
 
     public void dispose() {

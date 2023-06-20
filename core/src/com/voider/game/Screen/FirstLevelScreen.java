@@ -135,13 +135,13 @@ public class FirstLevelScreen implements Screen {
         TextureRegion[] mobSprites = new TextureRegion[1];
         mobSprites[0] = new TextureRegion(new Texture("mobs/chort/idle/chort_idle_anim_f0.png"));
 //        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
-
+        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
         MapObjects objects = tiledMap.getLayers().get("ChortPosition").getObjects();
         for (MapObject object : objects) {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(mobSprites, "chort", 100, character);
+            Mob mob = new Mob(tileMap, mobSprites, "chort", 100, character);
             mob.setPosition(x, y);
             mobs.add(mob);
         }

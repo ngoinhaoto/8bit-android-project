@@ -2,10 +2,15 @@
     "activeFile": "test-map.tmx",
     "expandedProjectPaths": [
         "tileset",
-        "tilemap"
+        "tilemap",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "0x72_DungeonTilesetII_v1.6.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
         "D:/8bit-android-project/assets/map/Tileset1.tsx": {
             "scaleInDock": 1
         },
@@ -45,16 +50,19 @@
                 "y": 256.688436419516
             }
         },
+        "pixil-frame-0.tsx": {
+            "scaleInDock": 2
+        },
         "t1.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "test-map.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 3,
+            "scale": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 1481.3333333333333,
-                "y": 824.6666666666667
+                "x": 384,
+                "y": 371.75
             }
         },
         "tilemap/map/dungeon1/tileset/t1.tsx": {
@@ -75,19 +83,26 @@
     },
     "last.exportedFilePath": "D:/8bit-android-project/assets/map/dungeon1/tilemap",
     "last.externalTilesetPath": "D:/8bit-android-project/assets/map/dungeon1",
+    "last.imagePath": "D:/8bit-android-project/assets/map/tileset",
     "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
     "openFiles": [
         "test-map.tmx"
     ],
     "project": "dungeon1.tiled-project",
-    "property.type": "object",
+    "property.type": "bool",
     "recentFiles": [
         "test-map.tmx",
+        "0x72_DungeonTilesetII_v1.6.tsx",
         "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/test-map.tmx",
         "D:/8bit-android-project/assets/map/test.tmx",
         "D:/Artwork/8bit/map/test.tmx",
         "t1.tsx",
         "tileset/t1.tsx",
         "tilemap/test-map.tmx"
-    ]
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
 }
