@@ -1,88 +1,88 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] /Users/ritherthemuncher/.gradle/caches/transforms-3/6c67070aafcf3489eb022be0d7842003/transformed/gdx-controllers-android-2.2.1/AndroidManifest.xml:2:1-11:12
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] C:\Users\OS\.gradle\caches\transforms-3\6c67070aafcf3489eb022be0d7842003\transformed\gdx-controllers-android-2.2.1\AndroidManifest.xml:2:1-11:12
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
 	package
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
 	xmlns:tools
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:3:5-51
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:1-28:12
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:2:1-28:12
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:2:11-69
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:2:11-69
 uses-feature#0x00020000
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:5:5-78
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:5:5-78
 	android:glEsVersion
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:5:19-51
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:5:19-51
 	android:required
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:5:52-75
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:5:52-75
 application
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:7:5-26:19
-MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] /Users/ritherthemuncher/.gradle/caches/transforms-3/6c67070aafcf3489eb022be0d7842003/transformed/gdx-controllers-android-2.2.1/AndroidManifest.xml:9:5-20
-MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] /Users/ritherthemuncher/.gradle/caches/transforms-3/6c67070aafcf3489eb022be0d7842003/transformed/gdx-controllers-android-2.2.1/AndroidManifest.xml:9:5-20
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:7:5-26:19
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] C:\Users\OS\.gradle\caches\transforms-3\6c67070aafcf3489eb022be0d7842003\transformed\gdx-controllers-android-2.2.1\AndroidManifest.xml:9:5-20
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] C:\Users\OS\.gradle\caches\transforms-3\6c67070aafcf3489eb022be0d7842003\transformed\gdx-controllers-android-2.2.1\AndroidManifest.xml:9:5-20
 	android:label
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:13:9-41
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:13:9-41
 	android:fullBackupContent
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:9:9-41
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:9:9-41
 	android:appCategory
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:12:9-35
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:12:9-35
 	tools:ignore
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:14:9-39
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:14:9-39
 	android:icon
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:10:9-45
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:10:9-45
 	android:allowBackup
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:8:9-35
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:8:9-35
 	android:isGame
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:11:9-30
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:11:9-30
 activity#com.voider.game.AndroidLauncher
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:15:9-25:20
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:15:9-25:20
 	android:screenOrientation
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:18:13-50
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:18:13-50
 	android:label
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:17:13-45
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:17:13-45
 	android:exported
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:20:13-36
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:20:13-36
 	android:configChanges
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:19:13-107
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:19:13-107
 	android:name
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:16:13-59
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:16:13-59
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:21:13-24:29
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:21:13-24:29
 action#android.intent.action.MAIN
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:22:17-69
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:22:17-69
 	android:name
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:22:25-66
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:22:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:23:17-77
+ADDED from D:\8bit-android-project\android\AndroidManifest.xml:23:17-77
 	android:name
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml:23:27-74
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml:23:27-74
 uses-sdk
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] /Users/ritherthemuncher/.gradle/caches/transforms-3/6c67070aafcf3489eb022be0d7842003/transformed/gdx-controllers-android-2.2.1/AndroidManifest.xml:5:5-7:41
-MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] /Users/ritherthemuncher/.gradle/caches/transforms-3/6c67070aafcf3489eb022be0d7842003/transformed/gdx-controllers-android-2.2.1/AndroidManifest.xml:5:5-7:41
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] C:\Users\OS\.gradle\caches\transforms-3\6c67070aafcf3489eb022be0d7842003\transformed\gdx-controllers-android-2.2.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1] C:\Users\OS\.gradle\caches\transforms-3\6c67070aafcf3489eb022be0d7842003\transformed\gdx-controllers-android-2.2.1\AndroidManifest.xml:5:5-7:41
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		ADDED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
-		INJECTED from /Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
+		ADDED from D:\8bit-android-project\android\AndroidManifest.xml
+		INJECTED from D:\8bit-android-project\android\AndroidManifest.xml
