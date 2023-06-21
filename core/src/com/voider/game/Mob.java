@@ -165,9 +165,9 @@
 
         public boolean isColliding(float x, float y) {
             int tileXStart = (int) (x / tileMap.getTileWidth());
-            int tileXEnd = (int) ((x + getWidth()) / tileMap.getTileWidth());
+            int tileXEnd = (int) ((x + 16 + getWidth()) / tileMap.getTileWidth());
             int tileYStart = (int) (y / tileMap.getTileHeight());
-            int tileYEnd = (int) ((y + getHeight()) / tileMap.getTileHeight());
+            int tileYEnd = (int) ((y + 16 + getHeight()) / tileMap.getTileHeight());
 
             // Check collisions for each corner of the character
             boolean topLeft = tileMap.isBoundary(tileXStart, tileYEnd);
