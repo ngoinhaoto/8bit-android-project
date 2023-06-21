@@ -33,8 +33,8 @@ public class Character extends Sprite {
     private TileMap tileMap;
     private Array<Bullet> bullets;
     public Character(TileMap tileMap) {
-        this.currentHP = this.maxHP;
-        this.currentARM = this.maxARM;
+        setHP(getMaxHP());
+        setARM(getMaxARM());
         textureAtlas = new TextureAtlas(Gdx.files.internal("char/character.atlas"));
         this.position = new Vector2();
         this.speed = 100f;

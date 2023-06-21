@@ -25,8 +25,8 @@ public class HUD extends Actor {
         TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
         TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
 
-        hpBar = new Sprite(atlasHP.findRegion("hpBar-" + loadCurrentHP()));
-        armorBar = new Sprite(atlasARM.findRegion("armBar-" + loadCurrentARM()));
+        hpBar = new Sprite(atlasHP.findRegion("hpBar-"+loadCurrentHP()));
+        armorBar = new Sprite(atlasARM.findRegion("armBar-"+loadCurrentARM()));
     }
 
     @Override
@@ -45,10 +45,10 @@ public class HUD extends Actor {
         armorBar.draw(batch);
     }
 
-    public String loadCurrentHP() {
-        return  String.valueOf(Math.round(this.character.getCurrentHP() / this.character.getMaxHP()) *100);
+    private String loadCurrentHP() {
+        return  String.valueOf((int)((double)this.character.getCurrentHP() / this.character.getMaxHP() *100));
     }
-    public String loadCurrentARM() {
-        return  String.valueOf(Math.round(this.character.getCurrentARM() / this.character.getMaxARM()) *100);
+    private String loadCurrentARM() {
+        return  String.valueOf((int)(Math.round((float)this.character.getCurrentARM() / this.character.getMaxARM() *100)));
     }
 }
