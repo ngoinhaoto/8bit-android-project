@@ -183,10 +183,6 @@ public class FirstLevelScreen implements Screen {
         character.render(batch);
         batch.end();
 
-// Update and render the controls
-        stage.act(delta);
-        stage.draw();
-
 
 // Update and render the bullets
         batch.begin();
@@ -203,7 +199,14 @@ public class FirstLevelScreen implements Screen {
         }
         batch.end();
 
+
+        // Update and render the controls
+        stage.act(delta);
+        stage.draw();
+
+
     }
+
 
     @Override
     public void resize(int width, int height) {
