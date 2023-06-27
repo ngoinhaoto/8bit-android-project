@@ -34,8 +34,6 @@ public class Character extends Sprite {
     public float speed;
     private boolean isLeft = false;
     private Weapon gun;
-
-
     private TileMap tileMap;
     private Array<Bullet> bullets;
 
@@ -125,8 +123,6 @@ public class Character extends Sprite {
         }
 
     }
-
-
 
 
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
@@ -256,11 +252,9 @@ public class Character extends Sprite {
                 break;
             case WALKING_LEFT:
                 region = charWalk.getKeyFrame(stateTime, true);
-                this.isLeft = true;
                 break;
             case WALKING_RIGHT:
                 region = charWalk.getKeyFrame(stateTime, true);
-                this.isLeft = false;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currentState);
@@ -285,11 +279,13 @@ public class Character extends Sprite {
                 // Code to set the character to move left state
                 this.previousState = currentState;
                 currentState = State.WALKING_LEFT;
+                this.isLeft = true;
                 break;
             case "RIGHT":
                 // Code to set the character to move right state
                 this.previousState = currentState;
                 currentState = State.WALKING_RIGHT;
+                this.isLeft = false;
                 break;
             default:
                 currentState = State.IDLING;
@@ -314,7 +310,7 @@ public class Character extends Sprite {
 
         // Render the bullets
         for (Bullet bullet : bullets) {
-            bullet.render(spriteBatch, gun.getAngle());
+            bullet.render(spriteBatch);
         }
     }
     public void setGun(Weapon gun) {

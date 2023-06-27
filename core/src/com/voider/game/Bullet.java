@@ -34,9 +34,7 @@ public class Bullet {
         return position;
     }
 
-    public void render(SpriteBatch batch, float gunAngle) {
-        setAngle(gunAngle);
-
+    public void render(SpriteBatch batch) {
         if (!isLeft) {
             batch.draw(
                     bulletTexture,
@@ -48,9 +46,8 @@ public class Bullet {
                     bulletTexture.getRegionHeight(),
                     1.0f,
                     1.0f,
-                    gunAngle
+                    this.getAngle()
             );
-
         } else {
             batch.draw(
                     bulletTexture,
@@ -62,7 +59,7 @@ public class Bullet {
                     bulletTexture.getRegionHeight(),
                     -1.0f,
                     1.0f,
-                    gunAngle
+                    this.getAngle()
             );
         }
     }

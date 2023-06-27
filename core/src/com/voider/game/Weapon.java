@@ -11,11 +11,14 @@ public class Weapon {
     private boolean isShoot = false;
     private float shootDuration = 0.5f; // Duration in seconds for which isShoot will be true
     private float shootTimer = 0.0f; // Timer to track the elapsed time
+    private boolean isLeft = false;
+    private Character character;
 
-    public Weapon(Texture texture) {
+    public Weapon(Texture texture, Character character) {
         this.texture = texture;
-        position = new Vector2();
-        angle = 0;
+        this.position = new Vector2();
+        this.angle = 0;
+        this.character = character;
     }
 
     public void setState() {
@@ -43,14 +46,20 @@ public class Weapon {
 
     public void setAngle(float angle) {
         this.angle = angle;
+        if (angle < -90 || angle > 90) {
+            this.isLeft = true;
+            this.character.setState("LEFT");
+        } else {
+            this.isLeft = false;
+            this.character.setState("RIGHT");
+        }
     }
     public float getAngle() {
         return this.angle;
     }
     public void render(SpriteBatch spriteBatch) {
         updateTexture();
-        boolean flipY = angle < -90 || angle > 90; // Check if angle is outside the range -90 to 90
-        if (!flipY) {
+        if (!isLeft) {
             spriteBatch.draw(
                     texture,
                     position.x + 20,
@@ -60,7 +69,7 @@ public class Weapon {
                     texture.getWidth(),
                     texture.getHeight(),
                     1.0f,
-                    flipY ? -1.0f : 1.0f, // Flip the texture vertically if flipY is true
+                    1.0f,
                     angle,
                     0,
                     0,
@@ -79,7 +88,7 @@ public class Weapon {
                     texture.getWidth(),
                     texture.getHeight(),
                     1.0f,
-                    flipY ? -1.0f : 1.0f, // Flip the texture vertically if flipY is true
+                    -1.0f,
                     angle,
                     0,
                     0,

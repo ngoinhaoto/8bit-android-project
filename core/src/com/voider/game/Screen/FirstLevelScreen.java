@@ -161,7 +161,7 @@ public class FirstLevelScreen implements Screen {
         TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
         character = new Character(tileMap);
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.setGun(new Weapon(new Texture("weap/gun/gun inactive.png")));
+        character.setGun(new Weapon(new Texture("weap/gun/gun inactive.png"), this.character));
         character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 
@@ -225,7 +225,7 @@ public class FirstLevelScreen implements Screen {
 // Update and render the bullets
         batch.begin();
         for (Bullet bullet : character.getBullets()) {
-            bullet.render(batch, bullet.getAngle()); // Render bullet
+            bullet.render(batch); // Render bullet
         }
         batch.end();
 
