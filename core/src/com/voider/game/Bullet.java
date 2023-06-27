@@ -10,12 +10,10 @@ public class Bullet {
     private Vector2 position;
     private Vector2 velocity;
     private boolean isLeft;
-
     private TextureRegion bulletTexture;
-
+    private float angle;
     private float bulletSpeed = 300; // Declare bullet speed
-    // constructor
-// constructor
+
     public Bullet(float x, float y, float velocityX, float velocityY, boolean left) {
         this.isLeft = left;
         position = new Vector2(x, y);
@@ -34,15 +32,45 @@ public class Bullet {
         return position;
     }
 
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float gunAngle) {
+        setAngle(gunAngle);
 
         if (!isLeft) {
-            batch.draw(bulletTexture, position.x, position.y);
+            batch.draw(
+                    bulletTexture,
+                    position.x,
+                    position.y,
+                    bulletTexture.getRegionWidth() / 2,
+                    bulletTexture.getRegionHeight() / 2,
+                    bulletTexture.getRegionWidth(),
+                    bulletTexture.getRegionHeight(),
+                    1.0f,
+                    1.0f,
+                    gunAngle
+            );
+
         } else {
-            batch.draw(bulletTexture, position.x + bulletTexture.getRegionWidth(), position.y, -bulletTexture.getRegionWidth(), bulletTexture.getRegionHeight());
+            batch.draw(
+                    bulletTexture,
+                    position.x + bulletTexture.getRegionWidth(),
+                    position.y,
+                    bulletTexture.getRegionWidth() / 2,
+                    bulletTexture.getRegionHeight() / 2,
+                    -bulletTexture.getRegionWidth(),
+                    bulletTexture.getRegionHeight(),
+                    -1.0f,
+                    1.0f,
+                    gunAngle
+            );
         }
     }
 
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
+    public float getAngle() {
+        return this.angle;
+    }
     public TextureRegion getBulletTexture() {
         return bulletTexture;
     }
