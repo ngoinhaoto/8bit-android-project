@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
@@ -24,6 +24,7 @@ import com.voider.game.Mob;
 import com.voider.game.Scene.HUD;
 import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
+import com.voider.game.Weapon;
 
 
 public class FirstLevelScreen implements Screen {
@@ -87,6 +88,28 @@ public class FirstLevelScreen implements Screen {
 
         touchpad = new Touchpad(10, touchpadStyle);
         touchpad.setBounds(120, 120, 250, 250);
+
+        touchpad.addListener(new ChangeListener() {
+            private boolean isTouchpadActive = false; // Track if the touchpad is active
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (touchpad.isTouched()) {
+                    // Touchpad is being touched
+                    isTouchpadActive = true;
+
+                    float knobPercentX = touchpad.getKnobPercentX();
+                    float knobPercentY = touchpad.getKnobPercentY();
+                    rotateGun(knobPercentX, knobPercentY);
+                } else if (isTouchpadActive) {
+                    // Touchpad was released after being touched
+                    isTouchpadActive = false;
+
+                }
+            }
+        });
+
+
         stage.addActor(touchpad);
 
         // Create the shooting button
@@ -138,6 +161,8 @@ public class FirstLevelScreen implements Screen {
         TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
         character = new Character(tileMap);
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
+        character.setGun(new Weapon(new Texture("weap/gun/gun inactive.png")));
+        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 
     private void initialiseMobs() {
@@ -154,6 +179,14 @@ public class FirstLevelScreen implements Screen {
         }
     }
 
+    public void rotateGun(float knobPercentX, float knobPercentY) {
+        // Calculate the angle of rotation based on the joystick input
+        float angleRad = MathUtils.atan2(knobPercentY, knobPercentX);
+        float angleDeg = MathUtils.radiansToDegrees * angleRad;
+
+        // Set the rotation angle of the gun in the Weapon class
+        character.getGun().setAngle(angleDeg);
+    }
 
     @Override
     public void render(float delta) {
@@ -183,11 +216,17 @@ public class FirstLevelScreen implements Screen {
         character.render(batch);
         batch.end();
 
+<<<<<<< HEAD
+=======
+// Update and render the controls
+        stage.act(delta);
+        stage.draw();
+>>>>>>> e9d18be06e9c17de501970a1d17c6e8e795d21cf
 
 // Update and render the bullets
         batch.begin();
         for (Bullet bullet : character.getBullets()) {
-            bullet.render(batch); // Render bullet
+            bullet.render(batch, bullet.getAngle()); // Render bullet
         }
         batch.end();
 

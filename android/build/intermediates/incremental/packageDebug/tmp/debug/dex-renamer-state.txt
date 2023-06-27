@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 #Wed Jun 21 14:12:02 ICT 2023
 base.0=/Users/ritherthemuncher/Documents/GitHub/8bit-android-project/android/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+=======
+#Tue Jun 27 19:50:05 ICT 2023
+base.0=D\:\\8bit-android-project\\android\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+>>>>>>> e9d18be06e9c17de501970a1d17c6e8e795d21cf
 renamed.0=classes.dex
 path.0=classes.dex
