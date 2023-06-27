@@ -15,7 +15,7 @@ public class Weapon {
     public Weapon(Texture texture) {
         this.texture = texture;
         position = new Vector2();
-        angle = 0.0f;
+        angle = 0;
     }
 
     public void setState() {

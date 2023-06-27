@@ -206,4 +206,8 @@
         private State getState() {
             return this.currentState;
         }
+
+        public Vector2 getPosition() {
+            return new Vector2(getX(), getY());
+        }
     }

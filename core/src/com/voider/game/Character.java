@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class Character extends Sprite {
     //Stat
@@ -33,6 +38,9 @@ public class Character extends Sprite {
 
     private TileMap tileMap;
     private Array<Bullet> bullets;
+
+    private Array<Mob> mobsInRange; // List to store mobs within attacking radius
+
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
         setARM(getMaxARM());
@@ -52,9 +60,76 @@ public class Character extends Sprite {
         this.tileMap = tileMap;
 
         bullets = new Array<>();
+        mobsInRange = new Array<>();
     }
 
-    public void update(float delta, float joystickX, float joystickY) {
+    public void updateGunAim() {
+        if (mobsInRange.isEmpty()) {
+            // If there are no mobs in range, no need to update the aim
+            return;
+        }
+
+        // Find the nearest mob
+        Mob nearestMob = findNearestMob();
+
+        // Get the position of the character and the nearest mob
+        Vector2 characterPosition = getPosition();
+        Vector2 mobPosition = nearestMob.getPosition();
+
+        // Calculate the direction vector from character to mob
+        Vector2 direction = mobPosition.cpy().sub(characterPosition);
+
+        // Calculate the angle using atan2
+        float angle = MathUtils.atan2(direction.y, direction.x);
+
+        // Convert the angle to degrees
+        angle = MathUtils.radiansToDegrees * angle;
+
+        // Set the angle for the gun
+        gun.setAngle(angle);
+    }
+
+
+
+    private Mob findNearestMob() {
+        Mob nearestMob = null;
+        float nearestDistance = Float.MAX_VALUE;
+        Vector2 characterPosition = new Vector2(getX(), getY());
+
+        for (Mob mob : mobsInRange) {
+            Vector2 mobPosition = new Vector2(mob.getX(), mob.getY());
+            float distance = characterPosition.dst(mobPosition);
+
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestMob = mob;
+            }
+        }
+
+        return nearestMob;
+    }
+
+
+    // Add this method to update the mobsInRange list based on the character's attacking radius
+    public void updateMobsInRange(float attackingRadius, Array<Mob> allMobs) {
+        mobsInRange.clear(); // Clear the current list of mobs in range
+
+        for (Mob mob : allMobs) {
+            Vector2 mobPosition = new Vector2(mob.getPosition().x, mob.getPosition().y);
+            Vector2 characterPosition = new Vector2(getPosition().x, getPosition().y);
+            float distance = characterPosition.dst(mobPosition);
+
+            if (distance <= attackingRadius) {
+                mobsInRange.add(mob);
+            }
+        }
+
+    }
+
+
+
+
+    public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
         // Update the character's position based on input or game logic
         float deltaX = joystickX * speed * delta;
         float deltaY = joystickY * speed * delta;
@@ -87,7 +162,18 @@ public class Character extends Sprite {
                 bullets.removeIndex(i);
             }
         }
+
+
+        // Update the mobs in range
+        float attackingRadius = 170;
+
+
+        updateMobsInRange(attackingRadius, allMobs);
+
+
+        updateGunAim(); // Update the gun aim based on the updated mobsInRange list
     }
+
 
     private boolean isBulletOffScreen(Bullet bullet) {
         float screenWidth = Gdx.graphics.getWidth();
@@ -118,12 +204,14 @@ public class Character extends Sprite {
         }
 
         Bullet bullet;
+
         // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
         if (!isLeft) {
-            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false);
+            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle());
         } else {
-            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true);
+            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle());
         }
+
         bullets.add(bullet);
     }
 

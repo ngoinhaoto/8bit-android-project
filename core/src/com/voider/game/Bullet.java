@@ -14,10 +14,12 @@ public class Bullet {
     private float angle;
     private float bulletSpeed = 300; // Declare bullet speed
 
-    public Bullet(float x, float y, float velocityX, float velocityY, boolean left) {
+    public Bullet(float x, float y, float velocityX, float velocityY, boolean left, float angle) {
         this.isLeft = left;
         position = new Vector2(x, y);
-        velocity = new Vector2(velocityX, velocityY).nor().scl(bulletSpeed);
+        this.angle = angle;
+        float angleInRadians = (float) Math.toRadians(angle);
+        velocity = new Vector2((float) Math.cos(angleInRadians), (float) Math.sin(angleInRadians)).nor().scl(bulletSpeed);
         bulletTexture = new TextureRegion(new Texture("bullet/bullet 5.png"));
     }
 
@@ -67,12 +69,15 @@ public class Bullet {
 
     public void setAngle(float angle) {
         this.angle = angle;
+        float angleInRadians = (float) Math.toRadians(angle);
+        velocity.set((float) Math.cos(angleInRadians), (float) Math.sin(angleInRadians)).nor().scl(bulletSpeed);
     }
+
     public float getAngle() {
         return this.angle;
     }
+
     public TextureRegion getBulletTexture() {
         return bulletTexture;
     }
-
 }

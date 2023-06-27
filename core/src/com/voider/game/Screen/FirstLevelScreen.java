@@ -167,7 +167,9 @@ public class FirstLevelScreen implements Screen {
 
     private void initialiseMobs() {
         mobs = new Array<>();
-        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
+
+        // Create the tileMap object
+        TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx");
         MapObjects objects = tiledMap.getLayers().get("ChortPosition").getObjects();
         for (MapObject object : objects) {
             float x = object.getProperties().get("x", Float.class);
@@ -197,7 +199,7 @@ public class FirstLevelScreen implements Screen {
 // Update the character's position and state based on the joystick input
         float joystickX = touchpad.getKnobPercentX();
         float joystickY = touchpad.getKnobPercentY();
-        character.update(delta, joystickX, joystickY);
+        character.update(delta, joystickX, joystickY, mobs);
 
 // Update the camera's position to center on the character
         float cameraX = character.getPosition().x; // Adjust this if necessary
@@ -216,12 +218,9 @@ public class FirstLevelScreen implements Screen {
         character.render(batch);
         batch.end();
 
-<<<<<<< HEAD
-=======
 // Update and render the controls
         stage.act(delta);
         stage.draw();
->>>>>>> e9d18be06e9c17de501970a1d17c6e8e795d21cf
 
 // Update and render the bullets
         batch.begin();
