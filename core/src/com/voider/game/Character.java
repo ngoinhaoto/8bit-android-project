@@ -17,7 +17,7 @@ public class Character extends Sprite {
     private int currentHP;
     private int currentARM;
     private static final float FRAME_TIME = 0.18f;
-    private enum State { IDLING, WALKING_RIGHT, WALKING_LEFT, SHOOTING }
+    private enum State { IDLING, WALKING_RIGHT, WALKING_LEFT }
     public State currentState;
 
     public State previousState;
@@ -25,17 +25,18 @@ public class Character extends Sprite {
     public Vector2 position;
     private Animation<TextureRegion> charIdle;
     private Animation<TextureRegion> charWalk;
-    private Animation<TextureRegion> charShoot;
     private float stateTime;
     public float speed;
     private boolean isLeft = false;
+    private Weapon gun;
+
 
     private TileMap tileMap;
     private Array<Bullet> bullets;
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
         setARM(getMaxARM());
-        textureAtlas = new TextureAtlas(Gdx.files.internal("char/character.atlas"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal("char/char.atlas"));
         this.position = new Vector2();
         this.speed = 100f;
 
@@ -44,11 +45,9 @@ public class Character extends Sprite {
 
         charIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
         charWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
-        charShoot = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("shoot"));
 
         charIdle.setFrameDuration(FRAME_TIME);
         charWalk.setFrameDuration(FRAME_TIME);
-        charShoot.setFrameDuration(FRAME_TIME);
 
         this.tileMap = tileMap;
 
@@ -73,6 +72,8 @@ public class Character extends Sprite {
 
         // Increment the stateTime for animation
         stateTime += delta;
+        // Update the gun
+        this.gun.update(delta);
 
         // Update the bullets' positions and check for collision with boundaries
         for (int i = bullets.size - 1; i >= 0; i--) {
@@ -101,6 +102,10 @@ public class Character extends Sprite {
     }
 
     public void shoot() {
+        //Change state of Gun
+        this.gun.setState();
+
+        // Create a new bullet,
         float bulletSpeed = 500;
 
         float velocityX = 0;
@@ -112,7 +117,6 @@ public class Character extends Sprite {
             velocityX = -bulletSpeed;
         }
 
-        // Create a new bullet,
         Bullet bullet;
         // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
         if (!isLeft) {
@@ -170,9 +174,6 @@ public class Character extends Sprite {
                 region = charWalk.getKeyFrame(stateTime, true);
                 this.isLeft = false;
                 break;
-            case SHOOTING:
-                region = charShoot.getKeyFrame(stateTime, true);
-                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currentState);
         }
@@ -202,10 +203,6 @@ public class Character extends Sprite {
                 this.previousState = currentState;
                 currentState = State.WALKING_RIGHT;
                 break;
-            case "SHOOT":
-                // Code to set the character to shoot state
-                this.previousState = currentState;
-                currentState = State.SHOOTING;
             default:
                 currentState = State.IDLING;
                 break;
@@ -223,49 +220,51 @@ public class Character extends Sprite {
         } else {
             spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
         }
+        // Render the gun
+        gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
+        gun.render(spriteBatch);
 
         // Render the bullets
         for (Bullet bullet : bullets) {
-            bullet.render(spriteBatch);
+            bullet.render(spriteBatch, gun.getAngle());
         }
+    }
+    public void setGun(Weapon gun) {
+        this.gun = gun;
+    }
+    public Weapon getGun() {
+        return this.gun;
     }
     public Array<Bullet> getBullets() {
         return bullets;
     }
-
-
     public Vector2 getPosition() {
         return position;
     }
-
     public void setPosition(float x, float y) {
         position.set(x, y);
     }
-
     public void setHP(int newHP) {
         this.currentHP = newHP;
     }
-
     public int getMaxHP() {
         return this.maxHP;
     }
     public int getCurrentHP() {
         return this.currentHP;
     }
-
     public void setARM(int newArmor) {
         this.currentARM = newArmor;
     }
-
     public int getMaxARM() {
         return this.maxARM;
     }
     public int getCurrentARM() {
         return this.currentARM;
     }
-
     public void dispose() {
         // Dispose of any resources here if needed
+        gun.dispose();
     }
 }
 

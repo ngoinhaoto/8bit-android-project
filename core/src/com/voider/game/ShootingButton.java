@@ -17,27 +17,11 @@ public class ShootingButton extends ImageButton {
         setPosition(Gdx.graphics.getWidth() - getWidth() - 150, 150); // Adjust the position as needed
 
         this.character = character;
-        final Timer.Task exitTask = new Timer.Task() {
-            @Override
-            public void run() {
-                character.setState("IDLE");
-            }
-        };
 
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 character.shoot();
-                character.setState("SHOOT");
-                if (exitTask.isScheduled()) {
-                    Timer.instance().clear(); // Cancel the running timer
-                }
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                Timer.schedule(exitTask, 0.5f); // 1 second delay
             }
         });
     }
