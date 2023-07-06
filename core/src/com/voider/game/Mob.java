@@ -7,13 +7,18 @@
     import com.badlogic.gdx.graphics.g2d.TextureAtlas;
     import com.badlogic.gdx.graphics.g2d.TextureRegion;
     import com.badlogic.gdx.math.MathUtils;
+    import com.badlogic.gdx.math.Rectangle;
     import com.badlogic.gdx.math.Vector2;
     import com.badlogic.gdx.scenes.scene2d.Actor;
+
 
     public class Mob extends Actor {
         private enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING };
         private TileMap tileMap;
         private String mobType;
+
+        private int HP;
+        private int maxHealth;
         private float radius; // if player enters their radius, they will follow player
         private Character player;
         private float movementSpeed;
@@ -34,6 +39,9 @@
 
         public Mob(TileMap tileMap, float x, float y, String mobType, float radius, Character player) {
             this.tileMap = tileMap;
+
+            this.maxHealth = calculateMaxHealth(mobType); // cái này thì mỗi mob có maxhealth riêng nghe, hp chỉ là máu tạm thời
+            this.HP = maxHealth;
             this.mobType = mobType;
             this.radius = radius;
             this.player = player;
@@ -58,6 +66,29 @@
             super.act(delta);
             // Update the mob's behavior and attributes
             update(delta);
+        }
+
+        public void takeDamage(int damage) {
+            HP -= damage;
+
+            // Check if the mob is still alive
+            if (HP <= 0) {
+                // Mob is dead, perform necessary actions (e.g., remove from the game)
+            }
+        }
+
+        private int calculateMaxHealth(String mobType) {
+            int maxHealth = 0;
+            switch (mobType) {
+                case "chort":
+                    maxHealth = 10;
+                    break;
+                case "goblin":
+                    maxHealth = 8;
+                    break;
+
+            }
+            return maxHealth;
         }
 
         public void update(float delta) {
@@ -210,4 +241,15 @@
         public Vector2 getPosition() {
             return new Vector2(getX(), getY());
         }
+
+        public Rectangle getBoundingRectangle() {
+            float x = getX();
+            float y = getY();
+            float width = getWidth();
+            float height = getHeight();
+
+            return new Rectangle(x, y, width, height);
+        }
+
+
     }

@@ -1,0 +1,124 @@
+d:assets:assets:0:application/unknown:1
+d:mobs:mobs:0:application/unknown:1
+d:mobs/chort:mobs/chort:0:application/unknown:1
+d:mobs/chort/idle:mobs/chort/idle:0:application/unknown:1
+i:mobs/chort/idle/chort_idle_anim_f0.png:mobs/chort/idle/chort_idle_anim_f0-0e153e20ee5932d8c0a9ebb2829d0213.png:284:image/png:1
+i:mobs/chort/idle/chort_idle_anim_f1.png:mobs/chort/idle/chort_idle_anim_f1-366d76fc35f9d15e0a56daea8518d1e1.png:242:image/png:1
+i:mobs/chort/idle/chort_idle_anim_f3.png:mobs/chort/idle/chort_idle_anim_f3-7640840b486436fd911b0d74de0d0c92.png:308:image/png:1
+i:mobs/chort/idle/chort_idle_anim_f2.png:mobs/chort/idle/chort_idle_anim_f2-4b0fce7eb7b128498b88a7b0a05715ed.png:261:image/png:1
+d:mobs/chort/walk:mobs/chort/walk:0:application/unknown:1
+i:mobs/chort/walk/chort_run_anim_f2.png:mobs/chort/walk/chort_run_anim_f2-f7091edf2428265abc45f44f153800d3.png:310:image/png:1
+i:mobs/chort/walk/chort_run_anim_f3.png:mobs/chort/walk/chort_run_anim_f3-93df4ef74624287c8928c6a670cc3ba7.png:285:image/png:1
+i:mobs/chort/walk/chort_run_anim_f1.png:mobs/chort/walk/chort_run_anim_f1-356027c1f4e72f6910a3391770e0d72b.png:300:image/png:1
+i:mobs/chort/walk/chort_run_anim_f0.png:mobs/chort/walk/chort_run_anim_f0-98fed1a8bdad92b76011392e2bb2a4a6.png:298:image/png:1
+t:mobs/chort/animation_chort.atlas:mobs/chort/animation_chort-2389f277a61fa255a68b625e29d707ee.atlas:811:application/unknown:1
+i:mobs/chort/animation_chort.png:mobs/chort/animation_chort-1219eaef31c33aba356e886aef70bfc9.png:1546:image/png:1
+d:mobs/mob2:mobs/mob2:0:application/unknown:1
+d:mobs/mob3:mobs/mob3:0:application/unknown:1
+d:mobs/mob4:mobs/mob4:0:application/unknown:1
+d:char:char:0:application/unknown:1
+d:char/idle:char/idle:0:application/unknown:1
+i:char/idle/idle 1.png:char/idle/idle 1-585fc7242ea3c1e6d079d7a1e2218db1.png:1307:image/png:1
+i:char/idle/idle_spritesheet.png:char/idle/idle_spritesheet-ba534be0747dc442938eed569d0fa357.png:1631:image/png:1
+i:char/idle/idle 2.png:char/idle/idle 2-c214d83b295a626cd94b90c37fbd4c2a.png:1181:image/png:1
+d:char/walk:char/walk:0:application/unknown:1
+i:char/walk/walk 1.png:char/walk/walk 1-12289489fc74a87fcd721775107d4e89.png:1301:image/png:1
+i:char/walk/walk 2.png:char/walk/walk 2-938dcc0145c65e0d4e18be86c5cc24d5.png:1300:image/png:1
+i:char/walk/walk 3.png:char/walk/walk 3-fafedb1791a1058d08e4e31112503d7f.png:1314:image/png:1
+i:char/walk/walk_spritesheet.png:char/walk/walk_spritesheet-4d5d9a1c38db191ba515883ab6dd99ec.png:1494:image/png:1
+t:char/character.atlas:char/character-b5e214ee27f0f46379f6fd98bc7d79e8.atlas:627:application/unknown:1
+b:char/char32x32.xcf:char/char32x32-79291c0c9609b51998f7d37d27285b74.xcf:4639:application/unknown:1
+t:char/char.atlas:char/char-92ac969a2bb941c048ae5be2da3f99fd.atlas:530:application/unknown:1
+b:char/char32x32 walk1.xcf:char/char32x32 walk1-ad62aa8427b8e4f9f8d431d37cdb4f71.xcf:2685:application/unknown:1
+b:char/char16x16.xcf:char/char16x16-dbe6481742237ab170cb236387cdeee4.xcf:1388:application/unknown:1
+b:char/char32x32 walk2.xcf:char/char32x32 walk2-d0bd4419959e16ff92e19427f84f9641.xcf:2795:application/unknown:1
+b:char/char32x32 walk3.xcf:char/char32x32 walk3-8a52337034964295deb3240187c40320.xcf:2759:application/unknown:1
+i:char/character.png:char/character-9d0023cc4db9ca0668fcc7f79dbec9f5.png:2037:image/png:1
+i:char/char.png:char/char-41348ceb5ecf6d6b83e9578e2ea9cf1f.png:1871:image/png:1
+d:char/shoot:char/shoot:0:application/unknown:1
+i:char/shoot/shoot.png:char/shoot/shoot-5f42660c1e6a9d8ddf3ff753c6a7b7b2.png:1306:image/png:1
+i:Pixilart Sprite Sheet.png:Pixilart Sprite Sheet-a175baa6f9af61fdc9e617aa90345404.png:3375:image/png:1
+d:weap:weap:0:application/unknown:1
+i:weap/gun.png:weap/gun-21f6532ee967799cfec87237813159c0.png:216:image/png:1
+t:weap/gun.atlas:weap/gun-e06c401e3859a40014c14bb14b1f12cc.atlas:254:application/unknown:1
+d:weap/gun:weap/gun:0:application/unknown:1
+i:weap/gun/gun inactive.png:weap/gun/gun inactive-c1513d41a377fc7c9496e852c846ff3d.png:619:image/png:1
+i:weap/gun/gun active.png:weap/gun/gun active-96a5011aa29b43b7c7e59a36e677f4a2.png:615:image/png:1
+d:shootingbutton:shootingbutton:0:application/unknown:1
+i:shootingbutton/shoot-button-up.png:shootingbutton/shoot-button-up-712942ed784c4e3363037a483ceffa3f.png:9303:image/png:1
+i:shootingbutton/shoot-button-down.png:shootingbutton/shoot-button-down-89b9fad903d77ad1c75a06a55f397888.png:13295:image/png:1
+i:pixil-gif-drawing.gif:pixil-gif-drawing-a60b9b9bfc0ac9302176c4595edc0cf3.gif:6957:image/gif:1
+d:map:map:0:application/unknown:1
+d:map/dungeon1:map/dungeon1:0:application/unknown:1
+b:map/dungeon1/t1.tsx:map/dungeon1/t1-67bbf49445dce78b74441633f5028ad4.tsx:231:application/unknown:1
+b:map/dungeon1/t3.tsx:map/dungeon1/t3-4bf865eb6dbba2e5a7037c84af515772.tsx:320:application/unknown:1
+b:map/dungeon1/t2.tsx:map/dungeon1/t2-593282d595f2cd8448b0c6e52f249fab.tsx:300:application/unknown:1
+b:map/dungeon1/pixil-frame-0.tsx:map/dungeon1/pixil-frame-0-f5ee7fd0d6174ad0393c2729009fd2fd.tsx:244:application/unknown:1
+i:map/dungeon1/pixil-frame-0.png:map/dungeon1/pixil-frame-0-25c7fce868e20dd5be054a716ea23354.png:8241:image/png:1
+b:map/dungeon1/test-map.tmx:map/dungeon1/test-map-74b5b8ec9ed0f8d566f7964e1a66d3a3.tmx:111001:application/unknown:1
+b:map/dungeon1/dungeon1.tiled-session:map/dungeon1/dungeon1-8a5a0ca433432cb193d8954e8cae3f19.tiled-session:3183:application/unknown:1
+i:map/dungeon1/Dungeon_Tileset.png:map/dungeon1/Dungeon_Tileset-de8da6d06c44e17a8360dd2a18e0e847.png:6326:image/png:1
+b:map/dungeon1/dungeon1.tiled-project:map/dungeon1/dungeon1-f3345de7d9f33cbee85b1453acfc54e3.tiled-project:196:application/unknown:1
+b:map/dungeon1/0x72_DungeonTilesetII_v1.6.tsx:map/dungeon1/0x72_DungeonTilesetII_v1.6-721fe9ab706259222c681a855ac3542c.tsx:278:application/unknown:1
+d:map/tileset:map/tileset:0:application/unknown:1
+i:map/tileset/dungeontileset-extended.png:map/tileset/dungeontileset-extended-c0ceaa236438a9beda9986735ab1d535.png:62726:image/png:1
+i:map/tileset/0x72_16x16DungeonTileset.v5.png:map/tileset/0x72_16x16DungeonTileset.v5-3e6271d653c7d0de9a3e972b1d46ae1e.png:26827:image/png:1
+i:map/tileset/Dungeon_Tileset.png:map/tileset/Dungeon_Tileset-de8da6d06c44e17a8360dd2a18e0e847.png:6326:image/png:1
+i:map/tileset/0x72_DungeonTilesetII_v1.6.png:map/tileset/0x72_DungeonTilesetII_v1.6-f546882c6dd017f5d53f10a61c880272.png:39623:image/png:1
+b:test.pixil:test-5dba1dd01fcbc116653d87077f68b0ca.pixil:33586:application/unknown:1
+d:bullet:bullet:0:application/unknown:1
+i:bullet/bullet 5.png:bullet/bullet 5-a9db0d5ea8bb843c2e0eefe5c906f515.png:606:image/png:1
+i:bullet/bullet 3.png:bullet/bullet 3-c68c225acc992d6494ed7819796d05a7.png:598:image/png:1
+i:badlogic.jpg:badlogic-ba3e909e98a4c58c6a15f043f2e1a8a7.jpg:68465:image/jpeg:1
+d:joystick:joystick:0:application/unknown:1
+i:joystick/joystickknob.png:joystick/joystickknob-c121140c9f6d44a06dc21e27ab87470b.png:2179:image/png:1
+i:joystick/joystickbackground.png:joystick/joystickbackground-dbda56b2350e607f9f7844ddc084235d.png:3963:image/png:1
+d:hud:hud:0:application/unknown:1
+i:hud/Arm_Bar.png:hud/Arm_Bar-b7513f7c42ee038fd202b28068045ec3.png:3218:image/png:1
+d:hud/HP Bar:hud/HP Bar:0:application/unknown:1
+i:hud/HP Bar/HP_Bar.png:hud/HP Bar/HP_Bar-004348f2fbe4c31f0a35a17771d97dbb.png:4971:image/png:1
+i:hud/HP Bar/hpBar-60.png:hud/HP Bar/hpBar-60-f26be8449befa9bad7caa0d89842536c.png:364:image/png:1
+t:hud/HP Bar/HP_Bar.atlas:hud/HP Bar/HP_Bar-34d5db453ee2cf9e57c19eab7706a733.atlas:663:application/unknown:1
+i:hud/HP Bar/hpBar-100.png:hud/HP Bar/hpBar-100-6233b3157191756153d10d32bb88923a.png:363:image/png:1
+i:hud/HP Bar/hpBar-empty.png:hud/HP Bar/hpBar-empty-22cbf13fa0461f384054ac138e56e101.png:353:image/png:1
+i:hud/HP Bar/hpBar-20.png:hud/HP Bar/hpBar-20-9f8cbad8d5ae4dbba2d72442feb0582f.png:361:image/png:1
+i:hud/HP Bar/hpBar-40.png:hud/HP Bar/hpBar-40-f8ebe63d5ffb1aa991cd24e6fd2cc644.png:365:image/png:1
+i:hud/HP Bar/hpBar-80.png:hud/HP Bar/hpBar-80-f0194cb176453bd752b62f0f97719424.png:366:image/png:1
+t:hud/Arm_Bar.atlas:hud/Arm_Bar-bd381e4230ad25da73347c0a353f64cd.atlas:477:application/unknown:1
+d:hud/Armor Bar:hud/Armor Bar:0:application/unknown:1
+i:hud/Armor Bar/armBar-67.png:hud/Armor Bar/armBar-67-db18b9714aca587eb78057b25f5d7fed.png:341:image/png:1
+i:hud/Armor Bar/Arm_Bar.png:hud/Armor Bar/Arm_Bar-b7513f7c42ee038fd202b28068045ec3.png:3218:image/png:1
+t:hud/Armor Bar/Arm_Bar.atlas:hud/Armor Bar/Arm_Bar-8ed83b201371802d4aa87ddff90c38a8.atlas:473:application/unknown:1
+i:hud/Armor Bar/armBar-100.png:hud/Armor Bar/armBar-100-05fb4925169fc5f37789578828d13343.png:335:image/png:1
+i:hud/Armor Bar/armBar-empty.png:hud/Armor Bar/armBar-empty-6d12333a9d800772a62653bed9494ad4.png:329:image/png:1
+i:hud/Armor Bar/armBar-33.png:hud/Armor Bar/armBar-33-82119e91b0d551498ccdba3676c3801b.png:343:image/png:1
+t:com/badlogic/gdx/graphics/g3d/particles/particles.fragment.glsl:particles.fragment-b90524761fdf09b0a836056d590c30b8.glsl:820:application/unknown:1
+t:com/badlogic/gdx/graphics/g3d/particles/particles.vertex.glsl:particles.vertex-f25b8b2fae10b9bfa09bfdd484923148.glsl:2886:application/unknown:1
+t:com/badlogic/gdx/graphics/g3d/shaders/default.fragment.glsl:default.fragment-e1c018bd48044c8b67c7bbc53145e540.glsl:5874:application/unknown:1
+t:com/badlogic/gdx/graphics/g3d/shaders/default.vertex.glsl:default.vertex-28b7e77ea3f282ebd5b066ba256692c3.glsl:9096:application/unknown:1
+t:com/badlogic/gdx/graphics/g3d/shaders/depth.fragment.glsl:depth.fragment-8341d5ce47fc398da575c9e294b6821b.glsl:869:application/unknown:1
+t:com/badlogic/gdx/graphics/g3d/shaders/depth.vertex.glsl:depth.vertex-98a450f1f747c05eedb7122779187316.glsl:2931:application/unknown:1
+t:com/badlogic/gdx/utils/lsans-15.fnt:lsans-15-5143ae9583bc43b1084f98062e054ae8.fnt:17711:application/unknown:1
+i:com/badlogic/gdx/utils/lsans-15.png:lsans-15-afe63790f9c73ea9a111fd9843835d21.png:14652:image/png:1
+t:com/kotcrab/vis/ui/skin/x1/uiskin.json:uiskin-e9e477dc1d51a8db4031928f077ec62e.json:15340:application/unknown:1
+t:com/kotcrab/vis/ui/skin/x1/uiskin.atlas:uiskin-905327fa3af07d964de6ee568b57bbe1.atlas:11319:application/unknown:1
+i:com/kotcrab/vis/ui/skin/x1/uiskin.png:uiskin-d8c4e90f20c6667ed2a92d7ca4639abd.png:49621:image/png:1
+t:com/kotcrab/vis/ui/skin/x1/default.fnt:default-2d8881cb595df3a9f992e88bd2a2f488.fnt:58815:application/unknown:1
+t:com/kotcrab/vis/ui/skin/x1/font-small.fnt:font-small-883d9a52ae3f6774c8fa2ccf73277ccd.fnt:52302:application/unknown:1
+t:com/kotcrab/vis/ui/skin/x2/uiskin.json:uiskin-e9e477dc1d51a8db4031928f077ec62e.json:15340:application/unknown:1
+t:com/kotcrab/vis/ui/skin/x2/uiskin.atlas:uiskin-483a82dc6da99896818879e7fe170abf.atlas:11378:application/unknown:1
+i:com/kotcrab/vis/ui/skin/x2/uiskin.png:uiskin-26bae89847964476a6bcd95c8d4be92a.png:109954:image/png:1
+t:com/kotcrab/vis/ui/skin/x2/default.fnt:default-b9cabee3ebace16ddfe0d23abf7b206a.fnt:88655:application/unknown:1
+t:com/kotcrab/vis/ui/skin/x2/font-small.fnt:font-small-133efe0327401743b80e30795a93cd3e.fnt:63810:application/unknown:1
+b:com/kotcrab/vis/ui/widget/color/internal/default.vert:default-670ae046fc453ffd667649cb07a3ece1.vert:271:application/unknown:1
+b:com/kotcrab/vis/ui/widget/color/internal/hsv.frag:hsv-674bb593af94527eaf8381eab1bf21d0.frag:723:application/unknown:1
+b:com/kotcrab/vis/ui/widget/color/internal/rgb.frag:rgb-5e854a38cb22659e3b1a1bd3ca3c4e52.frag:579:application/unknown:1
+b:com/kotcrab/vis/ui/widget/color/internal/palette.frag:palette-d9c8f4ea25607af9f9dd5b14cdb25d75.frag:420:application/unknown:1
+b:com/kotcrab/vis/ui/widget/color/internal/verticalBar.frag:verticalBar-0a5eb93a37b8c2b055130a2e57fe0791.frag:386:application/unknown:1
+b:com/kotcrab/vis/ui/widget/color/internal/checkerboard.frag:checkerboard-9ca47c461b75f9f1ce146dc592b35804.frag:536:application/unknown:1
+b:com/kotcrab/vis/ui/i18n/ButtonBar.properties:ButtonBar-847dc7404975d48ca50f289017bbd691.properties:744:application/unknown:1
+b:com/kotcrab/vis/ui/i18n/ColorPicker.properties:ColorPicker-092679565218b94aad3fb714c623c3b6.properties:674:application/unknown:1
+b:com/kotcrab/vis/ui/i18n/Common.properties:Common-35cad1892caf20ca7af060f4663ec9ba.properties:657:application/unknown:1
+b:com/kotcrab/vis/ui/i18n/Dialogs.properties:Dialogs-5c8f3c2b5cd0d8f581e309c690e0afe6.properties:681:application/unknown:1
+b:com/kotcrab/vis/ui/i18n/FileChooser.properties:FileChooser-bd20667c0e15574cd7447051f53c9564.properties:2713:application/unknown:1
+b:com/kotcrab/vis/ui/i18n/TabbedPane.properties:TabbedPane-ec1d8951361132a9126f3803603c47f5.properties:677:application/unknown:1

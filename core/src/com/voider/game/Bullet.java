@@ -3,21 +3,27 @@ package com.voider.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Bullet {
 
     private Vector2 position;
     private Vector2 velocity;
+
+    public int damage;
     private boolean isLeft;
     private TextureRegion bulletTexture;
     private float angle;
     private float bulletSpeed = 300; // Declare bullet speed
 
-    public Bullet(float x, float y, float velocityX, float velocityY, boolean left, float angle) {
+    //added damage to constructor
+
+    public Bullet(float x, float y, float velocityX, float velocityY, boolean left, float angle, int damage) {
         this.isLeft = left;
         position = new Vector2(x, y);
         this.angle = angle;
+        this.damage = damage;
         float angleInRadians = (float) Math.toRadians(angle);
         velocity = new Vector2((float) Math.cos(angleInRadians), (float) Math.sin(angleInRadians)).nor().scl(bulletSpeed);
         bulletTexture = new TextureRegion(new Texture("bullet/bullet 5.png"));
@@ -77,4 +83,22 @@ public class Bullet {
     public TextureRegion getBulletTexture() {
         return bulletTexture;
     }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public float getWidth() {
+        return bulletTexture.getRegionWidth();
+    }
+
+    public float getHeight() {
+        return bulletTexture.getRegionHeight();
+    }
+
+    public Rectangle getBoundingRectangle() {
+        return new Rectangle(position.x, position.y, getWidth(), getHeight());
+    }
+
+
 }

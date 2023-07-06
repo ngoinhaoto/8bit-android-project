@@ -17,8 +17,8 @@ import java.util.Vector;
 
 public class Character extends Sprite {
     //Stat
-    private final int maxHP = 5;
-    private final int maxARM = 3;
+    private final int maxHP = 6;
+    private final int maxARM = 4;
     private int currentHP;
     private int currentARM;
     private static final float FRAME_TIME = 0.18f;
@@ -151,14 +151,22 @@ public class Character extends Sprite {
             Bullet bullet = bullets.get(i);
             bullet.update(delta);
 
-            if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y-4)) {
+            if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y - 4)) {
                 // Handle bullet collision with boundaries or other objects
                 bullets.removeIndex(i);
             } else if (isBulletOffScreen(bullet)) {
                 bullets.removeIndex(i);
+            } else {
+                // Check for collision with mobs
+                for (Mob mob : mobsInRange) {
+                    if (bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
+                        mob.takeDamage(bullet.getDamage());
+                        bullets.removeIndex(i);
+                        break; // Exit the inner loop since the bullet can only hit one mob
+                    }
+                }
             }
         }
-
 
         // Update the mobs in range
         float attackingRadius = 170;
@@ -202,10 +210,12 @@ public class Character extends Sprite {
         Bullet bullet;
 
         // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
+
+        // t set damage thành 2
         if (!isLeft) {
-            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle());
+            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle(), 2);
         } else {
-            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle());
+            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle(), 2);
         }
 
         bullets.add(bullet);
