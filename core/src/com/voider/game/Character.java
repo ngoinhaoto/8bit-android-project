@@ -22,7 +22,7 @@ public class Character extends Sprite {
     private int currentHP;
     private int currentARM;
     private static final float FRAME_TIME = 0.18f;
-    private enum State { IDLING, WALKING_RIGHT, WALKING_LEFT }
+    enum State { IDLING, WALKING, DEAD }
     public State currentState;
 
     public State previousState;
@@ -84,7 +84,7 @@ public class Character extends Sprite {
         angle = MathUtils.radiansToDegrees * angle;
 
         // Set the angle for the gun
-        gun.setAngle(angle);
+        this.gun.setAngle(angle);
     }
 
 
@@ -165,7 +165,7 @@ public class Character extends Sprite {
                     mob.takeDamage(bullet.getDamage());
                     bullets.removeIndex(i);
                     bulletHit = true;
-                    Gdx.app.log("HP", "current mob HP: " + mob.getHP());
+                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
 
                     break; // Exit the inner loop since the bullet can only hit one mob
                 }
@@ -177,7 +177,7 @@ public class Character extends Sprite {
                     if (bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                         mob.takeDamage(bullet.getDamage());
                         bullets.removeIndex(i);
-                        Gdx.app.log("HP", "current mob HP: " + mob.getHP());
+                        Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
                         break; // Exit the loop since the bullet can only hit one mob
                     }
                 }
@@ -275,10 +275,7 @@ public class Character extends Sprite {
             case IDLING:
                 region = charIdle.getKeyFrame(stateTime, true);
                 break;
-            case WALKING_LEFT:
-                region = charWalk.getKeyFrame(stateTime, true);
-                break;
-            case WALKING_RIGHT:
+            case WALKING:
                 region = charWalk.getKeyFrame(stateTime, true);
                 break;
             default:
@@ -303,13 +300,13 @@ public class Character extends Sprite {
             case "LEFT":
                 // Code to set the character to move left state
                 this.previousState = currentState;
-                currentState = State.WALKING_LEFT;
+                currentState = State.WALKING;
                 this.isLeft = true;
                 break;
             case "RIGHT":
                 // Code to set the character to move right state
                 this.previousState = currentState;
-                currentState = State.WALKING_RIGHT;
+                currentState = State.WALKING;
                 this.isLeft = false;
                 break;
             default:

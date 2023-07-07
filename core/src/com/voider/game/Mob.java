@@ -11,14 +11,16 @@
     import com.badlogic.gdx.math.Vector2;
     import com.badlogic.gdx.scenes.scene2d.Actor;
 
+    import org.w3c.dom.Text;
+
 
     public class Mob extends Actor {
-        private enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING };
+        private enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING, DEAD };
         private TileMap tileMap;
         private String mobType;
 
-        private int HP;
-        private int maxHealth;
+        private int currentHP;
+        private int maxHP;
         private float radius; // if player enters their radius, they will follow player
         private Character player;
         private float movementSpeed;
@@ -34,14 +36,15 @@
         private Animation<TextureRegion> mIdle;
         private Animation<TextureRegion> mWalk;
         private Animation<TextureRegion> mAttack;
+        private Animation<TextureRegion> mDie;
         private static final float FRAME_TIME = 0.15f;
         private float stateTime;
 
         public Mob(TileMap tileMap, float x, float y, String mobType, float radius, Character player) {
             this.tileMap = tileMap;
 
-            this.maxHealth = calculateMaxHealth(mobType); // cái này thì mỗi mob có maxhealth riêng nghe, hp chỉ là máu tạm thời
-            this.HP = maxHealth;
+            this.maxHP = calculateMaxHealth(mobType); // cái này thì mỗi mob có maxhealth riêng nghe, hp chỉ là máu tạm thời
+            this.setCurrentHP(maxHP);
             this.mobType = mobType;
             this.radius = radius;
             this.player = player;
@@ -55,10 +58,12 @@
             mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
             mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
 //            mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
+            mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
 
             mIdle.setFrameDuration(FRAME_TIME);
             mWalk.setFrameDuration(FRAME_TIME);
 //            mAttack.setFrameDuration(FRAME_TIME);
+            mDie.setFrameDuration(FRAME_TIME);
         }
 
         @Override
@@ -69,12 +74,14 @@
         }
 
         public void takeDamage(int damage) {
-            HP -= damage;
+            this.setCurrentHP(this.getCurrentHP()-damage);
 
             // Check if the mob is still alive
-            if (HP <= 0) {
+            if (this.getCurrentHP() <= 0) {
                 // Mob is dead, remove it from the stage
-                remove();
+//                remove();
+                this.currentState = State.DEAD;
+                this.setCurrentHP(0);
             }
         }
 
@@ -95,45 +102,47 @@
 
         public void update(float delta) {
             stateTime += delta;
-            // Check if the mob is colliding
-            boolean isColliding = isColliding(getX(), getY());
+            // Check if the mob is
+            // If Mod dead, no movement
+            if (this.currentState != State.DEAD) {
+                boolean isColliding = isColliding(getX(), getY());
 
-            // Check the distance between the mob and the player
-            float distanceToPlayerX = player.getPosition().x - getX();
-            float distanceToPlayerY = player.getPosition().y - getY();
-            float totalDistanceToPlayer = (float) Math.sqrt(distanceToPlayerX * distanceToPlayerX + distanceToPlayerY * distanceToPlayerY);
+                // Check the distance between the mob and the player
+                float distanceToPlayerX = player.getPosition().x - getX();
+                float distanceToPlayerY = player.getPosition().y - getY();
+                float totalDistanceToPlayer = (float) Math.sqrt(distanceToPlayerX * distanceToPlayerX + distanceToPlayerY * distanceToPlayerY);
 
-            // Check if the player is within the mob's radius and not colliding
-            if (totalDistanceToPlayer <= radius && !isColliding) {
-                // Move towards the player
-                float directionX = distanceToPlayerX / totalDistanceToPlayer;
-                float directionY = distanceToPlayerY / totalDistanceToPlayer;
+                // Check if the player is within the mob's radius and not colliding
+                if (totalDistanceToPlayer <= radius && !isColliding) {
+                    // Move towards the player
+                    float directionX = distanceToPlayerX / totalDistanceToPlayer;
+                    float directionY = distanceToPlayerY / totalDistanceToPlayer;
 
-                float distanceMovedX = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerX));
-                float distanceMovedY = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerY));
+                    float distanceMovedX = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerX));
+                    float distanceMovedY = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerY));
 
-                // Check if moving towards the player would result in a collision
-                if (!isColliding(getX() + distanceMovedX * directionX, getY() + distanceMovedY * directionY)) {
-                    setX(getX() + distanceMovedX * directionX);
-                    setY(getY() + distanceMovedY * directionY);
+                    // Check if moving towards the player would result in a collision
+                    if (!isColliding(getX() + distanceMovedX * directionX, getY() + distanceMovedY * directionY)) {
+                        setX(getX() + distanceMovedX * directionX);
+                        setY(getY() + distanceMovedY * directionY);
+                    } else {
+                        // Mob is about to hit a wall, stop moving towards the player
+                        // You can add any necessary behavior here, such as changing direction or stopping completely
+                    }
                 } else {
-                    // Mob is about to hit a wall, stop moving towards the player
-                    // You can add any necessary behavior here, such as changing direction or stopping completely
+                    // Perform random left and right movement
+                    randomMovement(delta);
                 }
-            } else {
-                // Perform random left and right movement
-                randomMovement(delta);
             }
         }
 
 
         public void randomMovement(float delta) {
             State previousState = currentState; // Store the previous state before updating
-            // Check if the mob is currently moving right
-            if (movingRight) {
-                // Move right
-                float distanceMoved = Math.min(movementSpeed * delta, distanceToMove);
 
+            // Check if the mob is currently moving right
+            float distanceMoved = Math.min(movementSpeed * delta, distanceToMove);
+            if (movingRight) {
                 // Check if moving right would result in a collision
                 if (!isColliding(getX() + distanceMoved, getY())) {
                     setX(getX() + distanceMoved);
@@ -150,9 +159,6 @@
                     distanceToMove = MathUtils.random(50, 200);
                 }
             } else {
-                // Move left
-                float distanceMoved = Math.min(movementSpeed * delta, distanceToMove);
-
                 // Check if moving left would result in a collision
                 if (!isColliding(getX() - distanceMoved, getY())) {
                     setX(getX() - distanceMoved);
@@ -212,6 +218,15 @@
             return topLeft || topRight || bottomLeft || bottomRight;
         }
 
+        public void setState(String stt) {
+            switch (stt) {
+                case "DIE":
+                    this.currentState = State.DEAD;
+                default:
+                    this.currentState = State.IDLING;
+            }
+        }
+
         public TextureRegion getFrame(float deltaTime) {
             currentState = getState();
             TextureRegion region;
@@ -230,6 +245,9 @@
                 case ATTACKING:
                     region = mAttack.getKeyFrame(stateTime, true);
                     break;
+                case DEAD:
+                    region = mDie.getKeyFrame(stateTime, true);
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + currentState);
             }
@@ -243,8 +261,10 @@
         public Vector2 getPosition() {
             return new Vector2(getX(), getY());
         }
-
-        public int getHP () {return HP;}
+        public void setCurrentHP(int currentHP) {
+            this.currentHP = currentHP;
+        }
+        public int getCurrentHP() {return currentHP;}
 
         public Rectangle getBoundingRectangle() {
             float x = getX();

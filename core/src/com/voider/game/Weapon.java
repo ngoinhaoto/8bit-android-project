@@ -48,10 +48,14 @@ public class Weapon {
         this.angle = angle;
         if (angle < -90 || angle > 90) {
             this.isLeft = true;
-            this.character.setState("LEFT");
+            if(this.character.currentState != Character.State.IDLING) {
+                this.character.setState("LEFT");
+            }
         } else {
             this.isLeft = false;
-            this.character.setState("RIGHT");
+            if(this.character.currentState != Character.State.IDLING) {
+                this.character.setState("RIGHT");
+            }
         }
     }
     public float getAngle() {
