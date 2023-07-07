@@ -211,13 +211,6 @@ public class FirstLevelScreen implements Screen {
         mapRenderer.setView(gameCam);
         mapRenderer.render();
 
-
-// Render the character
-        batch.setProjectionMatrix(gameCam.combined);
-        batch.begin();
-        character.render(batch);
-        batch.end();
-
 // Update and render the controls
         stage.act(delta);
         stage.draw();
@@ -229,6 +222,13 @@ public class FirstLevelScreen implements Screen {
             mob.render(batch);
         }
         batch.end();
+
+        // Render the character
+        batch.setProjectionMatrix(gameCam.combined);
+        batch.begin();
+        character.render(batch);
+        batch.end();
+        
 // Update and render the bullets
         batch.begin();
         for (Bullet bullet : character.getBullets()) {

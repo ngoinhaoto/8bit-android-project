@@ -70,6 +70,12 @@ public class Character extends Sprite {
         // Find the nearest mob
         Mob nearestMob = findNearestMob();
 
+        // Check if a living mob is found
+        if (nearestMob == null) {
+            // If no living mob is found, reset the gun's aim
+            return;
+        }
+
         // Get the position of the character and the nearest mob
         Vector2 characterPosition = getPosition();
         Vector2 mobPosition = nearestMob.getPosition();
@@ -95,12 +101,14 @@ public class Character extends Sprite {
         Vector2 characterPosition = new Vector2(getX(), getY());
 
         for (Mob mob : mobsInRange) {
-            Vector2 mobPosition = new Vector2(mob.getX(), mob.getY());
-            float distance = characterPosition.dst(mobPosition);
+            if (mob.getState() != Mob.State.DEAD) {
+                Vector2 mobPosition = new Vector2(mob.getX(), mob.getY());
+                float distance = characterPosition.dst(mobPosition);
 
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearestMob = mob;
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestMob = mob;
+                }
             }
         }
 
@@ -336,6 +344,7 @@ public class Character extends Sprite {
             bullet.render(spriteBatch);
         }
     }
+
     public void setGun(Weapon gun) {
         this.gun = gun;
     }
