@@ -222,13 +222,6 @@ public class FirstLevelScreen implements Screen {
         stage.act(delta);
         stage.draw();
 
-// Update and render the bullets
-        batch.begin();
-        for (Bullet bullet : character.getBullets()) {
-            bullet.render(batch); // Render bullet
-        }
-        batch.end();
-
 // Render the mobs
         batch.begin();
         for (Mob mob : mobs) {
@@ -236,15 +229,16 @@ public class FirstLevelScreen implements Screen {
             mob.render(batch);
         }
         batch.end();
-
-//        removeDeadMobs();
-
+// Update and render the bullets
+        batch.begin();
+        for (Bullet bullet : character.getBullets()) {
+            bullet.render(batch); // Render bullet
+        }
+        batch.end();
 
         // Update and render the controls
         stage.act(delta);
         stage.draw();
-
-
     }
 
 //    private void removeDeadMobs() {

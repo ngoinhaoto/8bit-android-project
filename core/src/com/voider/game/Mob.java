@@ -16,7 +16,7 @@
 
 
     public class Mob extends Actor {
-        private enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING, DEAD };
+        enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING, DEAD };
         private TileMap tileMap;
         private String mobType;
 
@@ -77,16 +77,17 @@
         }
 
         public void takeDamage(int damage) {
+            if (currentState == State.DEAD) {
+                return; // If mob is already dead, ignore further damage
+            }
             this.setCurrentHP(this.getCurrentHP()-damage);
             // Set Mob as being attacked and start the attack timer
             isBeingAttacked = true;
             attackTimer = ATTACK_DURATION;
-            // Check if the mob is still alive
+            // Check State of Mob when HP is 0
             if (this.getCurrentHP() <= 0) {
                 // Mob is dead, remove it from the stage
-//                remove();
                 this.currentState = State.DEAD;
-                this.setCurrentHP(0);
             }
         }
 
@@ -263,7 +264,7 @@
             return region;
         }
 
-        private State getState() {
+        public State getState() {
             return this.currentState;
         }
 

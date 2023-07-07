@@ -161,7 +161,7 @@ public class Character extends Sprite {
             // Check for collision with mobs within attacking radius
             boolean bulletHit = false;
             for (Mob mob : mobsInRange) {
-                if (bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
+                if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                     mob.takeDamage(bullet.getDamage());
                     bullets.removeIndex(i);
                     bulletHit = true;
@@ -171,10 +171,10 @@ public class Character extends Sprite {
                 }
             }
 
-            // If the bullet didn't hit any mob within attacking radius, check for collision with all mobs
+            // If the bullet didn't hit any living mob within attacking radius, check for collision with all mobs
             if (!bulletHit) {
                 for (Mob mob : allMobs) {
-                    if (bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
+                    if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                         mob.takeDamage(bullet.getDamage());
                         bullets.removeIndex(i);
                         Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
@@ -188,6 +188,7 @@ public class Character extends Sprite {
                 bullets.removeIndex(i);
             }
         }
+
 
         // Increment the stateTime for animation
         stateTime += delta;
