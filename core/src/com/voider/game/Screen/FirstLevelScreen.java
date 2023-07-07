@@ -237,6 +237,8 @@ public class FirstLevelScreen implements Screen {
         }
         batch.end();
 
+        removeDeadMobs();
+
 
         // Update and render the controls
         stage.act(delta);
@@ -245,6 +247,14 @@ public class FirstLevelScreen implements Screen {
 
     }
 
+    private void removeDeadMobs() {
+        for (int i = mobs.size - 1; i >= 0; i--) {
+            Mob mob = mobs.get(i);
+            if (mob.getHP() <= 0) {
+                mobs.removeIndex(i);
+            }
+        }
+    }
 
     @Override
     public void resize(int width, int height) {

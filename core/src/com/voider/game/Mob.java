@@ -73,9 +73,11 @@
 
             // Check if the mob is still alive
             if (HP <= 0) {
-                // Mob is dead, perform necessary actions (e.g., remove from the game)
+                // Mob is dead, remove it from the stage
+                remove();
             }
         }
+
 
         private int calculateMaxHealth(String mobType) {
             int maxHealth = 0;
@@ -242,13 +244,15 @@
             return new Vector2(getX(), getY());
         }
 
+        public int getHP () {return HP;}
+
         public Rectangle getBoundingRectangle() {
             float x = getX();
             float y = getY();
             float width = getWidth();
             float height = getHeight();
 
-            return new Rectangle(x, y, width, height);
+            return new Rectangle(x + 4, y, width + 23, height + 23);
         }
 
 

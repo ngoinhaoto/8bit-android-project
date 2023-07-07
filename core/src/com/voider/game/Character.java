@@ -44,7 +44,7 @@ public class Character extends Sprite {
         setARM(getMaxARM());
         textureAtlas = new TextureAtlas(Gdx.files.internal("char/char.atlas"));
         this.position = new Vector2();
-        this.speed = 100f;
+        this.speed = 110f;
 
         currentState = State.IDLING;
         previousState = State.IDLING;
@@ -63,7 +63,7 @@ public class Character extends Sprite {
 
     public void updateGunAim() {
         if (mobsInRange.isEmpty()) {
-            // If there are no mobs in range, no need to update the aim
+            // If there are no mobs in range, reset the gun's aim
             return;
         }
 
@@ -126,6 +126,8 @@ public class Character extends Sprite {
 
 
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
+
+
         // Update the character's position based on input or game logic
         float deltaX = joystickX * speed * delta;
         float deltaY = joystickY * speed * delta;
@@ -141,41 +143,54 @@ public class Character extends Sprite {
             position.y = desiredY; // Vertical movement
         }
 
-        // Increment the stateTime for animation
-        stateTime += delta;
+
+        // Update the mobs in range
+        float attackingRadius = 170;
+        updateMobsInRange(attackingRadius, allMobs);
+        // Update the gun aim
+        updateGunAim();
         // Update the gun
         this.gun.update(delta);
 
-        // Update the bullets' positions and check for collision with boundaries
+
+        // Update the bullets' positions and check for collision with mobs
         for (int i = bullets.size - 1; i >= 0; i--) {
             Bullet bullet = bullets.get(i);
             bullet.update(delta);
 
-            if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y - 4)) {
-                // Handle bullet collision with boundaries or other objects
-                bullets.removeIndex(i);
-            } else if (isBulletOffScreen(bullet)) {
-                bullets.removeIndex(i);
-            } else {
-                // Check for collision with mobs
-                for (Mob mob : mobsInRange) {
+            // Check for collision with mobs within attacking radius
+            boolean bulletHit = false;
+            for (Mob mob : mobsInRange) {
+                if (bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
+                    mob.takeDamage(bullet.getDamage());
+                    bullets.removeIndex(i);
+                    bulletHit = true;
+                    Gdx.app.log("HP", "current mob HP: " + mob.getHP());
+
+                    break; // Exit the inner loop since the bullet can only hit one mob
+                }
+            }
+
+            // If the bullet didn't hit any mob within attacking radius, check for collision with all mobs
+            if (!bulletHit) {
+                for (Mob mob : allMobs) {
                     if (bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                         mob.takeDamage(bullet.getDamage());
                         bullets.removeIndex(i);
-                        break; // Exit the inner loop since the bullet can only hit one mob
+                        Gdx.app.log("HP", "current mob HP: " + mob.getHP());
+                        break; // Exit the loop since the bullet can only hit one mob
                     }
                 }
             }
+
+            // Check for collision with boundaries or off-screen
+            if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y - 4) || isBulletOffScreen(bullet)) {
+                bullets.removeIndex(i);
+            }
         }
 
-        // Update the mobs in range
-        float attackingRadius = 170;
-
-
-        updateMobsInRange(attackingRadius, allMobs);
-
-
-        updateGunAim(); // Update the gun aim based on the updated mobsInRange list
+        // Increment the stateTime for animation
+        stateTime += delta;
     }
 
 
@@ -196,7 +211,7 @@ public class Character extends Sprite {
         this.gun.setState();
 
         // Create a new bullet,
-        float bulletSpeed = 500;
+        float bulletSpeed = 400;
 
         float velocityX = 0;
         float velocityY = 0;
@@ -213,9 +228,9 @@ public class Character extends Sprite {
 
         // t set damage thành 2
         if (!isLeft) {
-            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle(), 2);
+            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle(), 3);
         } else {
-            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle(), 2);
+            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle(), 3);
         }
 
         bullets.add(bullet);

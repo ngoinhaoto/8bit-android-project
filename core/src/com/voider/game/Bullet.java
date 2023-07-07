@@ -15,7 +15,7 @@ public class Bullet {
     private boolean isLeft;
     private TextureRegion bulletTexture;
     private float angle;
-    private float bulletSpeed = 300; // Declare bullet speed
+    private float bulletSpeed = 400; // Declare bullet speed
 
     //added damage to constructor
 
@@ -97,7 +97,7 @@ public class Bullet {
     }
 
     public Rectangle getBoundingRectangle() {
-        return new Rectangle(position.x, position.y, getWidth(), getHeight());
+        return new Rectangle(position.x, position.y, getWidth() , getHeight());
     }
 
 
