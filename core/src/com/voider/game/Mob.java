@@ -1,6 +1,7 @@
     package com.voider.game;
 
     import com.badlogic.gdx.Gdx;
+    import com.badlogic.gdx.graphics.Color;
     import com.badlogic.gdx.graphics.g2d.Animation;
     import com.badlogic.gdx.graphics.g2d.Batch;
     import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -39,7 +40,9 @@
         private Animation<TextureRegion> mDie;
         private static final float FRAME_TIME = 0.15f;
         private float stateTime;
-
+        private boolean isBeingAttacked;
+        private float attackTimer;
+        private static final float ATTACK_DURATION = 0.2f;
         public Mob(TileMap tileMap, float x, float y, String mobType, float radius, Character player) {
             this.tileMap = tileMap;
 
@@ -75,7 +78,9 @@
 
         public void takeDamage(int damage) {
             this.setCurrentHP(this.getCurrentHP()-damage);
-
+            // Set Mob as being attacked and start the attack timer
+            isBeingAttacked = true;
+            attackTimer = ATTACK_DURATION;
             // Check if the mob is still alive
             if (this.getCurrentHP() <= 0) {
                 // Mob is dead, remove it from the stage
@@ -84,7 +89,6 @@
                 this.setCurrentHP(0);
             }
         }
-
 
         private int calculateMaxHealth(String mobType) {
             int maxHealth = 0;
@@ -135,7 +139,6 @@
                 }
             }
         }
-
 
         public void randomMovement(float delta) {
             State previousState = currentState; // Store the previous state before updating
@@ -191,6 +194,11 @@
 
         public void render(SpriteBatch spriteBatch) {
             TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+            // Check if the Mob is being attacked and modify the color accordingly
+            if (isBeingAttacked) {
+                // Set the color to red
+                spriteBatch.setColor(Color.RED);
+            }
             // Render the character at its current position
             float textureWidth = 32; // Set the desired texture width
             float textureHeight = 32; // Set the desired texture height
@@ -199,6 +207,16 @@
                         -textureWidth, textureHeight);
             } else {
                 spriteBatch.draw(currentFrame, getX(), getY(), textureWidth, textureHeight);
+            }
+            // Reset the color back to normal
+            spriteBatch.setColor(Color.WHITE);
+
+            // Update the attack timer and check if it's expired
+            if (isBeingAttacked) {
+                attackTimer -= Gdx.graphics.getDeltaTime();
+                if (attackTimer <= 0) {
+                    isBeingAttacked = false;
+                }
             }
         }
 
@@ -216,15 +234,6 @@
 
             // Return true if any corner collides with a boundary tile
             return topLeft || topRight || bottomLeft || bottomRight;
-        }
-
-        public void setState(String stt) {
-            switch (stt) {
-                case "DIE":
-                    this.currentState = State.DEAD;
-                default:
-                    this.currentState = State.IDLING;
-            }
         }
 
         public TextureRegion getFrame(float deltaTime) {
@@ -265,7 +274,6 @@
             this.currentHP = currentHP;
         }
         public int getCurrentHP() {return currentHP;}
-
         public Rectangle getBoundingRectangle() {
             float x = getX();
             float y = getY();
@@ -274,6 +282,4 @@
 
             return new Rectangle(x + 4, y, width + 23, height + 23);
         }
-
-
     }
