@@ -1,0 +1,48 @@
+
+HP_Bar.png
+size: 1024, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+hpBar-100
+  rotate: false
+  xy: 2, 2
+  size: 452, 40
+  orig: 452, 40
+  offset: 0, 0
+  index: -1
+hpBar-20
+  rotate: false
+  xy: 2, 86
+  size: 452, 40
+  orig: 452, 40
+  offset: 0, 0
+  index: -1
+hpBar-40
+  rotate: false
+  xy: 2, 44
+  size: 452, 40
+  orig: 452, 40
+  offset: 0, 0
+  index: -1
+hpBar-60
+  rotate: false
+  xy: 456, 86
+  size: 452, 40
+  orig: 452, 40
+  offset: 0, 0
+  index: -1
+hpBar-80
+  rotate: false
+  xy: 456, 2
+  size: 452, 40
+  orig: 452, 40
+  offset: 0, 0
+  index: -1
+hpBar-0
+  rotate: false
+  xy: 456, 44
+  size: 452, 40
+  orig: 452, 40
+  offset: 0, 0
+  index: -1

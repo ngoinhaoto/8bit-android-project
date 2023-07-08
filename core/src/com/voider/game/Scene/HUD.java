@@ -25,6 +25,9 @@ public class HUD extends Actor {
         TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
         TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
 
+        Gdx.app.log("HP", loadCurrentHP());
+        Gdx.app.log("ARM", loadCurrentARM());
+
         hpBar = new Sprite(atlasHP.findRegion("hpBar-"+loadCurrentHP()));
         armorBar = new Sprite(atlasARM.findRegion("armBar-"+loadCurrentARM()));
     }
@@ -51,4 +54,6 @@ public class HUD extends Actor {
     private String loadCurrentARM() {
         return  String.valueOf((int)(Math.round((float)this.character.getCurrentARM() / this.character.getMaxARM() *100)));
     }
+
+
 }

@@ -43,7 +43,14 @@
         private boolean isBeingAttacked;
         private float attackTimer;
         private static final float ATTACK_DURATION = 0.2f;
-        public Mob(TileMap tileMap, float x, float y, String mobType, float radius, Character player) {
+
+        private boolean isMelee;
+        private int damage;
+        private float biteCooldown;
+        private static final float BITE_COOLDOWN = 1f; // Adjust the value as needed
+
+        //add one more parameter to see whether mob is a melee mob
+        public Mob(TileMap tileMap, float x, float y, String mobType, boolean isMelee,float radius, int damage,Character player) {
             this.tileMap = tileMap;
 
             this.maxHP = calculateMaxHealth(mobType); // cái này thì mỗi mob có maxhealth riêng nghe, hp chỉ là máu tạm thời
@@ -51,7 +58,18 @@
             this.mobType = mobType;
             this.radius = radius;
             this.player = player;
-            movementSpeed = 40;
+            this.isMelee = isMelee;
+            this.damage = damage;
+
+
+
+            // Set the movement speed based on the isMelee parameter
+            if (isMelee) {
+                movementSpeed = 54; // Set a higher speed for melee mobs
+                biteCooldown =0f;
+            } else {
+                movementSpeed = 24; // Set the default speed for non-melee mobs
+            }
 
             currentState = State.IDLING;
             previousState = State.IDLING;
@@ -62,6 +80,8 @@
             mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
 //            mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
             mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+
+
 
             mIdle.setFrameDuration(FRAME_TIME);
             mWalk.setFrameDuration(FRAME_TIME);
@@ -107,38 +127,84 @@
 
         public void update(float delta) {
             stateTime += delta;
-            // Check if the mob is
-            // If Mod dead, no movement
-            if (this.currentState != State.DEAD) {
-                boolean isColliding = isColliding(getX(), getY());
 
-                // Check the distance between the mob and the player
-                float distanceToPlayerX = player.getPosition().x - getX();
-                float distanceToPlayerY = player.getPosition().y - getY();
-                float totalDistanceToPlayer = (float) Math.sqrt(distanceToPlayerX * distanceToPlayerX + distanceToPlayerY * distanceToPlayerY);
+            if (currentState == State.DEAD) {
+                return; // If mob is dead, no movement or actions are needed
+            }
 
-                // Check if the player is within the mob's radius and not colliding
-                if (totalDistanceToPlayer <= radius && !isColliding) {
-                    // Move towards the player
-                    float directionX = distanceToPlayerX / totalDistanceToPlayer;
-                    float directionY = distanceToPlayerY / totalDistanceToPlayer;
+            // Check if the mob is colliding with any obstacles
+            boolean isColliding = isColliding(getX(), getY());
 
-                    float distanceMovedX = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerX));
-                    float distanceMovedY = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerY));
+            // Check the distance between the mob and the player
+            float distanceToPlayerX = player.getPosition().x - getX();
+            float distanceToPlayerY = player.getPosition().y - getY();
+            float totalDistanceToPlayer = (float) Math.sqrt(distanceToPlayerX * distanceToPlayerX + distanceToPlayerY * distanceToPlayerY);
 
-                    // Check if moving towards the player would result in a collision
-                    if (!isColliding(getX() + distanceMovedX * directionX, getY() + distanceMovedY * directionY)) {
-                        setX(getX() + distanceMovedX * directionX);
-                        setY(getY() + distanceMovedY * directionY);
-                    } else {
-                        // Mob is about to hit a wall, stop moving towards the player
-                        // You can add any necessary behavior here, such as changing direction or stopping completely
+
+            // Calculate the distance threshold
+            float distanceThreshold = player.getWidth() + getWidth() ;
+
+
+            // Check if the player is within the mob's radius and not colliding
+            if (totalDistanceToPlayer <= radius && !isColliding && totalDistanceToPlayer > distanceThreshold) {
+                // Move towards the player
+                float directionX = distanceToPlayerX / totalDistanceToPlayer;
+                float directionY = distanceToPlayerY / totalDistanceToPlayer;
+
+                float distanceMovedX = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerX));
+                float distanceMovedY = Math.min(movementSpeed * delta, Math.abs(distanceToPlayerY));
+
+                // Check if moving towards the player would result in a collision
+                if (!isColliding(getX() + distanceMovedX * directionX, getY() + distanceMovedY * directionY)
+                        && !getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
+                    setX(getX() + distanceMovedX * directionX);
+                    setY(getY() + distanceMovedY * directionY);
+
+                    // Perform the bite action when in range
+                    if (isMelee && biteCooldown <= 0.0f) {
+                        bite(player);
+                        biteCooldown = BITE_COOLDOWN; // Reset the biteCooldown to the cooldown duration
                     }
                 } else {
-                    // Perform random left and right movement
-                    randomMovement(delta);
+                    // Mob is about to hit a wall, stop moving towards the player
+                    // You can add any necessary behavior here, such as changing direction or stopping completely
+
+                }
+            } else {
+                // Perform random left and right movement
+                randomMovement(delta);
+            }
+
+            // Update the bite cooldown
+            if (biteCooldown > 0.0f) {
+                biteCooldown -= delta;
+            }
+        }
+
+
+        public void bite(Character character) {
+            if (currentState == State.DEAD) {
+                return;
+            }
+
+            float distanceToCharacterX = character.getPosition().x - getX();
+            float distanceToCharacterY = character.getPosition().y - getY();
+            float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
+
+            float biteRange = 10;
+
+            if (totalDistanceToCharacter <= biteRange) {
+                // Inflict damage to the character
+                character.takeDamage(damage);
+
+                //  add any additional behavior here, such as playing a sound effect or triggering an animation
+
+                // Check if the character is dead after the bite
+                if (character.getCurrentHP() <= 0) {
+                    // Character is dead, update the mob's state or behavior accordingly
                 }
             }
+
         }
 
         public void randomMovement(float delta) {
@@ -233,7 +299,7 @@
             boolean bottomLeft = tileMap.isBoundary(tileXStart, tileYStart);
             boolean bottomRight = tileMap.isBoundary(tileXEnd, tileYStart);
 
-            // Return true if any corner collides with a boundary tile
+            // Return true if any corner collides with a boundary tile or if there is a collision with the character
             return topLeft || topRight || bottomLeft || bottomRight;
         }
 

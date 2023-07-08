@@ -17,8 +17,8 @@ import java.util.Vector;
 
 public class Character extends Sprite {
     //Stat
-    private final int maxHP = 6;
-    private final int maxARM = 4;
+    private final int maxHP = 5;
+    private final int maxARM = 3;
     private int currentHP;
     private int currentARM;
     private static final float FRAME_TIME = 0.18f;
@@ -38,6 +38,15 @@ public class Character extends Sprite {
     private Array<Bullet> bullets;
 
     private Array<Mob> mobsInRange; // List to store mobs within attacking radius
+
+
+    private static final float ARMOR_REGENERATION_TIME = 6f; // Time in seconds for armor regeneration, 5 seconds
+    private float armorRegenTimer = ARMOR_REGENERATION_TIME;
+
+    private static final float HP_REGENERATION_TIME = 40f;
+
+    private float HPRegenTimer = HP_REGENERATION_TIME;
+
 
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
@@ -173,7 +182,7 @@ public class Character extends Sprite {
                     mob.takeDamage(bullet.getDamage());
                     bullets.removeIndex(i);
                     bulletHit = true;
-                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
+//                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
 
                     break; // Exit the inner loop since the bullet can only hit one mob
                 }
@@ -185,7 +194,7 @@ public class Character extends Sprite {
                     if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                         mob.takeDamage(bullet.getDamage());
                         bullets.removeIndex(i);
-                        Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
+//                        Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
                         break; // Exit the loop since the bullet can only hit one mob
                     }
                 }
@@ -200,8 +209,36 @@ public class Character extends Sprite {
 
         // Increment the stateTime for animation
         stateTime += delta;
+
+
+        // Regenerate armor points
+        armorRegenTimer -= delta;
+        if (armorRegenTimer <= 0) {
+            regenerateArmor();
+            armorRegenTimer = ARMOR_REGENERATION_TIME;
+        }
+
+        // Regenerate HP every 30 seconds
+
+        HPRegenTimer -= delta;
+        if (HPRegenTimer <= 0) {
+            regenerateHP();
+            HPRegenTimer = HP_REGENERATION_TIME;
+        }
+
     }
 
+    private void regenerateArmor() {
+        if (currentARM < maxARM) {
+            currentARM++;
+        }
+    }
+
+    private void regenerateHP() {
+            if (currentHP < maxHP) {
+                currentHP++;
+            }
+    }
 
     private boolean isBulletOffScreen(Bullet bullet) {
         float screenWidth = Gdx.graphics.getWidth();
@@ -344,6 +381,24 @@ public class Character extends Sprite {
             bullet.render(spriteBatch);
         }
     }
+
+    public void takeDamage(int damage) {
+        if (currentARM > 0) {
+            currentARM -= damage;
+            if (currentARM < 0) {
+                currentARM = 0;
+            }
+        } else {
+            // If there is no armor, apply the damage directly to HP
+            currentHP -= damage;
+        }
+
+        if (currentHP <= 0) {
+            currentState = State.DEAD;
+        }
+    }
+
+
 
     public void setGun(Weapon gun) {
         this.gun = gun;
