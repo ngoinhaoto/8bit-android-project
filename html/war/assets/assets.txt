@@ -4,26 +4,24 @@ d:bullet:bullet:0:application/unknown:1
 i:bullet/bullet 3.png:bullet/bullet 3-c68c225acc992d6494ed7819796d05a7.png:598:image/png:1
 i:bullet/bullet 5.png:bullet/bullet 5-a9db0d5ea8bb843c2e0eefe5c906f515.png:606:image/png:1
 d:char:char:0:application/unknown:1
-t:char/char.atlas:char/char-6bb75af8ae4b0ebd59a706ccf12b1975.atlas:571:application/unknown:1
-i:char/char.png:char/char-41348ceb5ecf6d6b83e9578e2ea9cf1f.png:1871:image/png:1
-b:char/char16x16.xcf:char/char16x16-dbe6481742237ab170cb236387cdeee4.xcf:1388:application/unknown:1
-b:char/char32x32 walk1.xcf:char/char32x32 walk1-ad62aa8427b8e4f9f8d431d37cdb4f71.xcf:2685:application/unknown:1
-b:char/char32x32 walk2.xcf:char/char32x32 walk2-d0bd4419959e16ff92e19427f84f9641.xcf:2795:application/unknown:1
-b:char/char32x32 walk3.xcf:char/char32x32 walk3-8a52337034964295deb3240187c40320.xcf:2759:application/unknown:1
-b:char/char32x32.xcf:char/char32x32-79291c0c9609b51998f7d37d27285b74.xcf:4639:application/unknown:1
-t:char/character.atlas:char/character-5d4aa897104e7bc93b8697e558252a84.atlas:675:application/unknown:1
-i:char/character.png:char/character-9d0023cc4db9ca0668fcc7f79dbec9f5.png:2037:image/png:1
+t:char/char.atlas:char/char-003d496a947499790a4905aa39294679.atlas:620:application/unknown:1
+i:char/char.png:char/char-ded4f756de178475ccaae7f643805a9c.png:2360:image/png:1
+d:char/die:char/die:0:application/unknown:1
+i:char/die/char32x32 die.png:char/die/char32x32 die-287fd9946377cb87530096db487695da.png:550:image/png:1
 d:char/idle:char/idle:0:application/unknown:1
-i:char/idle/idle 1.png:char/idle/idle 1-585fc7242ea3c1e6d079d7a1e2218db1.png:1307:image/png:1
-i:char/idle/idle 2.png:char/idle/idle 2-c214d83b295a626cd94b90c37fbd4c2a.png:1181:image/png:1
-i:char/idle/idle_spritesheet.png:char/idle/idle_spritesheet-ba534be0747dc442938eed569d0fa357.png:1631:image/png:1
+i:char/idle/char32x32 idle 1.png:char/idle/char32x32 idle 1-46f611b31fe40437f576f40ca1306d1c.png:4929:image/png:1
+i:char/idle/char32x32 idle 1ww.png:char/idle/char32x32 idle 1ww-585fc7242ea3c1e6d079d7a1e2218db1.png:1307:image/png:1
+i:char/idle/char32x32 idle 2.png:char/idle/char32x32 idle 2-b13375eaa5a26ba62443e9a3f96b2dd6.png:4825:image/png:1
+i:char/idle/char32x32 idle 2ww.png:char/idle/char32x32 idle 2ww-c214d83b295a626cd94b90c37fbd4c2a.png:1181:image/png:1
 d:char/shoot:char/shoot:0:application/unknown:1
-i:char/shoot/shoot.png:char/shoot/shoot-5f42660c1e6a9d8ddf3ff753c6a7b7b2.png:1306:image/png:1
+i:char/shoot/char32x32 shoot.png:char/shoot/char32x32 shoot-5f42660c1e6a9d8ddf3ff753c6a7b7b2.png:1306:image/png:1
 d:char/walk:char/walk:0:application/unknown:1
-i:char/walk/walk 1.png:char/walk/walk 1-12289489fc74a87fcd721775107d4e89.png:1301:image/png:1
-i:char/walk/walk 2.png:char/walk/walk 2-938dcc0145c65e0d4e18be86c5cc24d5.png:1300:image/png:1
-i:char/walk/walk 3.png:char/walk/walk 3-fafedb1791a1058d08e4e31112503d7f.png:1314:image/png:1
-i:char/walk/walk_spritesheet.png:char/walk/walk_spritesheet-4d5d9a1c38db191ba515883ab6dd99ec.png:1494:image/png:1
+i:char/walk/char32x32 walk1.png:char/walk/char32x32 walk1-1072f997eab99b7a8a56efeaab6c11bf.png:4936:image/png:1
+i:char/walk/char32x32 walk1ww.png:char/walk/char32x32 walk1ww-12289489fc74a87fcd721775107d4e89.png:1301:image/png:1
+i:char/walk/char32x32 walk2.png:char/walk/char32x32 walk2-4c9ded63f1ffd1a4f16aead3ac154ab2.png:4918:image/png:1
+i:char/walk/char32x32 walk2ww.png:char/walk/char32x32 walk2ww-fafedb1791a1058d08e4e31112503d7f.png:1314:image/png:1
+i:char/walk/char32x32 walk3.png:char/walk/char32x32 walk3-a10648435c714affc35b5a835a9a9093.png:4919:image/png:1
+i:char/walk/char32x32 walk3ww.png:char/walk/char32x32 walk3ww-938dcc0145c65e0d4e18be86c5cc24d5.png:1300:image/png:1
 d:hud:hud:0:application/unknown:1
 d:hud/Armor Bar:hud/Armor Bar:0:application/unknown:1
 i:hud/Armor Bar/armBar-100.png:hud/Armor Bar/armBar-100-05fb4925169fc5f37789578828d13343.png:335:image/png:1
@@ -34,6 +32,7 @@ t:hud/Armor Bar/Arm_Bar.atlas:hud/Armor Bar/Arm_Bar-9869760ef277b4e465e71def2de6
 i:hud/Armor Bar/Arm_Bar.png:hud/Armor Bar/Arm_Bar-b7513f7c42ee038fd202b28068045ec3.png:3218:image/png:1
 t:hud/Arm_Bar.atlas:hud/Arm_Bar-8a9bb2dea54ba9aa7fce8261b8bceeba.atlas:511:application/unknown:1
 i:hud/Arm_Bar.png:hud/Arm_Bar-b7513f7c42ee038fd202b28068045ec3.png:3218:image/png:1
+i:hud/game_over_overlay.jpg:hud/game_over_overlay-4a35a6fe817e15159d40588aa4778fe6.jpg:49984:image/jpeg:1
 d:hud/HP Bar:hud/HP Bar:0:application/unknown:1
 i:hud/HP Bar/hpBar-100.png:hud/HP Bar/hpBar-100-6233b3157191756153d10d32bb88923a.png:363:image/png:1
 i:hud/HP Bar/hpBar-20.png:hud/HP Bar/hpBar-20-9f8cbad8d5ae4dbba2d72442feb0582f.png:361:image/png:1
@@ -65,7 +64,7 @@ i:map/tileset/dungeontileset-extended.png:map/tileset/dungeontileset-extended-c0
 i:map/tileset/Dungeon_Tileset.png:map/tileset/Dungeon_Tileset-de8da6d06c44e17a8360dd2a18e0e847.png:6326:image/png:1
 d:mobs:mobs:0:application/unknown:1
 d:mobs/chort:mobs/chort:0:application/unknown:1
-t:mobs/chort/animation_chort.atlas:mobs/chort/animation_chort-0adcfe7581b338bb5e149c839116ac71.atlas:901:application/unknown:1
+t:mobs/chort/animation_chort.atlas:mobs/chort/animation_chort-fa58c703b7222b42944d000d8ca0f43e.atlas:970:application/unknown:1
 i:mobs/chort/animation_chort.png:mobs/chort/animation_chort-c4b222cbdd90f9eace86347f21585a99.png:1804:image/png:1
 d:mobs/chort/die:mobs/chort/die:0:application/unknown:1
 i:mobs/chort/die/chort_die.png:mobs/chort/die/chort_die-98274494d0a4958ddd00ecc218e5647c.png:772:image/png:1

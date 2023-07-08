@@ -1,6 +1,7 @@
 package com.voider.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,30 +23,31 @@ public class Character extends Sprite {
     private int currentHP;
     private int currentARM;
     private static final float FRAME_TIME = 0.18f;
-    enum State { IDLING, WALKING, DEAD }
+    public enum State { IDLING, WALKING, DEAD }
+    private float attackTimer;
+    private static final float ATTACK_DURATION = 0.2f;
     public State currentState;
-
     public State previousState;
     public TextureAtlas textureAtlas;
     public Vector2 position;
     private Animation<TextureRegion> charIdle;
     private Animation<TextureRegion> charWalk;
+    private Animation<TextureRegion> charDie;
     private float stateTime;
     public float speed;
     private boolean isLeft = false;
+    private boolean isBeingAttacked;
     private Weapon gun;
     private TileMap tileMap;
     private Array<Bullet> bullets;
 
     private Array<Mob> mobsInRange; // List to store mobs within attacking radius
 
+    private float armorRegenTimer; // Time in seconds for each armor regeneration tick
+    private static final float ARMOR_REGEN_TICK = 1f; // Time in seconds for each armor regeneration tick
+    private float lastDamageTime;
+    private static final float DAMAGE_COOLDOWN = 5f; // Time in seconds to wait before armor regeneration
 
-    private static final float ARMOR_REGENERATION_TIME = 6f; // Time in seconds for armor regeneration, 5 seconds
-    private float armorRegenTimer = ARMOR_REGENERATION_TIME;
-
-    private static final float HP_REGENERATION_TIME = 40f;
-
-    private float HPRegenTimer = HP_REGENERATION_TIME;
 
 
     public Character(TileMap tileMap) {
@@ -60,14 +62,17 @@ public class Character extends Sprite {
 
         charIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
         charWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+        charDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
 
         charIdle.setFrameDuration(FRAME_TIME);
         charWalk.setFrameDuration(FRAME_TIME);
+        charDie.setFrameDuration(FRAME_TIME);
 
         this.tileMap = tileMap;
 
         bullets = new Array<>();
         mobsInRange = new Array<>();
+        armorRegenTimer = ARMOR_REGEN_TICK; // Initialize the armor regeneration timer
     }
 
     public void updateGunAim() {
@@ -141,7 +146,6 @@ public class Character extends Sprite {
 
     }
 
-
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
 
 
@@ -206,38 +210,28 @@ public class Character extends Sprite {
             }
         }
 
-
         // Increment the stateTime for animation
         stateTime += delta;
 
+        // Regenerate armor points if enough time has passed since the last damage
+        if (currentARM < maxARM && currentHP > 0) {
+            lastDamageTime += delta;
 
-        // Regenerate armor points
-        armorRegenTimer -= delta;
-        if (armorRegenTimer <= 0) {
-            regenerateArmor();
-            armorRegenTimer = ARMOR_REGENERATION_TIME;
+            if (lastDamageTime >= DAMAGE_COOLDOWN) {
+                armorRegenTimer -= delta;
+
+                if (armorRegenTimer <= 0) {
+                    regenerateArmor();
+                    armorRegenTimer = ARMOR_REGEN_TICK;
+                }
+            }
         }
-
-        // Regenerate HP every 30 seconds
-
-        HPRegenTimer -= delta;
-        if (HPRegenTimer <= 0) {
-            regenerateHP();
-            HPRegenTimer = HP_REGENERATION_TIME;
-        }
-
     }
 
     private void regenerateArmor() {
         if (currentARM < maxARM) {
-            currentARM++;
+            currentARM+=1;
         }
-    }
-
-    private void regenerateHP() {
-            if (currentHP < maxHP) {
-                currentHP++;
-            }
     }
 
     private boolean isBulletOffScreen(Bullet bullet) {
@@ -324,6 +318,9 @@ public class Character extends Sprite {
             case WALKING:
                 region = charWalk.getKeyFrame(stateTime, true);
                 break;
+            case DEAD:
+                region = charDie.getKeyFrames()[0]; // Use the first (and only)
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currentState);
         }
@@ -355,13 +352,20 @@ public class Character extends Sprite {
                 currentState = State.WALKING;
                 this.isLeft = false;
                 break;
-            default:
-                currentState = State.IDLING;
+            case "DIE":
+                this.previousState = currentState;
+                // Code to set the character to dead state
+                currentState = State.DEAD;
                 break;
         }
     }
 
     public void render(SpriteBatch spriteBatch) {
+        // Check if the Mob is being attacked and modify the color accordingly
+        if (isBeingAttacked) {
+            // Set the color to red
+            spriteBatch.setColor(Color.RED);
+        }
         TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
         // Render the character at its current position
         float textureWidth = 32; // Set the desired texture width
@@ -371,6 +375,13 @@ public class Character extends Sprite {
                     -textureWidth, textureHeight);
         } else {
             spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
+        }
+        // Update the attack timer and check if it's expired
+        if (isBeingAttacked) {
+            attackTimer -= Gdx.graphics.getDeltaTime();
+            if (attackTimer <= 0) {
+                isBeingAttacked = false;
+            }
         }
         // Render the gun
         gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
@@ -383,22 +394,26 @@ public class Character extends Sprite {
     }
 
     public void takeDamage(int damage) {
-        if (currentARM > 0) {
-            currentARM -= damage;
+        isBeingAttacked = true;
+        attackTimer = ATTACK_DURATION;
+        if (this.currentARM > 0) {
+            this.currentARM -= damage;
             if (currentARM < 0) {
                 currentARM = 0;
             }
         } else {
             // If there is no armor, apply the damage directly to HP
-            currentHP -= damage;
+            this.currentHP -= damage;
         }
 
-        if (currentHP <= 0) {
-            currentState = State.DEAD;
+        if (this.currentHP <= 0) {
+            this.currentHP = 0; // Ensure HP is never negative
+            this.setState("DIE"); // Set the state to "DEAD" if HP reaches 0
         }
+
+        // Update the lastDamageTime of the character
+        this.setLastDamageTime(0);
     }
-
-
 
     public void setGun(Weapon gun) {
         this.gun = gun;
@@ -433,6 +448,13 @@ public class Character extends Sprite {
     public int getCurrentARM() {
         return this.currentARM;
     }
+    public void setLastDamageTime(float time) {
+        this.lastDamageTime = time;
+    }
+    public float getLastDamageTime() {
+        return lastDamageTime;
+    }
+
     public void dispose() {
         // Dispose of any resources here if needed
         gun.dispose();

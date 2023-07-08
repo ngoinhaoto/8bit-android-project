@@ -2,10 +2,12 @@ package com.voider.game.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -45,12 +47,16 @@ public class FirstLevelScreen implements Screen {
     private ShootingButton shootingButton;
 
     private Array<Bullet> bullets;
-
     private Array<Mob> mobs;
+    private ShapeRenderer shapeRenderer;
+    private Color overlayColor;
+
     public FirstLevelScreen() {
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/test-map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        shapeRenderer = new ShapeRenderer();
+        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
 
         bullets = new Array<>();
         loadCamera();
@@ -120,19 +126,21 @@ public class FirstLevelScreen implements Screen {
         touchpad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                float knobPercentX = touchpad.getKnobPercentX();
-                float knobPercentY = touchpad.getKnobPercentY();
+                if(character.getState() != Character.State.DEAD) {
+                    float knobPercentX = touchpad.getKnobPercentX();
+                    float knobPercentY = touchpad.getKnobPercentY();
 
-                if (knobPercentY > 0f || knobPercentY < 0f) {
-                    if (knobPercentX > 0f) {
-                        character.setState("RIGHT");
-                    } else if (knobPercentX < -0f) {
-                        character.setState("LEFT");
+                    if (knobPercentY > 0f || knobPercentY < 0f) {
+                        if (knobPercentX > 0f) {
+                            character.setState("RIGHT");
+                        } else if (knobPercentX < -0f) {
+                            character.setState("LEFT");
+                        } else {
+                            character.setState("IDLE");
+                        }
                     } else {
                         character.setState("IDLE");
                     }
-                } else {
-                    character.setState("IDLE");
                 }
             }
         });
@@ -192,30 +200,30 @@ public class FirstLevelScreen implements Screen {
 
     @Override
     public void render(float delta) {
-// Clear the screen
+        // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-// Update the character's position and state based on the joystick input
+        // Update the character's position and state based on the joystick input
         float joystickX = touchpad.getKnobPercentX();
         float joystickY = touchpad.getKnobPercentY();
         character.update(delta, joystickX, joystickY, mobs);
 
-// Update the camera's position to center on the character
+        // Update the camera's position to center on the character
         float cameraX = character.getPosition().x; // Adjust this if necessary
         float cameraY = character.getPosition().y; // Adjust this if necessary
         gameCam.position.set(cameraX, cameraY, 0);
         gameCam.update();
 
-// Render the tile map
+        // Render the tile map
         mapRenderer.setView(gameCam);
         mapRenderer.render();
 
-// Update and render the controls
+        // Update and render the controls
         stage.act(delta);
         stage.draw();
 
-// Render the mobs
+        // Render the mobs
         batch.begin();
         for (Mob mob : mobs) {
             mob.act(delta);
@@ -228,7 +236,7 @@ public class FirstLevelScreen implements Screen {
         batch.begin();
         character.render(batch);
         batch.end();
-        
+
 // Update and render the bullets
         batch.begin();
         for (Bullet bullet : character.getBullets()) {
@@ -239,16 +247,22 @@ public class FirstLevelScreen implements Screen {
         // Update and render the controls
         stage.act(delta);
         stage.draw();
-    }
 
-//    private void removeDeadMobs() {
-//        for (int i = mobs.size - 1; i >= 0; i--) {
-//            Mob mob = mobs.get(i);
-//            if (mob.getCurrentHP() <= 0) {
-//                mobs.removeIndex(i);
-//            }
-//        }
-//    }
+        // Update the overlay color based on the character's state
+        if (character.getState() == Character.State.DEAD) {
+            float darkeningSpeed = 0.5f; // Adjust this value to control the speed of darkening
+            overlayColor.a += darkeningSpeed * delta; // Increase the alpha value for a gradual darkening effect
+            overlayColor.a = MathUtils.clamp(overlayColor.a, 0, 0.5f); // Clamp the alpha value to the desired range
+
+            // Clear the screen and draw the overlay
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(overlayColor);
+            shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            shapeRenderer.end();
+        }
+    }
 
     @Override
     public void resize(int width, int height) {

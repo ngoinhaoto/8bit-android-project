@@ -183,28 +183,21 @@
 
 
         public void bite(Character character) {
-            if (currentState == State.DEAD) {
-                return;
-            }
+            if (currentState != State.DEAD || character.getState() != Character.State.DEAD) {
+                float distanceToCharacterX = character.getPosition().x - getX();
+                float distanceToCharacterY = character.getPosition().y - getY();
+                float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
-            float distanceToCharacterX = character.getPosition().x - getX();
-            float distanceToCharacterY = character.getPosition().y - getY();
-            float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
+                float biteRange = 10;
 
-            float biteRange = 10;
+                if (totalDistanceToCharacter <= biteRange) {
+                    // Inflict damage to the character
+                    character.takeDamage(damage);
 
-            if (totalDistanceToCharacter <= biteRange) {
-                // Inflict damage to the character
-                character.takeDamage(damage);
+                    //  add any additional behavior here, such as playing a sound effect or triggering an animation
 
-                //  add any additional behavior here, such as playing a sound effect or triggering an animation
-
-                // Check if the character is dead after the bite
-                if (character.getCurrentHP() <= 0) {
-                    // Character is dead, update the mob's state or behavior accordingly
                 }
             }
-
         }
 
         public void randomMovement(float delta) {
