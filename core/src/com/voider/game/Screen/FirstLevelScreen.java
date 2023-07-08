@@ -77,7 +77,6 @@ public class FirstLevelScreen implements Screen {
 
     public void loadControls() {
         stage = new Stage();
-
         Gdx.input.setInputProcessor(stage);
 
         // Create the joystick
@@ -100,51 +99,44 @@ public class FirstLevelScreen implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if (character.getState() == Character.State.DEAD) {
+                    return; // Return early if the character is dead
+                }
+
+                float knobPercentX = touchpad.getKnobPercentX();
+                float knobPercentY = touchpad.getKnobPercentY();
+
+                if (knobPercentY > 0f || knobPercentY < 0f) {
+                    if (knobPercentX > 0f) {
+                        character.setState("RIGHT");
+                    } else if (knobPercentX < -0f) {
+                        character.setState("LEFT");
+                    } else {
+                        character.setState("IDLE");
+                    }
+                } else {
+                    character.setState("IDLE");
+                }
+
                 if (touchpad.isTouched()) {
                     // Touchpad is being touched
                     isTouchpadActive = true;
 
-                    float knobPercentX = touchpad.getKnobPercentX();
-                    float knobPercentY = touchpad.getKnobPercentY();
                     rotateGun(knobPercentX, knobPercentY);
                 } else if (isTouchpadActive) {
                     // Touchpad was released after being touched
                     isTouchpadActive = false;
-
                 }
             }
         });
-
-
-        stage.addActor(touchpad);
 
         // Create the shooting button
         shootingButton = new ShootingButton(character);
+
+        stage.addActor(touchpad);
         stage.addActor(shootingButton);
-
-        Gdx.input.setInputProcessor(stage);
-        touchpad.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(character.getState() != Character.State.DEAD) {
-                    float knobPercentX = touchpad.getKnobPercentX();
-                    float knobPercentY = touchpad.getKnobPercentY();
-
-                    if (knobPercentY > 0f || knobPercentY < 0f) {
-                        if (knobPercentX > 0f) {
-                            character.setState("RIGHT");
-                        } else if (knobPercentX < -0f) {
-                            character.setState("LEFT");
-                        } else {
-                            character.setState("IDLE");
-                        }
-                    } else {
-                        character.setState("IDLE");
-                    }
-                }
-            }
-        });
     }
+
 
     private void loadHUD() {
         hud = new HUD(character);
@@ -200,57 +192,12 @@ public class FirstLevelScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // Clear the screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Update the character's position and state based on the joystick input
-        float joystickX = touchpad.getKnobPercentX();
-        float joystickY = touchpad.getKnobPercentY();
-        character.update(delta, joystickX, joystickY, mobs);
-
-        // Update the camera's position to center on the character
-        float cameraX = character.getPosition().x; // Adjust this if necessary
-        float cameraY = character.getPosition().y; // Adjust this if necessary
-        gameCam.position.set(cameraX, cameraY, 0);
-        gameCam.update();
-
-        // Render the tile map
-        mapRenderer.setView(gameCam);
-        mapRenderer.render();
-
-        // Update and render the controls
-        stage.act(delta);
-        stage.draw();
-
-        // Render the mobs
-        batch.begin();
-        for (Mob mob : mobs) {
-            mob.act(delta);
-            mob.render(batch);
-        }
-        batch.end();
-
-        // Render the character
-        batch.setProjectionMatrix(gameCam.combined);
-        batch.begin();
-        character.render(batch);
-        batch.end();
-
-// Update and render the bullets
-        batch.begin();
-        for (Bullet bullet : character.getBullets()) {
-            bullet.render(batch); // Render bullet
-        }
-        batch.end();
-
-        // Update and render the controls
-        stage.act(delta);
-        stage.draw();
+        Gdx.app.log("state", String.valueOf(character.getState()));
 
         // Update the overlay color based on the character's state
         if (character.getState() == Character.State.DEAD) {
-            float darkeningSpeed = 0.5f; // Adjust this value to control the speed of darkening
+            float darkeningSpeed = 1f; // Adjust this value to control the speed of darkening
             overlayColor.a += darkeningSpeed * delta; // Increase the alpha value for a gradual darkening effect
             overlayColor.a = MathUtils.clamp(overlayColor.a, 0, 0.5f); // Clamp the alpha value to the desired range
 
@@ -261,6 +208,55 @@ public class FirstLevelScreen implements Screen {
             shapeRenderer.setColor(overlayColor);
             shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             shapeRenderer.end();
+            return;
+        } else {
+            // Clear the screen
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            // Update the character's position and state based on the joystick input
+            float joystickX = touchpad.getKnobPercentX();
+            float joystickY = touchpad.getKnobPercentY();
+            character.update(delta, joystickX, joystickY, mobs);
+
+            // Update the camera's position to center on the character
+            float cameraX = character.getPosition().x; // Adjust this if necessary
+            float cameraY = character.getPosition().y; // Adjust this if necessary
+            gameCam.position.set(cameraX, cameraY, 0);
+            gameCam.update();
+
+            // Render the tile map
+            mapRenderer.setView(gameCam);
+            mapRenderer.render();
+
+            // Update and render the controls
+            stage.act(delta);
+            stage.draw();
+
+            // Render the mobs
+            batch.begin();
+            for (Mob mob : mobs) {
+                mob.act(delta);
+                mob.render(batch);
+            }
+            batch.end();
+
+            // Render the character
+            batch.setProjectionMatrix(gameCam.combined);
+            batch.begin();
+            character.render(batch);
+            batch.end();
+
+// Update and render the bullets
+            batch.begin();
+            for (Bullet bullet : character.getBullets()) {
+                bullet.render(batch); // Render bullet
+            }
+            batch.end();
+
+            // Update and render the controls
+            stage.act(delta);
+            stage.draw();
         }
     }
 

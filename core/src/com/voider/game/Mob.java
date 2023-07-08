@@ -188,7 +188,7 @@
                 float distanceToCharacterY = character.getPosition().y - getY();
                 float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
-                float biteRange = 10;
+                float biteRange = 26;
 
                 if (totalDistanceToCharacter <= biteRange) {
                     // Inflict damage to the character

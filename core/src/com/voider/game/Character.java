@@ -48,8 +48,6 @@ public class Character extends Sprite {
     private float lastDamageTime;
     private static final float DAMAGE_COOLDOWN = 5f; // Time in seconds to wait before armor regeneration
 
-
-
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
         setARM(getMaxARM());
@@ -148,6 +146,11 @@ public class Character extends Sprite {
 
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
 
+        // Check if the character is dead
+        if (currentState == State.DEAD) {
+            // Character is dead, do not update movement or shooting
+            return;
+        }
 
         // Update the character's position based on input or game logic
         float deltaX = joystickX * speed * delta;
@@ -248,6 +251,12 @@ public class Character extends Sprite {
 
     public void shoot() {
         //Change state of Gun
+
+        if (currentState == State.DEAD) {
+            // Character is dead, cannot shoot
+            return;
+        }
+
         this.gun.setState();
 
         // Create a new bullet,
@@ -360,36 +369,83 @@ public class Character extends Sprite {
         }
     }
 
-    public void render(SpriteBatch spriteBatch) {
-        // Check if the Mob is being attacked and modify the color accordingly
-        if (isBeingAttacked) {
-            // Set the color to red
-            spriteBatch.setColor(Color.RED);
-        }
-        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
-        // Render the character at its current position
-        float textureWidth = 32; // Set the desired texture width
-        float textureHeight = 32; // Set the desired texture height
-        if (isLeft) {
-            spriteBatch.draw(currentFrame, position.x + textureWidth, position.y,
-                    -textureWidth, textureHeight);
-        } else {
-            spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
-        }
-        // Update the attack timer and check if it's expired
-        if (isBeingAttacked) {
-            attackTimer -= Gdx.graphics.getDeltaTime();
-            if (attackTimer <= 0) {
-                isBeingAttacked = false;
-            }
-        }
-        // Render the gun
-        gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
-        gun.render(spriteBatch);
+//    public void render(SpriteBatch spriteBatch) {
+//        // Check if the Mob is being attacked and modify the color accordingly
+//        if (isBeingAttacked) {
+//            // Set the color to red
+//            spriteBatch.setColor(Color.RED);
+//        }
+//        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+//        // Render the character at its current position
+//        float textureWidth = 32; // Set the desired texture width
+//        float textureHeight = 32; // Set the desired texture height
+//        if (isLeft) {
+//            spriteBatch.draw(currentFrame, position.x + textureWidth, position.y,
+//                    -textureWidth, textureHeight);
+//        } else {
+//            spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
+//        }
+//        // Update the attack timer and check if it's expired
+//        if (isBeingAttacked) {
+//            attackTimer -= Gdx.graphics.getDeltaTime();
+//            if (attackTimer <= 0) {
+//                isBeingAttacked = false;
+//            }
+//        }
+//        // Render the gun
+//        gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
+//        gun.render(spriteBatch);
+//
+//        // Render the bullets
+//        for (Bullet bullet : bullets) {
+//            bullet.render(spriteBatch);
+//        }
+//    }
 
-        // Render the bullets
-        for (Bullet bullet : bullets) {
-            bullet.render(spriteBatch);
+
+    public void render(SpriteBatch spriteBatch) {
+        if (currentState != State.DEAD) {
+            // Check if the Mob is being attacked and modify the color accordingly
+            if (isBeingAttacked) {
+                // Set the color to red
+                spriteBatch.setColor(Color.RED);
+            }
+            TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+            // Render the character at its current position
+            float textureWidth = 32; // Set the desired texture width
+            float textureHeight = 32; // Set the desired texture height
+            if (isLeft) {
+                spriteBatch.draw(currentFrame, position.x + textureWidth, position.y,
+                        -textureWidth, textureHeight);
+            } else {
+                spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
+            }
+            // Update the attack timer and check if it's expired
+            if (isBeingAttacked) {
+                attackTimer -= Gdx.graphics.getDeltaTime();
+                if (attackTimer <= 0) {
+                    isBeingAttacked = false;
+                }
+            }
+            // Render the gun
+            gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
+            gun.render(spriteBatch);
+
+            // Render the bullets
+            for (Bullet bullet : bullets) {
+                bullet.render(spriteBatch);
+            }
+        } else {
+            // Character is dead, do not reset the state
+            TextureRegion currentFrame = charDie.getKeyFrames()[0];
+            float textureWidth = 32; // Set the desired texture width
+            float textureHeight = 32; // Set the desired texture height
+            if (isLeft) {
+                spriteBatch.draw(currentFrame, position.x + textureWidth, position.y,
+                        -textureWidth, textureHeight);
+            } else {
+                spriteBatch.draw(currentFrame, position.x, position.y, textureWidth, textureHeight);
+            }
         }
     }
 
