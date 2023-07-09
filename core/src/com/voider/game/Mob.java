@@ -153,7 +153,7 @@
 
 
             // Calculate the distance threshold
-            float distanceThreshold = player.getWidth() + getWidth() ;
+            float distanceThreshold = 16;
 
 
             // Check if the player is within the mob's radius and not colliding
@@ -199,7 +199,7 @@
                 float distanceToCharacterY = character.getPosition().y - getY();
                 float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
-                float biteRange = 26;
+                float biteRange = 20;
 
                 if (totalDistanceToCharacter <= biteRange) {
                     // Inflict damage to the character
