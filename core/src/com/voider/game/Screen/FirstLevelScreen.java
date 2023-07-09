@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -29,7 +31,7 @@ import com.voider.game.TileMap;
 import com.voider.game.Weapon;
 
 
-public class FirstLevelScreen implements Screen {
+public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
     private float initialCameraX = 470; // Adjust this value to set the initial x-coordinate of the camera
     private float initialCameraY = 935; // Adjust this value to set the initial y-coordinate of the camera
@@ -52,14 +54,25 @@ public class FirstLevelScreen implements Screen {
     private ShapeRenderer shapeRenderer;
     private Color overlayColor;
 
+
+    /// keep track of mobs killed this level and to enable gates
+
+    private int mobsKilledThisLevel;
+
+
+    private boolean gate1BoundaryEnabled = true;
+    private boolean gate2BoundaryEnabled = true;
+
     public FirstLevelScreen() {
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/test-map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         shapeRenderer = new ShapeRenderer();
+
         overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
 
         bullets = new Array<>();
+        mobsKilledThisLevel=0;
         loadCamera();
         loadCharacter();
         loadControls();
@@ -176,12 +189,31 @@ public class FirstLevelScreen implements Screen {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(tileMap, x, y, "chort", true,100, 2, character);
+            Mob mob = new Mob(tileMap, x, y, "chort", true, 100, 2, character, this);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
     }
+    @Override
+    public void onMobDeath() {
+        mobsKilledThisLevel++;
+        Gdx.app.log("Mobs Killed", String.valueOf(mobsKilledThisLevel));
 
+        if (mobsKilledThisLevel >= 3 && gate1BoundaryEnabled) {
+            MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
+            MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
+
+            // Update the gate boundary in the TileMap
+            TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx");
+            tileMap.updateGateBoundary(gate1Object, false);
+
+            // Log the gate1 boundary value
+            boolean gate1Boundary = gate1Object.getProperties().get("boundary", Boolean.class);
+            Gdx.app.log("Gate1 Boundary", String.valueOf(gate1Boundary));
+
+            gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
+        }
+    }
 
 
     public void rotateGun(float knobPercentX, float knobPercentY) {
@@ -260,8 +292,12 @@ public class FirstLevelScreen implements Screen {
             // Update and render the controls
             stage.act(delta);
             stage.draw();
+
         }
     }
+
+
+
 
     @Override
     public void resize(int width, int height) {

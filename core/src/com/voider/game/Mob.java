@@ -15,6 +15,7 @@
     import org.w3c.dom.Text;
 
 
+
     public class Mob extends Actor {
         enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING, DEAD };
         private TileMap tileMap;
@@ -49,8 +50,14 @@
         private float biteCooldown;
         private static final float BITE_COOLDOWN = 1f; // Adjust the value as needed
 
+        private MobDeathListener mobDeathListener;
+
+        public interface MobDeathListener {
+            void onMobDeath();
+        }
+
         //add one more parameter to see whether mob is a melee mob
-        public Mob(TileMap tileMap, float x, float y, String mobType, boolean isMelee,float radius, int damage,Character player) {
+        public Mob(TileMap tileMap, float x, float y, String mobType, boolean isMelee,float radius, int damage,Character player, MobDeathListener mobDeathListener) {
             this.tileMap = tileMap;
 
             this.maxHP = calculateMaxHealth(mobType); // cái này thì mỗi mob có maxhealth riêng nghe, hp chỉ là máu tạm thời
@@ -60,6 +67,7 @@
             this.player = player;
             this.isMelee = isMelee;
             this.damage = damage;
+            this.mobDeathListener = mobDeathListener;
 
 
 
@@ -100,13 +108,16 @@
             if (currentState == State.DEAD) {
                 return; // If mob is already dead, ignore further damage
             }
-            this.setCurrentHP(this.getCurrentHP()-damage);
+            this.setCurrentHP(this.getCurrentHP() - damage);
             // Set Mob as being attacked and start the attack timer
             isBeingAttacked = true;
             attackTimer = ATTACK_DURATION;
             // Check State of Mob when HP is 0
             if (this.getCurrentHP() <= 0) {
-                // Mob is dead, remove it from the stage
+                // Mob is dead, invoke the callback listener
+                if (mobDeathListener != null) {
+                    mobDeathListener.onMobDeath();
+                }
                 this.currentState = State.DEAD;
             }
         }
