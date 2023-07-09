@@ -3,6 +3,7 @@ package com.voider.game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -86,6 +87,11 @@ public class TileMap {
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render();
+    }
+
+
+    public void initialiseGates() {
+        MapObjects room1GateObject = tiledMap.getLayers();
     }
 
     public void resize(int width, int height) {

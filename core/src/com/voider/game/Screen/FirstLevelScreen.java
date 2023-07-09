@@ -48,6 +48,7 @@ public class FirstLevelScreen implements Screen {
 
     private Array<Bullet> bullets;
     private Array<Mob> mobs;
+
     private ShapeRenderer shapeRenderer;
     private Color overlayColor;
 
@@ -180,6 +181,8 @@ public class FirstLevelScreen implements Screen {
             mobs.add(mob);
         }
     }
+
+
 
     public void rotateGun(float knobPercentX, float knobPercentY) {
         // Calculate the angle of rotation based on the joystick input
