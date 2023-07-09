@@ -28,11 +28,13 @@ import com.voider.game.Mob;
 import com.voider.game.Scene.HUD;
 import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
+import com.voider.game.Voider;
 import com.voider.game.Weapon;
 
 
 public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
+    private final Voider game;
     private float initialCameraX = 470; // Adjust this value to set the initial x-coordinate of the camera
     private float initialCameraY = 935; // Adjust this value to set the initial y-coordinate of the camera
     private OrthographicCamera gameCam;
@@ -50,8 +52,9 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
     private Array<Bullet> bullets;
     private Array<Mob> mobs;
-
-    private ShapeRenderer shapeRenderer;
+    private boolean isGameOver;
+    private float overlayAlpha;  // Current alpha value for the overlay color
+    private final float OVERLAY_FADE_SPEED = 1.5f; // Speed at which the overlay color fades (adjust as needed)
     private Color overlayColor;
 
 
@@ -63,11 +66,11 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private boolean gate1BoundaryEnabled = true;
     private boolean gate2BoundaryEnabled = true;
 
-    public FirstLevelScreen() {
+    public FirstLevelScreen(Voider game) {
+        this.game = game;
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/test-map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        shapeRenderer = new ShapeRenderer();
 
         overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
 
@@ -225,75 +228,77 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         character.getGun().setAngle(angleDeg);
     }
 
+    private void showGameOverScreen() {
+        overlayAlpha = 0f; // Reset the overlay alpha to 0
+        game.setScreen(new GameOverScreen(this.game));
+    }
+
     @Override
     public void render(float delta) {
-
-        Gdx.app.log("state", String.valueOf(character.getState()));
-
-        // Update the overlay color based on the character's state
-        if (character.getState() == Character.State.DEAD) {
-            float darkeningSpeed = 1f; // Adjust this value to control the speed of darkening
-            overlayColor.a += darkeningSpeed * delta; // Increase the alpha value for a gradual darkening effect
-            overlayColor.a = MathUtils.clamp(overlayColor.a, 0, 0.5f); // Clamp the alpha value to the desired range
-
-            // Clear the screen and draw the overlay
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(overlayColor);
-            shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            shapeRenderer.end();
-            return;
-        } else {
-            // Clear the screen
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            // Update the character's position and state based on the joystick input
-            float joystickX = touchpad.getKnobPercentX();
-            float joystickY = touchpad.getKnobPercentY();
-            character.update(delta, joystickX, joystickY, mobs);
-
-            // Update the camera's position to center on the character
-            float cameraX = character.getPosition().x; // Adjust this if necessary
-            float cameraY = character.getPosition().y; // Adjust this if necessary
-            gameCam.position.set(cameraX, cameraY, 0);
-            gameCam.update();
-
-            // Render the tile map
-            mapRenderer.setView(gameCam);
-            mapRenderer.render();
-
-            // Update and render the controls
-            stage.act(delta);
-            stage.draw();
-
-            // Render the mobs
-            batch.begin();
-            for (Mob mob : mobs) {
-                mob.act(delta);
-                mob.render(batch);
-            }
-            batch.end();
-
-            // Render the character
-            batch.setProjectionMatrix(gameCam.combined);
-            batch.begin();
-            character.render(batch);
-            batch.end();
-
-// Update and render the bullets
-            batch.begin();
-            for (Bullet bullet : character.getBullets()) {
-                bullet.render(batch); // Render bullet
-            }
-            batch.end();
-
-            // Update and render the controls
-            stage.act(delta);
-            stage.draw();
-
+        // Check for character's death and start game over process
+        if (character.getState() == Character.State.DEAD && !isGameOver) {
+            isGameOver = true;
         }
+
+        if (isGameOver) {
+            // Gradually darken the screen by increasing the alpha value of the overlay color
+            overlayAlpha = Math.min(overlayAlpha + OVERLAY_FADE_SPEED * delta, 1f);
+            overlayColor.a = overlayAlpha;
+
+            // Once the screen is fully darkened, show the GameOverScreen
+            if (overlayAlpha >= 1f) {
+                showGameOverScreen();
+                return;
+            }
+        }
+
+        // Clear the screen
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Update the character's position and state based on the joystick input
+        float joystickX = touchpad.getKnobPercentX();
+        float joystickY = touchpad.getKnobPercentY();
+        character.update(delta, joystickX, joystickY, mobs);
+
+        // Update the camera's position to center on the character
+        float cameraX = character.getPosition().x; // Adjust this if necessary
+        float cameraY = character.getPosition().y; // Adjust this if necessary
+        gameCam.position.set(cameraX, cameraY, 0);
+        gameCam.update();
+
+        // Render the tile map
+        mapRenderer.setView(gameCam);
+        mapRenderer.render();
+
+        // Update and render the controls
+        stage.act(delta);
+        stage.draw();
+
+        // Render the mobs
+        batch.begin();
+        for (Mob mob : mobs) {
+            mob.act(delta);
+            mob.render(batch);
+        }
+        batch.end();
+
+        // Render the character
+        batch.setProjectionMatrix(gameCam.combined);
+        batch.begin();
+        character.render(batch);
+        batch.end();
+
+        // Update and render the bullets
+        batch.begin();
+        for (Bullet bullet : character.getBullets()) {
+            bullet.render(batch); // Render bullet
+        }
+        batch.end();
+
+        // Update and render the controls
+        stage.act(delta);
+        stage.draw();
     }
 
 
