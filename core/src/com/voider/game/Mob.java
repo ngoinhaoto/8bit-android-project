@@ -50,7 +50,13 @@
         private float biteCooldown;
         private static final float BITE_COOLDOWN = 1f; // Adjust the value as needed
 
+        private float shootingCooldown;
+        private static final float SHOOTING_COOLDOWN = 1.5f;
+
         private MobDeathListener mobDeathListener;
+
+        private TextureAtlas mShootAtlas;
+        private Animation<TextureRegion> mShoot;
 
         public interface MobDeathListener {
             void onMobDeath();
@@ -69,32 +75,35 @@
             this.damage = damage;
             this.mobDeathListener = mobDeathListener;
 
-
-
             // Set the movement speed based on the isMelee parameter
             if (isMelee) {
                 movementSpeed = 54; // Set a higher speed for melee mobs
-                biteCooldown =0f;
+                biteCooldown = 0f;
             } else {
                 movementSpeed = 24; // Set the default speed for non-melee mobs
             }
 
+
             currentState = State.IDLING;
             previousState = State.IDLING;
 
-            textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/chort/animation_chort.atlas"));
 
-            mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
-            mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+            if (mobType == "chort") {
+                textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/chort/animation_chort.atlas"));
+                mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+                mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
 //            mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
-            mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
-
-
-
-            mIdle.setFrameDuration(FRAME_TIME);
-            mWalk.setFrameDuration(FRAME_TIME);
+                mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+                mIdle.setFrameDuration(FRAME_TIME);
+                mWalk.setFrameDuration(FRAME_TIME);
 //            mAttack.setFrameDuration(FRAME_TIME);
-            mDie.setFrameDuration(FRAME_TIME);
+                mDie.setFrameDuration(FRAME_TIME);
+
+
+            } else if (mobType == "necromancer") {
+//                textureAtlas = new TextureAtlas();
+            }
+
         }
 
         @Override
@@ -128,10 +137,9 @@
                 case "chort":
                     maxHealth = 10;
                     break;
-                case "goblin":
-                    maxHealth = 8;
+                case "necromancer":
+                    maxHealth = 7;
                     break;
-
             }
             return maxHealth;
         }

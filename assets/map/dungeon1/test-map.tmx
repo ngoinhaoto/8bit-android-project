@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="112" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="36" nextobjectid="134">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="112" height="80" tilewidth="16" tileheight="16" infinite="0" nextlayerid="37" nextobjectid="141">
  <properties>
   <property name="boundary" type="bool" value="true"/>
  </properties>
@@ -871,6 +871,29 @@
    <point/>
   </object>
   <object id="51" x="1557.31" y="576.972">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="36" name="NecromancerPosition">
+  <object id="134" x="979.536" y="265.434">
+   <point/>
+  </object>
+  <object id="135" x="937.58" y="595.941">
+   <point/>
+  </object>
+  <object id="136" x="874.219" y="1119.1">
+   <point/>
+  </object>
+  <object id="137" x="1141.36" y="1124.24">
+   <point/>
+  </object>
+  <object id="138" x="1290.35" y="410.994">
+   <point/>
+  </object>
+  <object id="139" x="1583.18" y="413.563">
+   <point/>
+  </object>
+  <object id="140" x="1556.64" y="688.415">
    <point/>
   </object>
  </objectgroup>

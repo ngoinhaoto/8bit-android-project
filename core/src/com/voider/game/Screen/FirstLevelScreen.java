@@ -196,6 +196,19 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             mob.setPosition(x, y);
             mobs.add(mob);
         }
+
+//        MapObjects necromancerObjects = tiledMap.getLayers().get("NecromancerPosition").getObjects();
+//
+//        for (MapObject object: necromancerObjects) {
+//            float x = object.getProperties().get("x", Float.class);
+//            float y = object.getProperties().get("y", Float.class);
+//
+//            Mob mob = new Mob(tileMap, x, y, "necromancer", false, 100, 2, character, this);
+//            mob.setPosition(x, y);
+//            mobs.add(mob);
+//
+//        }
+
     }
     @Override
     public void onMobDeath() {
