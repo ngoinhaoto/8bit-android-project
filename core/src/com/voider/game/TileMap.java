@@ -90,6 +90,7 @@ public class TileMap {
         if (gateLayer != null) {
             gateTiles = new boolean[tileLayer.getWidth()][tileLayer.getHeight()];
 
+            // Retrieve the gate objects' properties and mark the corresponding tiles as boundary tiles
             for (MapObject object : gateLayer.getObjects()) {
                 if (object instanceof RectangleMapObject) {
                     RectangleMapObject rectangleObject = (RectangleMapObject) object;
@@ -98,19 +99,16 @@ public class TileMap {
                     float width = rectangleObject.getRectangle().getWidth();
                     float height = rectangleObject.getRectangle().getHeight();
 
-                    // Check if the object has the "boundary" property set to true
                     boolean isBoundary = false;
-                    if (rectangleObject.getProperties().containsKey("boundary")) {
-                        isBoundary = rectangleObject.getProperties().get("boundary", Boolean.class);
+                    if (object.getProperties().containsKey("boundary")) {
+                        isBoundary = object.getProperties().get("boundary", Boolean.class);
                     }
 
-                    // Convert object coordinates to tile coordinates
                     int startX = (int) (x / tileWidth);
                     int startY = (int) (y / tileHeight);
                     int endX = (int) ((x + width) / tileWidth);
                     int endY = (int) ((y + height) / tileHeight);
 
-                    // Mark the corresponding tiles as boundary tiles
                     for (int tileX = startX; tileX <= endX; tileX++) {
                         for (int tileY = startY; tileY <= endY; tileY++) {
                             gateTiles[tileX][tileY] = isBoundary;
@@ -134,7 +132,6 @@ public class TileMap {
     }
 
     public void dispose() {
-
         tiledMap.dispose();
     }
 
@@ -143,25 +140,46 @@ public class TileMap {
             // The position is outside the boundary of the tilemap
             return true;
         }
-        return boundaryTiles[x][y] || gateTiles[x][y];
+
+        return boundaryTiles[x][y] || gateTiles[x][y]; // Include gateTiles in the condition
     }
 
-    public void updateGateBoundary(MapObject gateObject,boolean gateBoundary) {
+
+
+    public void updateGateBoundary(MapObject gateObject, boolean gateBoundary) {
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
 
         if (gateObject instanceof RectangleMapObject) {
             gateObject.getProperties().put("boundary", gateBoundary);
+
+            // Update the gate object in the gate layer
+            for (MapObject object : gateLayer.getObjects()) {
+                if (object.getName().equals(gateObject.getName())) {
+                    object.getProperties().put("boundary", gateBoundary);
+                    break;
+                }
+            }
         }
 
-        updateGateTiles(gateLayer);
-    }
+        // Retrieve the gate object's boundary property from the tiled map object
+        boolean gateBoundaryUpdate = false;
+        for (MapObject object : gateLayer.getObjects()) {
+            if (object.getName().equals(gateObject.getName())) {
+                gateBoundaryUpdate = object.getProperties().get("boundary", Boolean.class);
+                break;
+            }
+        }
 
+        Gdx.app.log("Gate Boundary", String.valueOf(gateBoundaryUpdate));
 
-
-    private void updateGateTiles(MapLayer gateLayer) {
         TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
 
-        gateTiles = new boolean[tileLayer.getWidth()][tileLayer.getHeight()];
+        // Reset all gate tiles to false (not boundary)
+        for (int tileX = 0; tileX < tileLayer.getWidth(); tileX++) {
+            for (int tileY = 0; tileY < tileLayer.getHeight(); tileY++) {
+                gateTiles[tileX][tileY] = false;
+            }
+        }
 
         for (MapObject object : gateLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {
@@ -172,8 +190,8 @@ public class TileMap {
                 float height = rectangleObject.getRectangle().getHeight();
 
                 boolean isBoundary = false;
-                if (rectangleObject.getProperties().containsKey("boundary")) {
-                    isBoundary = rectangleObject.getProperties().get("boundary", Boolean.class);
+                if (object.getProperties().containsKey("boundary")) {
+                    isBoundary = object.getProperties().get("boundary", Boolean.class);
                 }
 
                 int startX = (int) (x / tileWidth);
@@ -184,12 +202,23 @@ public class TileMap {
                 for (int tileX = startX; tileX <= endX; tileX++) {
                     for (int tileY = startY; tileY <= endY; tileY++) {
                         gateTiles[tileX][tileY] = isBoundary;
+
+                        isBoundary(tileX, tileY);
                         Gdx.app.log("TileMap", "Tile Position: (" + tileX + ", " + tileY + "), Gate Tile Value: " + gateTiles[tileX][tileY]);
+                        Gdx.app.log("TileMap", "Tile Position: (" + tileX + ", " + tileY + "), is Boundary: " + isBoundary(tileX, tileY));
+
                     }
                 }
             }
         }
     }
+
+    public boolean[][] getGateTiles() {
+        return gateTiles;
+    }
+
+
+
 
     public int getWidth() {
         return boundaryTiles.length;
@@ -206,3 +235,4 @@ public class TileMap {
         return tileHeight;
     }
 }
+

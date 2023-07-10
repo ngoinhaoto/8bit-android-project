@@ -1,0 +1,34 @@
+
+Arm_Bar.png
+size: 2048, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+armBar-100
+  rotate: false
+  xy: 296, 2
+  size: 292, 40
+  orig: 292, 40
+  offset: 0, 0
+  index: -1
+armBar-33
+  rotate: false
+  xy: 590, 2
+  size: 292, 40
+  orig: 292, 40
+  offset: 0, 0
+  index: -1
+armBar-67
+  rotate: false
+  xy: 2, 2
+  size: 292, 40
+  orig: 292, 40
+  offset: 0, 0
+  index: -1
+armBar-0
+  rotate: false
+  xy: 884, 2
+  size: 292, 40
+  orig: 292, 40
+  offset: 0, 0
+  index: -1

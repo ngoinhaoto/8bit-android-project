@@ -303,6 +303,10 @@ public class Character extends Sprite {
         bullets.add(bullet);
     }
 
+    public TileMap getTileMap() {
+        return tileMap;
+    }
+
     public boolean isColliding_b(float x, float y) {
         int tileXStart = (int) (x / tileMap.getTileWidth());
         int tileXEnd = (int) ((x) / tileMap.getTileWidth());

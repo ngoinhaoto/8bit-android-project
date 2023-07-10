@@ -201,22 +201,21 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     public void onMobDeath() {
         mobsKilledThisLevel++;
         Gdx.app.log("Mobs Killed", String.valueOf(mobsKilledThisLevel));
+        MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
+        MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
+        MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
 
         if (mobsKilledThisLevel >= 3 && gate1BoundaryEnabled) {
-            MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
-            MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
-
-            // Update the gate boundary in the TileMap
-            TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx");
-            tileMap.updateGateBoundary(gate1Object, false);
-
-            // Log the gate1 boundary value
-            boolean gate1Boundary = gate1Object.getProperties().get("boundary", Boolean.class);
-            Gdx.app.log("Gate1 Boundary", String.valueOf(gate1Boundary));
-
+            character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
         }
+
+        if (mobsKilledThisLevel >= 6 && gate2BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate2Object, false);
+            gate2BoundaryEnabled = false;
+        }
     }
+
 
 
     public void rotateGun(float knobPercentX, float knobPercentY) {
