@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -111,7 +112,6 @@ public class Character extends Sprite {
     }
 
 
-
     private Mob findNearestMob() {
         Mob nearestMob = null;
         float nearestDistance = Float.MAX_VALUE;
@@ -197,7 +197,6 @@ public class Character extends Sprite {
                     bullets.removeIndex(i);
                     bulletHit = true;
 //                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
-
                     break; // Exit the inner loop since the bullet can only hit one mob
                 }
             }
@@ -295,9 +294,9 @@ public class Character extends Sprite {
 
         // t set damage thành 2
         if (!isLeft) {
-            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle(), 3);
+            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle(), 3, "bullet/bullet 5.png", bulletSpeed);
         } else {
-            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle(), 3);
+            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle(), 3, "bullet/bullet 5.png", bulletSpeed);
         }
 
         bullets.add(bullet);
@@ -424,6 +423,7 @@ public class Character extends Sprite {
             for (Bullet bullet : bullets) {
                 bullet.render(spriteBatch);
             }
+
         } else {
             // Character is dead, do not reset the state
             TextureRegion currentFrame = charDie.getKeyFrames()[0];
@@ -460,9 +460,20 @@ public class Character extends Sprite {
         this.setLastDamageTime(0);
     }
 
+
+    public Rectangle getBoundingRectangle() {
+        float x = getX();
+        float y = getY();
+        float width = getWidth();
+        float height = getHeight();
+        return new Rectangle(x + 4, y, width + 23, height + 23);
+    }
+
+
     public void setGun(Weapon gun) {
         this.gun = gun;
     }
+
     public Weapon getGun() {
         return this.gun;
     }

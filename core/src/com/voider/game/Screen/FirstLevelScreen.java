@@ -197,18 +197,16 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             mobs.add(mob);
         }
 
-//        MapObjects necromancerObjects = tiledMap.getLayers().get("NecromancerPosition").getObjects();
-//
-//        for (MapObject object: necromancerObjects) {
-//            float x = object.getProperties().get("x", Float.class);
-//            float y = object.getProperties().get("y", Float.class);
-//
-//            Mob mob = new Mob(tileMap, x, y, "necromancer", false, 100, 2, character, this);
-//            mob.setPosition(x, y);
-//            mobs.add(mob);
-//
-//        }
+        MapObjects necromancerObjects = tiledMap.getLayers().get("NecromancerPosition").getObjects();
 
+        for (MapObject object: necromancerObjects) {
+            float x = object.getProperties().get("x", Float.class);
+            float y = object.getProperties().get("y", Float.class);
+
+            Mob mob = new Mob(tileMap, x, y, "necromancer", false, 40, 1, character, this);
+            mob.setPosition(x, y);
+            mobs.add(mob);
+        }
     }
     @Override
     public void onMobDeath() {
@@ -218,12 +216,12 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
 
-        if (mobsKilledThisLevel >= 3 && gate1BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
         }
 
-        if (mobsKilledThisLevel >= 6 && gate2BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 10 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2BoundaryEnabled = false;
         }
@@ -307,6 +305,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             bullet.render(batch); // Render bullet
         }
         batch.end();
+
 
         // Update and render the controls
         stage.act(delta);

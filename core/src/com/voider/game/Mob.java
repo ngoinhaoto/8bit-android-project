@@ -11,6 +11,7 @@
     import com.badlogic.gdx.math.Rectangle;
     import com.badlogic.gdx.math.Vector2;
     import com.badlogic.gdx.scenes.scene2d.Actor;
+    import com.badlogic.gdx.utils.Array;
 
     import org.w3c.dom.Text;
 
@@ -32,7 +33,6 @@
         private float distanceToMove;
         private boolean movingRight;
         private State currentState;
-
         private State previousState;
         public TextureAtlas textureAtlas;
         private Animation<TextureRegion> mIdle;
@@ -58,6 +58,10 @@
         private TextureAtlas mShootAtlas;
         private Animation<TextureRegion> mShoot;
 
+        private Array<Bullet> bullets;
+        private int shootingRadius;
+
+
         public interface MobDeathListener {
             void onMobDeath();
         }
@@ -75,12 +79,17 @@
             this.damage = damage;
             this.mobDeathListener = mobDeathListener;
 
+
+
             // Set the movement speed based on the isMelee parameter
             if (isMelee) {
                 movementSpeed = 54; // Set a higher speed for melee mobs
                 biteCooldown = 0f;
             } else {
-                movementSpeed = 24; // Set the default speed for non-melee mobs
+                movementSpeed = 35; // Set the default speed for non-melee mobs
+                this.bullets = new Array<>();
+                shootingCooldown = 0;
+                shootingRadius = 200;
             }
 
 
@@ -98,13 +107,21 @@
                 mWalk.setFrameDuration(FRAME_TIME);
 //            mAttack.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
-
-
             } else if (mobType == "necromancer") {
-//                textureAtlas = new TextureAtlas();
-            }
+                textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/necromancer/necromancer.atlas"));
 
+                mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+                mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+//            mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
+                mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+                mIdle.setFrameDuration(FRAME_TIME);
+                mWalk.setFrameDuration(FRAME_TIME);
+//            mAttack.setFrameDuration(FRAME_TIME);
+                mDie.setFrameDuration(FRAME_TIME);
+            }
         }
+
+
 
         @Override
         public void act(float delta) {
@@ -112,6 +129,7 @@
             // Update the mob's behavior and attributes
             update(delta);
         }
+
 
         public void takeDamage(int damage) {
             if (currentState == State.DEAD) {
@@ -128,6 +146,24 @@
                     mobDeathListener.onMobDeath();
                 }
                 this.currentState = State.DEAD;
+            }
+        }
+
+        public void shoot(Character character) {
+            if (!isMelee) {
+                if (currentState == State.DEAD) {
+                    return;
+                }
+
+                if (mobType == "necromancer") {
+                    Bullet bullet = new Bullet(getX(), getY(), 0, 0, false, 0, damage, "bullet/shadow_ball.png", 180);
+                    // Calculate the angle towards the character
+                    float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
+
+                    bullet.setAngle(angle);
+                    bullets.add(bullet);
+                }
+
             }
         }
 
@@ -163,7 +199,6 @@
             // Calculate the distance threshold
             float distanceThreshold = 16;
 
-
             // Check if the player is within the mob's radius and not colliding
             if (totalDistanceToPlayer <= radius && !isColliding && totalDistanceToPlayer > distanceThreshold) {
                 // Move towards the player
@@ -180,41 +215,102 @@
                     setY(getY() + distanceMovedY * directionY);
 
                     // Perform the bite action when in range
-                    if (isMelee && biteCooldown <= 0.0f) {
+                    if (isMelee && biteCooldown <= 0.0f && player.getState() != Character.State.DEAD) {
                         bite(player);
                         biteCooldown = BITE_COOLDOWN; // Reset the biteCooldown to the cooldown duration
                     }
+
                 } else {
                     // Mob is about to hit a wall, stop moving towards the player
                     // You can add any necessary behavior here, such as changing direction or stopping completely
-
                 }
             } else {
                 // Perform random left and right movement
                 randomMovement(delta);
             }
 
+
+            // shooting mob shoots at character if the character is within the shootingradius
+            if (totalDistanceToPlayer <= shootingRadius && !isColliding && totalDistanceToPlayer > distanceThreshold && !isMelee) {
+                if (!isMelee && shootingCooldown <= 0.0f && player.getState() != Character.State.DEAD) {
+                    shoot(player);
+                    shootingCooldown = SHOOTING_COOLDOWN;
+                }
+            }
+//
+            // Update bullets
+            if (!isMelee) {
+                for (int i = bullets.size - 1; i >= 0; i--) {
+                    Bullet bullet = bullets.get(i);
+                    bullet.update(delta);
+
+                    // Check for collisions with obstacles or player
+                    float bulletRadius = bullet.getWidth() / 2; // Assuming the bullet object has a circular shape
+
+                    // Calculate the center position of the bullet
+                    float bulletCenterX = bullet.getPosition().x + bulletRadius;
+                    float bulletCenterY = bullet.getPosition().y + bulletRadius;
+
+                    // Check for collision with the player
+                    float playerRadius = player.getWidth() / 2; // Assuming the player object has a circular shape
+                    float playerCenterX = player.getPosition().x + playerRadius;
+                    float playerCenterY = player.getPosition().y + playerRadius;
+
+                    // Calculate the distance between the centers of the bullet and player
+                    float distance = Vector2.dst(bulletCenterX, bulletCenterY, playerCenterX, playerCenterY) - 10;
+
+                    if (distance < bulletRadius + playerRadius) {
+                        player.takeDamage(bullet.getDamage());
+                        Gdx.app.log("MOBBULLET", "Bullet hits character");
+                        bullets.removeIndex(i);
+                        continue;
+                    }
+
+                    // Check for collision with obstacles
+                    if (isColliding_b(bulletCenterX, bulletCenterY - 4) || isBulletOffScreen(bullet)) {
+                        bullets.removeIndex(i);
+                    }
+                }
+
+                if (shootingCooldown > 0.0f) {
+                    shootingCooldown -= delta;
+                }
+            }
+
             // Update the bite cooldown
-            if (biteCooldown > 0.0f) {
-                biteCooldown -= delta;
+            if (isMelee) {
+                if (biteCooldown > 0.0f) {
+                    biteCooldown -= delta;
+                }
             }
         }
 
+        private boolean isBulletOffScreen(Bullet bullet) {
+            float screenWidth = Gdx.graphics.getWidth();
+            float screenHeight = Gdx.graphics.getHeight();
+            float bulletWidth = bullet.getBulletTexture().getRegionWidth();
+            float bulletHeight = bullet.getBulletTexture().getRegionHeight();
+
+            float bulletX = bullet.getPosition().x;
+            float bulletY = bullet.getPosition().y;
+
+            return bulletX < -bulletWidth || bulletX > screenWidth || bulletY < -bulletHeight || bulletY > screenHeight;
+        }
 
         public void bite(Character character) {
-            if (currentState != State.DEAD || character.getState() != Character.State.DEAD) {
+            // mob has to be a melee mob to bite people
+            if (currentState != State.DEAD || character.getState() != Character.State.DEAD || isMelee) {
                 float distanceToCharacterX = character.getPosition().x - getX();
                 float distanceToCharacterY = character.getPosition().y - getY();
                 float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
-                float biteRange = 20;
+                float biteRange = 30;
 
                 if (totalDistanceToCharacter <= biteRange) {
                     // Inflict damage to the character
                     character.takeDamage(damage);
 
                     //  add any additional behavior here, such as playing a sound effect or triggering an animation
-
                 }
             }
         }
@@ -297,8 +393,30 @@
                     isBeingAttacked = false;
                 }
             }
+
+            // Render bullets
+            if (!isMelee) {
+                for (Bullet bullet : bullets) {
+                    bullet.render(spriteBatch);
+                }
+            }
         }
 
+        public boolean isColliding_b(float x, float y) {
+            int tileXStart = (int) (x / tileMap.getTileWidth());
+            int tileXEnd = (int) ((x) / tileMap.getTileWidth());
+            int tileYStart = (int) (y / tileMap.getTileHeight());
+            int tileYEnd = (int) ((y) / tileMap.getTileHeight());
+
+            // Check collisions for each corner of the character
+            boolean topLeft = tileMap.isBoundary(tileXStart, tileYEnd);
+            boolean topRight = tileMap.isBoundary(tileXEnd, tileYEnd);
+            boolean bottomLeft = tileMap.isBoundary(tileXStart, tileYStart);
+            boolean bottomRight = tileMap.isBoundary(tileXEnd, tileYStart);
+
+            // Return true if any corner collides with a boundary tile
+            return topLeft || topRight || bottomLeft || bottomRight;
+        }
         public boolean isColliding(float x, float y) {
             int tileXStart = (int) (x / tileMap.getTileWidth());
             int tileXEnd = (int) ((x + 16 + getWidth()) / tileMap.getTileWidth());
@@ -315,6 +433,14 @@
             return topLeft || topRight || bottomLeft || bottomRight;
         }
 
+        public Array<Bullet> getBullets() {
+            return bullets;
+        }
+
+
+        public boolean getMeleeStatus() {
+            return isMelee;
+        }
         public TextureRegion getFrame(float deltaTime) {
             currentState = getState();
             TextureRegion region;
