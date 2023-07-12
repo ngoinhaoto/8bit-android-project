@@ -234,19 +234,27 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
         MapObject gate3Object = gateLayer.getObjects().get("Gate3Object");
 
+        MapLayer gate1 = tiledMap.getLayers().get("Gate1");
+        MapLayer gate2 = tiledMap.getLayers().get("Gate2");
+        MapLayer gate3 = tiledMap.getLayers().get("Gate3");
+
         if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
+            // make the gate disappear afterward
+            gate1.setVisible(false);
         }
 
         if (mobsKilledThisLevel >= 10 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2BoundaryEnabled = false;
+            gate2.setVisible(false);
         }
 //         The portal appear
         if (mobsKilledThisLevel >= 16 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
+            gate3.setVisible(false);
             portalVisible = true;
         }
     }
