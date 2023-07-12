@@ -48,19 +48,14 @@ public class Character extends Sprite {
     private static final float ARMOR_REGEN_TICK = 1f; // Time in seconds for each armor regeneration tick
     private float lastDamageTime;
     private static final float DAMAGE_COOLDOWN = 5f; // Time in seconds to wait before armor regeneration
-<<<<<<< Updated upstream
-
-=======
     private float timer;
     private static final int TIMER_INCREMENT = 1; // Timer increment in seconds
     public int mobsKilled;
->>>>>>> Stashed changes
 
     public void setMobsKilled(int mobsKilled) {
         this.mobsKilled = mobsKilled;
     }
 
-    public int mobsKilled;
 
     public float getTimer() {
         return timer;
@@ -70,7 +65,6 @@ public class Character extends Sprite {
         this.timer = timer;
     }
 
-    private float timer;
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
         setARM(getMaxARM());
@@ -115,11 +109,8 @@ public class Character extends Sprite {
     }
 
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
-<<<<<<< Updated upstream
-=======
         timer += delta;
 
->>>>>>> Stashed changes
         // Check if the character is dead
         if (currentState == State.DEAD) {
             // Character is dead, do not update movement or shooting

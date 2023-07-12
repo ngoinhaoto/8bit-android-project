@@ -264,6 +264,7 @@
 
                     if (distance < bulletRadius + playerRadius) {
                         player.takeDamage(bullet.getDamage());
+
                         Gdx.app.log("MOBBULLET", "Bullet hits character");
                         bullets.removeIndex(i);
                         continue;

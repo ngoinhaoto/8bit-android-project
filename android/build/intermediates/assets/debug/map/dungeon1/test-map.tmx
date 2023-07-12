@@ -575,12 +575,12 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="38" x="1433.39" y="336.333" width="225.185" height="16">
+  <object id="38" x="1442.08" y="328.364" width="225.185" height="16">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="145" x="1209.24" y="336.333" width="166.185" height="16">
+  <object id="145" x="1206.96" y="327.639" width="166.185" height="16">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
