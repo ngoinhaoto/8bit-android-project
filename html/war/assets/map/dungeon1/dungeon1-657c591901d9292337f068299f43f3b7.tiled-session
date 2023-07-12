@@ -1,9 +1,9 @@
 {
     "activeFile": "test-map.tmx",
     "expandedProjectPaths": [
+        ".",
         "tilemap",
-        "tileset",
-        "."
+        "tileset"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -58,11 +58,11 @@
             "scaleInEditor": 1
         },
         "test-map.tmx": {
-            "scale": 4,
-            "selectedLayer": 10,
+            "scale": 2,
+            "selectedLayer": 12,
             "viewCenter": {
-                "x": 1434.25,
-                "y": 150.125
+                "x": 386,
+                "y": 362.25
             }
         },
         "tilemap/map/dungeon1/tileset/t1.tsx": {

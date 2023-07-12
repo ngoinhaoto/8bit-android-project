@@ -3,8 +3,9 @@ i:badlogic.jpg:badlogic-ba3e909e98a4c58c6a15f043f2e1a8a7.jpg:68465:image/jpeg:1
 d:bullet:bullet:0:application/unknown:1
 i:bullet/bullet 3.png:bullet/bullet 3-c68c225acc992d6494ed7819796d05a7.png:598:image/png:1
 i:bullet/bullet 5.png:bullet/bullet 5-a9db0d5ea8bb843c2e0eefe5c906f515.png:606:image/png:1
+i:bullet/shadow_ball.png:bullet/shadow_ball-cef05a9afa812c6c6489304dec1d8f41.png:766:image/png:1
 d:char:char:0:application/unknown:1
-t:char/char.atlas:char/char-003d496a947499790a4905aa39294679.atlas:620:application/unknown:1
+t:char/char.atlas:char/char-d68dbacc6070f5820a1f22246ab2674e.atlas:668:application/unknown:1
 i:char/char.png:char/char-ded4f756de178475ccaae7f643805a9c.png:2360:image/png:1
 d:char/die:char/die:0:application/unknown:1
 i:char/die/char32x32 die.png:char/die/char32x32 die-287fd9946377cb87530096db487695da.png:550:image/png:1
@@ -30,9 +31,6 @@ i:hud/Armor Bar/armBar-67.png:hud/Armor Bar/armBar-67-db18b9714aca587eb78057b25f
 i:hud/Armor Bar/armBar-empty.png:hud/Armor Bar/armBar-empty-6d12333a9d800772a62653bed9494ad4.png:329:image/png:1
 t:hud/Armor Bar/Arm_Bar.atlas:hud/Armor Bar/Arm_Bar-9869760ef277b4e465e71def2de65547.atlas:507:application/unknown:1
 i:hud/Armor Bar/Arm_Bar.png:hud/Armor Bar/Arm_Bar-b7513f7c42ee038fd202b28068045ec3.png:3218:image/png:1
-t:hud/Arm_Bar.atlas:hud/Arm_Bar-8a9bb2dea54ba9aa7fce8261b8bceeba.atlas:511:application/unknown:1
-i:hud/Arm_Bar.png:hud/Arm_Bar-b7513f7c42ee038fd202b28068045ec3.png:3218:image/png:1
-i:hud/game_over_overlay.jpg:hud/game_over_overlay-4a35a6fe817e15159d40588aa4778fe6.jpg:49984:image/jpeg:1
 d:hud/HP Bar:hud/HP Bar:0:application/unknown:1
 i:hud/HP Bar/hpBar-100.png:hud/HP Bar/hpBar-100-6233b3157191756153d10d32bb88923a.png:363:image/png:1
 i:hud/HP Bar/hpBar-20.png:hud/HP Bar/hpBar-20-9f8cbad8d5ae4dbba2d72442feb0582f.png:361:image/png:1
@@ -49,14 +47,14 @@ d:map:map:0:application/unknown:1
 d:map/dungeon1:map/dungeon1:0:application/unknown:1
 b:map/dungeon1/0x72_DungeonTilesetII_v1.6.tsx:map/dungeon1/0x72_DungeonTilesetII_v1.6-c4f35948e55dd276e0e3c4ed69818eb9.tsx:282:application/unknown:1
 b:map/dungeon1/dungeon1.tiled-project:map/dungeon1/dungeon1-10b361e73e1df0f1ab301d093a29c039.tiled-project:208:application/unknown:1
-b:map/dungeon1/dungeon1.tiled-session:map/dungeon1/dungeon1-e1884f486257a2caff6ad6230d610a8b.tiled-session:3291:application/unknown:1
+b:map/dungeon1/dungeon1.tiled-session:map/dungeon1/dungeon1-657c591901d9292337f068299f43f3b7.tiled-session:3184:application/unknown:1
 i:map/dungeon1/Dungeon_Tileset.png:map/dungeon1/Dungeon_Tileset-de8da6d06c44e17a8360dd2a18e0e847.png:6326:image/png:1
 i:map/dungeon1/pixil-frame-0.png:map/dungeon1/pixil-frame-0-25c7fce868e20dd5be054a716ea23354.png:8241:image/png:1
 b:map/dungeon1/pixil-frame-0.tsx:map/dungeon1/pixil-frame-0-f5ee7fd0d6174ad0393c2729009fd2fd.tsx:244:application/unknown:1
 b:map/dungeon1/t1.tsx:map/dungeon1/t1-248382eb43c7a9b732b84312718c3326.tsx:235:application/unknown:1
 b:map/dungeon1/t2.tsx:map/dungeon1/t2-f830fe0d02114c59a1a1b4b890a21624.tsx:304:application/unknown:1
 b:map/dungeon1/t3.tsx:map/dungeon1/t3-1a83bc45ec3dafdbff3ebc3b6c35471a.tsx:324:application/unknown:1
-b:map/dungeon1/test-map.tmx:map/dungeon1/test-map-77978b34ee304a2a946191f3714e6277.tmx:111614:application/unknown:1
+b:map/dungeon1/test-map.tmx:map/dungeon1/test-map-fe4ed070779c84b2aadce0d18c3f6f9f.tmx:167457:application/unknown:1
 d:map/tileset:map/tileset:0:application/unknown:1
 i:map/tileset/0x72_16x16DungeonTileset.v5.png:map/tileset/0x72_16x16DungeonTileset.v5-3e6271d653c7d0de9a3e972b1d46ae1e.png:26827:image/png:1
 i:map/tileset/0x72_DungeonTilesetII_v1.6.png:map/tileset/0x72_DungeonTilesetII_v1.6-f546882c6dd017f5d53f10a61c880272.png:39623:image/png:1
@@ -78,11 +76,34 @@ i:mobs/chort/walk/chort_run_anim_f0.png:mobs/chort/walk/chort_run_anim_f0-98fed1
 i:mobs/chort/walk/chort_run_anim_f1.png:mobs/chort/walk/chort_run_anim_f1-356027c1f4e72f6910a3391770e0d72b.png:300:image/png:1
 i:mobs/chort/walk/chort_run_anim_f2.png:mobs/chort/walk/chort_run_anim_f2-f7091edf2428265abc45f44f153800d3.png:310:image/png:1
 i:mobs/chort/walk/chort_run_anim_f3.png:mobs/chort/walk/chort_run_anim_f3-93df4ef74624287c8928c6a670cc3ba7.png:285:image/png:1
+d:mobs/necromancer:mobs/necromancer:0:application/unknown:1
+d:mobs/necromancer/die:mobs/necromancer/die:0:application/unknown:1
+i:mobs/necromancer/die/necromancer_die.png:mobs/necromancer/die/necromancer_die-8847923b2ea063ffcf7815cf6d7ef655.png:670:image/png:1
+d:mobs/necromancer/idle:mobs/necromancer/idle:0:application/unknown:1
+i:mobs/necromancer/idle/idle 1.png:mobs/necromancer/idle/idle 1-06d9675ecc9af63b103e806200d6a3fb.png:4356:image/png:1
+i:mobs/necromancer/idle/idle 2.png:mobs/necromancer/idle/idle 2-137364ec0269941802717c718c56b6d3.png:258:image/png:1
+t:mobs/necromancer/necromancer.atlas:mobs/necromancer/necromancer-9b394657e0b5f71f8cd71b51c9f6fad3.atlas:769:application/unknown:1
+i:mobs/necromancer/necromancer.png:mobs/necromancer/necromancer-03897fe37112461a8fce40316fe93e6e.png:680:image/png:1
+d:mobs/necromancer/walk:mobs/necromancer/walk:0:application/unknown:1
+i:mobs/necromancer/walk/necromancer_anim_f0.png:mobs/necromancer/walk/necromancer_anim_f0-90e1d6f7a93e6d7cc2e42f4ce48c3e4c.png:245:image/png:1
+i:mobs/necromancer/walk/necromancer_anim_f1.png:mobs/necromancer/walk/necromancer_anim_f1-137364ec0269941802717c718c56b6d3.png:258:image/png:1
+i:mobs/necromancer/walk/necromancer_anim_f2.png:mobs/necromancer/walk/necromancer_anim_f2-79b6ab4b8d1a5773774665deb9d9a344.png:247:image/png:1
+i:mobs/necromancer/walk/necromancer_anim_f3.png:mobs/necromancer/walk/necromancer_anim_f3-e83affbacb109b613215dc32cb6f4b5f.png:240:image/png:1
 i:pixil-gif-drawing.gif:pixil-gif-drawing-a60b9b9bfc0ac9302176c4595edc0cf3.gif:6957:image/gif:1
 i:Pixilart Sprite Sheet.png:Pixilart Sprite Sheet-a175baa6f9af61fdc9e617aa90345404.png:3375:image/png:1
+d:portal:portal:0:application/unknown:1
+d:portal/animation:portal/animation:0:application/unknown:1
+i:portal/animation/f0_scaled_2x_pngcrushed.png:portal/animation/f0_scaled_2x_pngcrushed-99d2b0743ac354ac2740b4966c3b05f6.png:3351:image/png:1
+i:portal/animation/f1_scaled_2x_pngcrushed.png:portal/animation/f1_scaled_2x_pngcrushed-19b9741d656f4f9a644eae663b508986.png:3286:image/png:1
+i:portal/animation/f2_scaled_2x_pngcrushed.png:portal/animation/f2_scaled_2x_pngcrushed-01fa50464ab9aec3665fe8a0b9627187.png:3338:image/png:1
+i:portal/animation/f3_scaled_2x_pngcrushed.png:portal/animation/f3_scaled_2x_pngcrushed-106abf22ce670c07d112acd147041b9f.png:3382:image/png:1
+t:portal/portal.atlas:portal/portal-05bf39aabc0c5b812989af2fffc07b36.atlas:451:application/unknown:1
+i:portal/portal.png:portal/portal-db899ca65ca018e40eaf7bf853fa03a7.png:14098:image/png:1
 d:shootingbutton:shootingbutton:0:application/unknown:1
 i:shootingbutton/shoot-button-down.png:shootingbutton/shoot-button-down-89b9fad903d77ad1c75a06a55f397888.png:13295:image/png:1
 i:shootingbutton/shoot-button-up.png:shootingbutton/shoot-button-up-712942ed784c4e3363037a483ceffa3f.png:9303:image/png:1
+d:skin:skin:0:application/unknown:1
+i:skin/game_over.png:skin/game_over-7f5f9c8924f191530d7a38e293f717d0.png:26003:image/png:1
 b:test.pixil:test-5dba1dd01fcbc116653d87077f68b0ca.pixil:33586:application/unknown:1
 d:weap:weap:0:application/unknown:1
 d:weap/gun:weap/gun:0:application/unknown:1

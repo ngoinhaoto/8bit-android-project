@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.voider.game.Mob;
+import com.voider.game.Portal;
 import com.voider.game.Scene.HUD;
 import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
@@ -65,6 +67,10 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
     private boolean gate1BoundaryEnabled = true;
     private boolean gate2BoundaryEnabled = true;
+    private boolean gate3BoundaryEnabled = true;
+    private Portal portal;
+    private boolean portalVisible = false;
+
 
     public FirstLevelScreen(Voider game) {
         this.game = game;
@@ -76,12 +82,23 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
         bullets = new Array<>();
         mobsKilledThisLevel=0;
+        loadPortal();
         loadCamera();
         loadCharacter();
         loadControls();
         initialiseMobs();
         loadHUD();
     }
+
+    private void loadPortal() {
+        MapLayer portalLayer = tiledMap.getLayers().get("PortalPosition");
+        MapObject portalObj = portalLayer.getObjects().get("PortalPosition");
+        float x = portalObj.getProperties().get("x", Float.class);
+        float y = portalObj.getProperties().get("y", Float.class);
+        portal = new Portal();
+        portal.setPosition(x, y);
+    }
+
     @Override
     public void show() {
         // Initialize resources or perform any setup
@@ -215,6 +232,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
+        MapObject gate3Object = gateLayer.getObjects().get("Gate3Object");
 
         if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
@@ -224,6 +242,12 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         if (mobsKilledThisLevel >= 10 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2BoundaryEnabled = false;
+        }
+//         The portal appear
+        if (mobsKilledThisLevel >= 16 && gate3BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate3Object, false);
+            gate3BoundaryEnabled = false;
+            portalVisible = true;
         }
     }
 
@@ -285,6 +309,15 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         stage.act(delta);
         stage.draw();
 
+        // Render the portal if it's visible
+        if (portalVisible) {
+            batch.begin();
+            Gdx.app.log("Portal", "Loaded portal");
+            portal.update(delta);
+            portal.render(batch);
+            batch.end();
+        }
+
         // Render the mobs
         batch.begin();
         for (Mob mob : mobs) {
@@ -336,6 +369,9 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     @Override
     public void hide() {
         // Dispose of resources or perform any cleanup
+        if (portal != null) {
+            portal.dispose();
+        }
     }
 
     @Override

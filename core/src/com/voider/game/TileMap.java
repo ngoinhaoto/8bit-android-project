@@ -218,8 +218,6 @@ public class TileMap {
     }
 
 
-
-
     public int getWidth() {
         return boundaryTiles.length;
     }
