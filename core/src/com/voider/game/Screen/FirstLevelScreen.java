@@ -228,6 +228,8 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     @Override
     public void onMobDeath() {
         mobsKilledThisLevel++;
+        character.setMobsKilled(character.getMobsKilled() + 1);
+
         Gdx.app.log("Mobs Killed", String.valueOf(mobsKilledThisLevel));
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
