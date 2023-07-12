@@ -1,0 +1,69 @@
+
+animation_chort.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+die
+  rotate: false
+  xy: 20, 9
+  size: 23, 16
+  orig: 23, 16
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 63, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 153, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 99, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 45, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 135, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 81, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 2, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 117, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1

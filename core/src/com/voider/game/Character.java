@@ -48,9 +48,22 @@ public class Character extends Sprite {
     private static final float ARMOR_REGEN_TICK = 1f; // Time in seconds for each armor regeneration tick
     private float lastDamageTime;
     private static final float DAMAGE_COOLDOWN = 5f; // Time in seconds to wait before armor regeneration
+    private float timer;
 
 
     public int mobsKilled;
+
+    public void setMobsKilled(int mobsKilled) {
+        this.mobsKilled = mobsKilled;
+    }
+
+    public float getTimer() {
+        return timer;
+    }
+
+    public void setTimer(float timer) {
+        this.timer = timer;
+    }
 
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
@@ -77,6 +90,7 @@ public class Character extends Sprite {
         armorRegenTimer = ARMOR_REGEN_TICK; // Initialize the armor regeneration timer
 
         mobsKilled = 0;
+        timer = 0;
     }
 
     public void updateGunAim() {
@@ -116,7 +130,6 @@ public class Character extends Sprite {
         Mob nearestMob = null;
         float nearestDistance = Float.MAX_VALUE;
         Vector2 characterPosition = new Vector2(getX(), getY());
-
         for (Mob mob : mobsInRange) {
             if (mob.getState() != Mob.State.DEAD) {
                 Vector2 mobPosition = new Vector2(mob.getX(), mob.getY());
@@ -128,7 +141,6 @@ public class Character extends Sprite {
                 }
             }
         }
-
         return nearestMob;
     }
 

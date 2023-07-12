@@ -89,7 +89,7 @@
                 movementSpeed = 35; // Set the default speed for non-melee mobs
                 this.bullets = new Array<>();
                 shootingCooldown = 0;
-                shootingRadius = 200;
+                shootingRadius = 100;
             }
 
 
@@ -184,6 +184,9 @@
             stateTime += delta;
 
             if (currentState == State.DEAD) {
+                if (!isMelee) {
+                    bullets.clear();
+                }
                 return; // If mob is dead, no movement or actions are needed
             }
 
@@ -457,6 +460,7 @@
                     this.movingRight = true;
                     break;
                 case ATTACKING:
+                    region = mAttack.getKeyFrame(stateTime, true);
                     region = mAttack.getKeyFrame(stateTime, true);
                     break;
                 case DEAD:
