@@ -227,9 +227,14 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     }
     @Override
     public void onMobDeath() {
+<<<<<<< Updated upstream
         mobsKilledThisLevel++;
         character.setMobsKilled(character.getMobsKilled() + 1);
 
+=======
+
+        character.setMobsKilled(character.getMobsKilled() + 1);
+>>>>>>> Stashed changes
         Gdx.app.log("Mobs Killed", String.valueOf(mobsKilledThisLevel));
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
@@ -349,13 +354,10 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         }
         batch.end();
 
-
         // Update and render the controls
         stage.act(delta);
         stage.draw();
     }
-
-
 
 
     @Override
