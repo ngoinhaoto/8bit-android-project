@@ -79,60 +79,6 @@ public class Character extends Sprite {
         mobsKilled = 0;
     }
 
-    public void updateGunAim() {
-        if (mobsInRange.isEmpty()) {
-            // If there are no mobs in range, reset the gun's aim
-            return;
-        }
-
-        // Find the nearest mob
-        Mob nearestMob = findNearestMob();
-
-        // Check if a living mob is found
-        if (nearestMob == null) {
-            // If no living mob is found, reset the gun's aim
-            return;
-        }
-
-        // Get the position of the character and the nearest mob
-        Vector2 characterPosition = getPosition();
-        Vector2 mobPosition = nearestMob.getPosition();
-
-        // Calculate the direction vector from character to mob
-        Vector2 direction = mobPosition.cpy().sub(characterPosition);
-
-        // Calculate the angle using atan2
-        float angle = MathUtils.atan2(direction.y, direction.x);
-
-        // Convert the angle to degrees
-        angle = MathUtils.radiansToDegrees * angle;
-
-        // Set the angle for the gun
-        this.gun.setAngle(angle);
-    }
-
-
-    private Mob findNearestMob() {
-        Mob nearestMob = null;
-        float nearestDistance = Float.MAX_VALUE;
-        Vector2 characterPosition = new Vector2(getX(), getY());
-
-        for (Mob mob : mobsInRange) {
-            if (mob.getState() != Mob.State.DEAD) {
-                Vector2 mobPosition = new Vector2(mob.getX(), mob.getY());
-                float distance = characterPosition.dst(mobPosition);
-
-                if (distance < nearestDistance) {
-                    nearestDistance = distance;
-                    nearestMob = mob;
-                }
-            }
-        }
-
-        return nearestMob;
-    }
-
-
     // Add this method to update the mobsInRange list based on the character's attacking radius
     public void updateMobsInRange(float attackingRadius, Array<Mob> allMobs) {
         mobsInRange.clear(); // Clear the current list of mobs in range
@@ -150,14 +96,11 @@ public class Character extends Sprite {
     }
 
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
-
         // Check if the character is dead
         if (currentState == State.DEAD) {
             // Character is dead, do not update movement or shooting
             return;
         }
-
-
 
         // Update the character's position based on input or game logic
         float deltaX = joystickX * speed * delta;
@@ -174,50 +117,13 @@ public class Character extends Sprite {
             position.y = desiredY; // Vertical movement
         }
 
-
         // Update the mobs in range
         float attackingRadius = 170;
         updateMobsInRange(attackingRadius, allMobs);
         // Update the gun aim
-        updateGunAim();
+        this.gun.updateGunAim(mobsInRange);
         // Update the gun
-        this.gun.update(delta);
-
-
-        // Update the bullets' positions and check for collision with mobs
-        for (int i = bullets.size - 1; i >= 0; i--) {
-            Bullet bullet = bullets.get(i);
-            bullet.update(delta);
-
-            // Check for collision with mobs within attacking radius
-            boolean bulletHit = false;
-            for (Mob mob : mobsInRange) {
-                if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
-                    mob.takeDamage(bullet.getDamage());
-                    bullets.removeIndex(i);
-                    bulletHit = true;
-//                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
-                    break; // Exit the inner loop since the bullet can only hit one mob
-                }
-            }
-
-            // If the bullet didn't hit any living mob within attacking radius, check for collision with all mobs
-            if (!bulletHit) {
-                for (Mob mob : allMobs) {
-                    if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
-                        mob.takeDamage(bullet.getDamage());
-                        bullets.removeIndex(i);
-//                        Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
-                        break; // Exit the loop since the bullet can only hit one mob
-                    }
-                }
-            }
-
-            // Check for collision with boundaries or off-screen
-            if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y - 4) || isBulletOffScreen(bullet)) {
-                bullets.removeIndex(i);
-            }
-        }
+        this.gun.update(delta, allMobs);
 
         // Increment the stateTime for animation
         stateTime += delta;
@@ -254,17 +160,17 @@ public class Character extends Sprite {
         }
     }
 
-    private boolean isBulletOffScreen(Bullet bullet) {
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
-        float bulletWidth = bullet.getBulletTexture().getRegionWidth();
-        float bulletHeight = bullet.getBulletTexture().getRegionHeight();
-
-        float bulletX = bullet.getPosition().x;
-        float bulletY = bullet.getPosition().y;
-
-        return bulletX < -bulletWidth || bulletX > screenWidth || bulletY < -bulletHeight || bulletY > screenHeight;
-    }
+//    private boolean isBulletOffScreen(Bullet bullet) {
+//        float screenWidth = Gdx.graphics.getWidth();
+//        float screenHeight = Gdx.graphics.getHeight();
+//        float bulletWidth = bullet.getBulletTexture().getRegionWidth();
+//        float bulletHeight = bullet.getBulletTexture().getRegionHeight();
+//
+//        float bulletX = bullet.getPosition().x;
+//        float bulletY = bullet.getPosition().y;
+//
+//        return bulletX < -bulletWidth || bulletX > screenWidth || bulletY < -bulletHeight || bulletY > screenHeight;
+//    }
 
     public void shoot() {
         //Change state of Gun
@@ -275,51 +181,11 @@ public class Character extends Sprite {
         }
 
         this.gun.setState();
-
-        // Create a new bullet,
-        float bulletSpeed = 400;
-
-        float velocityX = 0;
-        float velocityY = 0;
-
-        if (!isLeft) {
-            velocityX = bulletSpeed;
-        } else {
-            velocityX = -bulletSpeed;
-        }
-
-        Bullet bullet;
-
-        // getPosition().y + 10 because the bullet needs to be fired from the arm of the character.
-
-        // t set damage thành 2
-        if (!isLeft) {
-            bullet = new Bullet(getPosition().x + 24, getPosition().y + 10, velocityX, velocityY, false, gun.getAngle(), 3, "bullet/bullet 5.png", bulletSpeed);
-        } else {
-            bullet = new Bullet(getPosition().x - 4, getPosition().y + 10, velocityX, velocityY, true, gun.getAngle(), 3, "bullet/bullet 5.png", bulletSpeed);
-        }
-
-        bullets.add(bullet);
+        this.gun.shoot();
     }
 
     public TileMap getTileMap() {
         return tileMap;
-    }
-
-    public boolean isColliding_b(float x, float y) {
-        int tileXStart = (int) (x / tileMap.getTileWidth());
-        int tileXEnd = (int) ((x) / tileMap.getTileWidth());
-        int tileYStart = (int) (y / tileMap.getTileHeight());
-        int tileYEnd = (int) ((y) / tileMap.getTileHeight());
-
-        // Check collisions for each corner of the character
-        boolean topLeft = tileMap.isBoundary(tileXStart, tileYEnd);
-        boolean topRight = tileMap.isBoundary(tileXEnd, tileYEnd);
-        boolean bottomLeft = tileMap.isBoundary(tileXStart, tileYStart);
-        boolean bottomRight = tileMap.isBoundary(tileXEnd, tileYStart);
-
-        // Return true if any corner collides with a boundary tile
-        return topLeft || topRight || bottomLeft || bottomRight;
     }
 
     public boolean isColliding(float x, float y) {
@@ -419,11 +285,6 @@ public class Character extends Sprite {
             gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
             gun.render(spriteBatch);
 
-            // Render the bullets
-            for (Bullet bullet : bullets) {
-                bullet.render(spriteBatch);
-            }
-
         } else {
             // Character is dead, do not reset the state
             TextureRegion currentFrame = charDie.getKeyFrames()[0];
@@ -509,6 +370,10 @@ public class Character extends Sprite {
     }
     public float getLastDamageTime() {
         return lastDamageTime;
+    }
+
+    public Array<Mob> getMobsInRange() {
+        return this.mobsInRange;
     }
 
     public void dispose() {
