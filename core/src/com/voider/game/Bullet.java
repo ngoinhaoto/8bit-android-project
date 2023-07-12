@@ -47,8 +47,8 @@ public class Bullet {
         if (!isLeft) {
             batch.draw(
                     bulletTexture,
-                    position.x,
-                    position.y,
+                    position.x + 1,
+                    position.y + 1,
                     bulletTexture.getRegionWidth() / 2,
                     bulletTexture.getRegionHeight() / 2,
                     bulletTexture.getRegionWidth(),
@@ -60,13 +60,13 @@ public class Bullet {
         } else {
             batch.draw(
                     bulletTexture,
-                    position.x + bulletTexture.getRegionWidth(),
-                    position.y,
+                    position.x + 1,
+                    position.y + 2,
                     bulletTexture.getRegionWidth() / 2,
                     bulletTexture.getRegionHeight() / 2,
-                    -bulletTexture.getRegionWidth(),
+                    bulletTexture.getRegionWidth(),
                     bulletTexture.getRegionHeight(),
-                    -1.0f,
+                    1.0f,
                     1.0f,
                     this.getAngle()
             );
