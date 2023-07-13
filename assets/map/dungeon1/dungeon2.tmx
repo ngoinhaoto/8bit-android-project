@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="130" height="102" tilewidth="16" tileheight="16" infinite="0" nextlayerid="28" nextobjectid="122">
+ <properties>
+  <property name="boundary" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" source="0x72_16x16DungeonTileset.v5.tsx"/>
  <tileset firstgid="513" source="DesertSands.tsx"/>
  <tileset firstgid="591" source="t1.tsx"/>
@@ -1277,24 +1280,24 @@
  </layer>
  <objectgroup id="5" name="ActualWall">
   <properties>
-   <property name="boundary" type="bool" value="true"/>
+   <property name="boundary" type="bool" value="false"/>
   </properties>
   <object id="1" x="1259.86" y="201.482" width="168.799" height="20.8109">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="3" x="1519.17" y="201.398" width="16.169" height="171.666">
+  <object id="3" x="1425.01" y="200.603" width="16.169" height="171.666">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="8" x="1194.24" y="200.174" width="17.9078" height="180.472">
+  <object id="8" x="1245.7" y="198.585" width="17.9078" height="180.472">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="10" x="1234.88" y="398.568" width="52.231" height="13.4308">
+  <object id="10" x="1257.53" y="369.566" width="52.231" height="13.4308">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
