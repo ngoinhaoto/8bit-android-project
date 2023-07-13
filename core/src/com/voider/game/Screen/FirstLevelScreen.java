@@ -15,7 +15,10 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -32,6 +35,8 @@ import com.voider.game.ShootingButton;
 import com.voider.game.TileMap;
 import com.voider.game.Voider;
 import com.voider.game.Weapon;
+
+import org.w3c.dom.css.Rect;
 
 
 public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
@@ -69,6 +74,8 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private boolean gate3BoundaryEnabled = true;
     private Portal portal;
     private boolean portalVisible = false;
+    private boolean characterEnteredPortal = false;
+
 
 
     public FirstLevelScreen(Voider game) {
@@ -283,6 +290,17 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             isGameOver = true;
         }
 
+        // Render the portal if it's visible
+        if (portalVisible) {
+            batch.begin();
+            Gdx.app.log("Portal", "Loaded portal");
+            portal.update(delta);
+            portal.render(batch);
+            batch.end();
+
+        }
+
+
         if (isGameOver) {
             // Gradually darken the screen by increasing the alpha value of the overlay color
             overlayAlpha = Math.min(overlayAlpha + OVERLAY_FADE_SPEED * delta, 1f);
@@ -319,13 +337,24 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         stage.draw();
 
         // Render the portal if it's visible
+        // Render the portal if it's visible
         if (portalVisible) {
             batch.begin();
-            Gdx.app.log("Portal", "Loaded portal");
             portal.update(delta);
             portal.render(batch);
             batch.end();
+
+            // Check if the character enters the portal
+
+            if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
+                Gdx.app.log("COLLISION", "COLLDING PORTAL");
+
+                game.setScreen(new SecondLevelScreen(this.game, this.character));
+            }
+
         }
+
+
 
         // Render the mobs
         batch.begin();

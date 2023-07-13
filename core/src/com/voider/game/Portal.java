@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Portal extends Actor {
@@ -18,6 +18,20 @@ public class Portal extends Actor {
         animation = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("portal"));
     }
 
+
+    public float getWidth() {
+        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+
+        return currentFrame.getRegionWidth();
+    }
+
+    public float getHeight() {
+        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+
+        return currentFrame.getRegionHeight();
+    }
+
+
     public void update(float delta) {
         stateTime += delta;
     }
@@ -26,6 +40,20 @@ public class Portal extends Actor {
         TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
         spriteBatch.draw(currentFrame, getX(), getY());
     }
+
+
+    public Rectangle getCollisionRectangle() {
+        float x = getX();
+        float y = getY();
+
+        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+        float width = currentFrame.getRegionWidth();
+        float height = currentFrame.getRegionHeight();
+
+        return new Rectangle(x + 30 , y, width - 30, height - 30);
+
+    }
+
 
     public void dispose() {
 

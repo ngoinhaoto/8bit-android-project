@@ -39,6 +39,11 @@ public class Character extends Sprite {
     private boolean isLeft = false;
     private boolean isBeingAttacked;
     private Weapon gun;
+
+    public void setTileMap(TileMap tileMap) {
+        this.tileMap = tileMap;
+    }
+
     private TileMap tileMap;
     private Array<Bullet> bullets;
 
@@ -346,6 +351,17 @@ public class Character extends Sprite {
         return new Rectangle(x + 4, y, width + 23, height + 23);
     }
 
+    public Rectangle getCollisionRectangle() {
+        float x = getPosition().x;
+        float y = getPosition().y;
+
+        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+
+        float width = currentFrame.getRegionWidth();
+        float height = currentFrame.getRegionHeight();
+
+        return new Rectangle(x , y, width - 10 , height - 10);
+    }
 
     public void setGun(Weapon gun) {
         this.gun = gun;
