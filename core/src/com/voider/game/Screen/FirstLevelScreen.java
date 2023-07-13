@@ -37,8 +37,8 @@ import com.voider.game.Weapon;
 public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
     private final Voider game;
-    private float initialCameraX = 1500; // Adjust this value to set the initial x-coordinate of the camera
-    private float initialCameraY = 1300; // Adjust this value to set the initial y-coordinate of the camera
+    private float initialCameraX = 470; // Adjust this value to set the initial x-coordinate of the camera
+    private float initialCameraY = 935; // Adjust this value to set the initial y-coordinate of the camera
     private OrthographicCamera gameCam;
     private SpriteBatch batch;
 
@@ -49,7 +49,6 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private Character character;
     private Touchpad touchpad;
     private Stage stage;
-
     private ShootingButton shootingButton;
 
     private Array<Bullet> bullets;
@@ -75,7 +74,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     public FirstLevelScreen(Voider game) {
         this.game = game;
         //Get map
-        tiledMap = new TmxMapLoader().load("map/dungeon1/dungeon2.tmx");
+        tiledMap = new TmxMapLoader().load("map/dungeon1/test-map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
