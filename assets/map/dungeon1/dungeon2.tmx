@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="130" height="102" tilewidth="16" tileheight="16" infinite="0" nextlayerid="28" nextobjectid="129">
  <properties>
-  <property name="boundary" type="bool" value="true"/>
+  <property name="boundary" type="bool" value="false"/>
  </properties>
  <tileset firstgid="1" source="0x72_16x16DungeonTileset.v5.tsx"/>
  <tileset firstgid="513" source="DesertSands.tsx"/>

@@ -245,6 +245,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         MapLayer gate2 = tiledMap.getLayers().get("Gate2");
         MapLayer gate3 = tiledMap.getLayers().get("Gate3");
 
+
         if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
@@ -345,7 +346,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             // Check if the character enters the portal
 
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
-                game.setScreen(new SecondLevelScreen(this.game, this.character));
+//                game.setScreen(new SecondLevelScreen(this.game, this.character));
             }
 
         }

@@ -73,9 +73,26 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
     private boolean portalVisible = false;
 
 
-    public SecondLevelScreen(Voider game, Character character) {
+//    public SecondLevelScreen(Voider game, Character character) {
+//        this.game = game;
+//        this.character = character;
+//        //Get map
+//        tiledMap = new TmxMapLoader().load("map/dungeon1/dungeon2.tmx");
+//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+//
+//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
+//
+//        bullets = new Array<>();
+//        mobsKilledThisLevel=0;
+//        loadPortal();
+//        loadCamera();
+//        loadCharacter();
+//        loadControls();
+//        initialiseMobs();
+//        loadHUD();
+//    }
+public SecondLevelScreen(Voider game) {
         this.game = game;
-        this.character = character;
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/dungeon2.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -192,13 +209,24 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         gameCam.update();
     }
 
+//    public void loadCharacter() {
+//        batch = new SpriteBatch();
+//        TileMap tileMap = new TileMap("map/dungeon1/dungeon2.tmx"); // Create the tileMap object
+//
+//        character.setTileMap(tileMap);
+//        character.setState("IDLE");
+//        character.setPosition(initialCameraX - 137, initialCameraY - 10);
+//    }
     public void loadCharacter() {
         batch = new SpriteBatch();
         TileMap tileMap = new TileMap("map/dungeon1/dungeon2.tmx"); // Create the tileMap object
-
-        character.setTileMap(tileMap);
+        character = new Character(tileMap);
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
+        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
+        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+
     }
+
 
     private void initialiseMobs() {
         mobs = new Array<>();
@@ -236,28 +264,47 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
         MapObject gate3Object = gateLayer.getObjects().get("Gate3Object");
+        MapObject gate4Object = gateLayer.getObjects().get("Gate4Object");
+        MapObject gate5Object = gateLayer.getObjects().get("Gate5Object");
 
         MapLayer gate1 = tiledMap.getLayers().get("Gate1");
         MapLayer gate2 = tiledMap.getLayers().get("Gate2");
         MapLayer gate3 = tiledMap.getLayers().get("Gate3");
+        MapLayer gate4 = tiledMap.getLayers().get("Gate3");
+        MapLayer gate5 = tiledMap.getLayers().get("Gate3");
 
-        if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
+
+        MapLayer gate1Broken = tiledMap.getLayers().get("Gate1Broken");
+        MapLayer gate3Broken = tiledMap.getLayers().get("Gate3Broken");
+
+        if (mobsKilledThisLevel >= 3 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
             gate1.setVisible(false);
+            gate1Broken.setVisible(true);
         }
 
-        if (mobsKilledThisLevel >= 10 && gate2BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 3 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2BoundaryEnabled = false;
             gate2.setVisible(false);
         }
 //         The portal appear
-        if (mobsKilledThisLevel >= 16 && gate3BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 3 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
             gate3.setVisible(false);
+            gate3Broken.setVisible(true);
+        }
+        if (mobsKilledThisLevel >= 3 && gate4BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate4Object, false);
+            gate4BoundaryEnabled = false;
+            gate4.setVisible(false);
+        }if (mobsKilledThisLevel >= 3 && gate5BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate5Object, false);
+            gate5BoundaryEnabled = false;
+            gate5.setVisible(false);
             portalVisible = true;
         }
     }

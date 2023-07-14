@@ -181,7 +181,7 @@ public class Weapon {
 
             // Check for collision with boundaries or off-screen
             if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y - 4) || isBulletOffScreen(bullet)) {
-                if (!bullets.isEmpty()) {
+                if (!bullets.isEmpty() && i < bullets.size) {
                     bullets.removeIndex(i);
                 }
             }
