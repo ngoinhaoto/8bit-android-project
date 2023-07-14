@@ -1,9 +1,9 @@
 {
     "activeFile": "pixil-frame-0.tsx",
     "expandedProjectPaths": [
-        ".",
         "tileset",
-        "tilemap"
+        "tilemap",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -43,6 +43,23 @@
         "D:/Artwork/8bit/map/char32x32 idle 1.tsx": {
             "scaleInDock": 1
         },
+        "D:/Artwork/8bit/map/dungeon1/0x72_DungeonTilesetII_v1.6.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/Artwork/8bit/map/dungeon1/pixil-frame-0.tsx": {
+            "scaleInDock": 2
+        },
+        "D:/Artwork/8bit/map/dungeon1/t1.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/Artwork/8bit/map/dungeon1/test-map.tmx": {
+            "scale": 0.5264229910714285,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 885.2196957650925,
+                "y": 762.6946520379498
+            }
+        },
         "D:/Artwork/8bit/map/test.tmx": {
             "scale": 0.5083984375,
             "selectedLayer": 0,
@@ -50,6 +67,11 @@
                 "x": 513.3768728390319,
                 "y": 256.688436419516
             }
+        },
+        "Dungeon Tileset + Spikes.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "dungeon2.tmx": {
             "expandedObjectLayers": [
@@ -73,11 +95,11 @@
             "scaleInEditor": 1
         },
         "test-map.tmx": {
-            "scale": 2,
-            "selectedLayer": 5,
+            "scale": 1.5,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 1289,
-                "y": 564.75
+                "x": 1189.3333333333333,
+                "y": 555.6666666666666
             }
         },
         "tilemap/map/dungeon1/tileset/t1.tsx": {
@@ -109,6 +131,8 @@
     "recentFiles": [
         "test-map.tmx",
         "pixil-frame-0.tsx",
+        "Dungeon Tileset + Spikes.tsx",
+        "D:/Artwork/8bit/map/dungeon1/test-map.tmx",
         "0x72_DungeonTilesetII_v1.6.tsx",
         "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/test-map.tmx",
         "D:/8bit-android-project/assets/map/test.tmx",

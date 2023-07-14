@@ -198,8 +198,6 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
         character.setTileMap(tileMap);
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.setGun(new Weapon(new Texture("weap/gun/gun inactive.png"), this.character));
-        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 
     private void initialiseMobs() {
