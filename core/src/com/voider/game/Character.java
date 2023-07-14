@@ -293,6 +293,7 @@ public class Character extends Sprite {
             // Render the gun
             gun.setPosition(position.x, position.y); // Set the gun position same as the character's position
             gun.render(spriteBatch);
+            spriteBatch.setColor(Color.WHITE);
 
         } else {
             // Character is dead, do not reset the state
@@ -336,7 +337,18 @@ public class Character extends Sprite {
         float y = getY();
         float width = getWidth();
         float height = getHeight();
-        return new Rectangle(x + 4, y, width + 23, height + 23);
+        return new Rectangle(x, y, width + 25, height + 25);
+    }
+
+    public Rectangle getBeingAttackedRectangle() {
+        float x = getPosition().x;
+        float y = getPosition().y;
+        TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+
+        float width = currentFrame.getRegionWidth();
+        float height = currentFrame.getRegionHeight();
+
+        return new Rectangle(x, y, width - 20, height - 20 );
     }
 
     public Rectangle getCollisionRectangle() {

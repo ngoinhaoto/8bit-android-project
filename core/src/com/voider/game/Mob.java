@@ -59,6 +59,7 @@
         private int shootingRadius;
         private boolean isLeft;
 
+
         public interface MobDeathListener {
             void onMobDeath();
         }
@@ -207,6 +208,17 @@
 
 
             // Calculate the distance threshold
+
+            float biteRange = 28;
+
+            if (Math.abs(totalDistanceToPlayer) <= biteRange && !isColliding && biteCooldown <= 0.0f) {
+                // Inflict damage to the character
+                // Add any additional behavior here, such as playing a sound effect or triggering an animation
+                bite(player);
+                currentState = State.ATTACKING;
+                biteCooldown = BITE_COOLDOWN; // Reset the biteCooldown to the cooldown duration
+            }
+
             float distanceThreshold = 16;
 
             // Check if the player is within the mob's radius and not colliding
@@ -220,7 +232,7 @@
 
                 // Check if moving towards the player would result in a collision
                 if (!isColliding(getX() + distanceMovedX * directionX, getY() + distanceMovedY * directionY)
-                        && !getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
+                        && !getBoundingRectangle().overlaps(player.getBeingAttackedRectangle())) {
                     setX(getX() + distanceMovedX * directionX);
                     setY(getY() + distanceMovedY * directionY);
 
@@ -239,6 +251,7 @@
                 // Perform random left and right movement
                 randomMovement(delta);
             }
+
 
 
             // shooting mob shoots at character if the character is within the shootingradius
@@ -288,7 +301,7 @@
             }
 
             // Update the bite cooldown
-            if (isMelee && this.getState() != State.ATTACKING) {
+            if (isMelee) {
                 if (biteCooldown > 0.0f) {
                     biteCooldown -= delta;
                 } else {
@@ -316,10 +329,11 @@
                 float distanceToCharacterY = character.getPosition().y - getY();
                 float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
-                float biteRange = 24;
+                float biteRange = 28;
                 if (Math.abs(totalDistanceToCharacter) <= biteRange) {
                     // Inflict damage to the character
                     character.takeDamage(damage);
+
                     //  add any additional behavior here, such as playing a sound effect or triggering an animation
                     this.setState(State.ATTACKING);
                 }
