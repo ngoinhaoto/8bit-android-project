@@ -102,6 +102,4 @@ public class Bullet {
     public Rectangle getBoundingRectangle() {
         return new Rectangle(position.x, position.y, getWidth() , getHeight());
     }
-
-
 }

@@ -12,7 +12,7 @@ public class Weapon {
     private Vector2 position; // The position of the weapon
     private float angle; // The rotation angle of the weapon
     private boolean isShoot = false;
-    private float shootDuration = 0.5f; // Duration in seconds for which isShoot will be true
+    private float shootDuration = 0.1f; // Duration in seconds for which isShoot will be true
     private float shootTimer = 0.0f; // Timer to track the elapsed time
     private boolean isLeft = false;
     private Character character;
@@ -66,9 +66,9 @@ public class Weapon {
 
     private void updateTexture() {
         if (isShoot) {
-            this.texture = new Texture("weap/gun/gun active.png");
+            this.texture = new Texture("weap/gun/gun fire.png");
         } else {
-            this.texture = new Texture("weap/gun/gun inactive.png");
+            this.texture = new Texture("weap/gun/gun active.png");
         }
     }
 

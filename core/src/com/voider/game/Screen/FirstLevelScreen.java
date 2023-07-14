@@ -201,7 +201,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         TileMap tileMap = new TileMap("map/dungeon1/test-map.tmx"); // Create the tileMap object
         character = new Character(tileMap);
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.setGun(new Weapon(new Texture("weap/gun/gun inactive.png"), this.character));
+        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
         character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
     }
 
