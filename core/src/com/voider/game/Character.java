@@ -362,7 +362,10 @@ public class Character extends Sprite {
 
         return new Rectangle(x , y, width - 10 , height - 10);
     }
-
+    // Set isLeft based the weapon
+    public void updateWeaponIsLeft(boolean isLeft) {
+        this.isLeft = isLeft;
+    }
     public void setGun(Weapon gun) {
         this.gun = gun;
     }

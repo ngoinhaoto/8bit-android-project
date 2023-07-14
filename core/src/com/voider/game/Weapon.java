@@ -80,11 +80,13 @@ public class Weapon {
         this.angle = angle;
         if (angle < -90 || angle > 90) {
             this.isLeft = true;
+            character.updateWeaponIsLeft(true); // Update the isLeft variable in Character
             if(this.character.currentState != Character.State.IDLING) {
                 this.character.setState("LEFT");
             }
         } else {
             this.isLeft = false;
+            character.updateWeaponIsLeft(false); // Update the isLeft variable in Character
             if(this.character.currentState != Character.State.IDLING) {
                 this.character.setState("RIGHT");
             }
