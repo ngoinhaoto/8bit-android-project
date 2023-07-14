@@ -211,11 +211,11 @@
 
             float biteRange = 28;
 
-            if (Math.abs(totalDistanceToPlayer) <= biteRange && !isColliding && biteCooldown <= 0.0f) {
+            if (isMelee && Math.abs(totalDistanceToPlayer) <= biteRange && !isColliding && biteCooldown <= 0.0f
+            && player.getState() != Character.State.DEAD) {
                 // Inflict damage to the character
                 // Add any additional behavior here, such as playing a sound effect or triggering an animation
                 bite(player);
-                currentState = State.ATTACKING;
                 biteCooldown = BITE_COOLDOWN; // Reset the biteCooldown to the cooldown duration
             }
 
