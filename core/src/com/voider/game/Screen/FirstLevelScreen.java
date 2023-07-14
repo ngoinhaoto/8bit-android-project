@@ -346,7 +346,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             // Check if the character enters the portal
 
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
-//                game.setScreen(new SecondLevelScreen(this.game, this.character));
+                game.setScreen(new SecondLevelScreen(this.game, this.character));
             }
 
         }
