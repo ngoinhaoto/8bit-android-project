@@ -181,18 +181,6 @@ public class Character extends Sprite {
         }
     }
 
-//    private boolean isBulletOffScreen(Bullet bullet) {
-//        float screenWidth = Gdx.graphics.getWidth();
-//        float screenHeight = Gdx.graphics.getHeight();
-//        float bulletWidth = bullet.getBulletTexture().getRegionWidth();
-//        float bulletHeight = bullet.getBulletTexture().getRegionHeight();
-//
-//        float bulletX = bullet.getPosition().x;
-//        float bulletY = bullet.getPosition().y;
-//
-//        return bulletX < -bulletWidth || bulletX > screenWidth || bulletY < -bulletHeight || bulletY > screenHeight;
-//    }
-
     public void shoot() {
         //Change state of Gun
 

@@ -61,7 +61,7 @@ public class Bullet {
             batch.draw(
                     bulletTexture,
                     position.x + 1,
-                    position.y + 2,
+                    position.y + 1,
                     bulletTexture.getRegionWidth() / 2,
                     bulletTexture.getRegionHeight() / 2,
                     bulletTexture.getRegionWidth(),

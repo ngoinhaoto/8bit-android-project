@@ -54,9 +54,9 @@ public class Weapon {
         // Set the bullet's position, velocity, angle, damage, and other properties as needed
 
         if (!isLeft) {
-            bullet = new Bullet(this.getPosition().x + 20, this.getPosition().y + 9, velocityX, velocityY, false, getAngle(), 3, "bullet/bullet 5.png", bulletSpeed);
+            bullet = new Bullet(this.getPosition().x + 20, this.getPosition().y + 9, velocityX, velocityY, false, getAngle(), 2, "bullet/bullet 5.png", bulletSpeed);
         } else {
-            bullet = new Bullet(this.getPosition().x + 4, this.getPosition().y + 9, velocityX, velocityY, true, getAngle(), 3, "bullet/bullet 5.png", bulletSpeed);
+            bullet = new Bullet(this.getPosition().x + 4, this.getPosition().y + 9, velocityX, velocityY, true, getAngle(), 2, "bullet/bullet 5.png", bulletSpeed);
         }
 
         // Add the bullet to the bullets array
@@ -100,7 +100,7 @@ public class Weapon {
         if (!isLeft) {
             spriteBatch.draw(
                     texture,
-                    position.x + 20,
+                    position.x + 22,
                     position.y + 9,
                     texture.getWidth() / 2,
                     texture.getHeight() / 2,
@@ -119,7 +119,7 @@ public class Weapon {
         } else {
             spriteBatch.draw(
                     texture,
-                    position.x + 4,
+                    position.x + 0,
                     position.y + 9,
                     texture.getWidth() / 2,
                     texture.getHeight() / 2,

@@ -236,7 +236,6 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         mobsKilledThisLevel++;
         character.setMobsKilled(character.getMobsKilled() + 1);
 
-        Gdx.app.log("Mobs Killed", String.valueOf(mobsKilledThisLevel));
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
@@ -293,7 +292,6 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         // Render the portal if it's visible
         if (portalVisible) {
             batch.begin();
-            Gdx.app.log("Portal", "Loaded portal");
             portal.update(delta);
             portal.render(batch);
             batch.end();
@@ -347,8 +345,6 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             // Check if the character enters the portal
 
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
-                Gdx.app.log("COLLISION", "COLLDING PORTAL");
-
                 game.setScreen(new SecondLevelScreen(this.game, this.character));
             }
 

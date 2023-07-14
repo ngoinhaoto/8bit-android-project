@@ -4,11 +4,60 @@ size: 256, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+attack
+  rotate: false
+  xy: 20, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 171, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 99, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 207, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
 die
   rotate: false
-  xy: 20, 9
+  xy: 38, 9
   size: 23, 16
   orig: 23, 16
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 81, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 225, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 135, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 idle
@@ -18,37 +67,16 @@ idle
   orig: 16, 23
   offset: 0, 0
   index: -1
-idle
+walk
   rotate: false
-  xy: 153, 2
-  size: 16, 23
-  orig: 16, 23
-  offset: 0, 0
-  index: -1
-idle
-  rotate: false
-  xy: 99, 2
-  size: 16, 23
-  orig: 16, 23
-  offset: 0, 0
-  index: -1
-idle
-  rotate: false
-  xy: 45, 2
+  xy: 189, 2
   size: 16, 23
   orig: 16, 23
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 135, 2
-  size: 16, 23
-  orig: 16, 23
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 81, 2
+  xy: 117, 2
   size: 16, 23
   orig: 16, 23
   offset: 0, 0
@@ -62,7 +90,7 @@ walk
   index: -1
 walk
   rotate: false
-  xy: 117, 2
+  xy: 153, 2
   size: 16, 23
   orig: 16, 23
   offset: 0, 0

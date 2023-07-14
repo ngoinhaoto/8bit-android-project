@@ -55,12 +55,9 @@
 
         private MobDeathListener mobDeathListener;
 
-        private TextureAtlas mShootAtlas;
-        private Animation<TextureRegion> mShoot;
-
         private Array<Bullet> bullets;
         private int shootingRadius;
-
+        private boolean isLeft;
 
         public interface MobDeathListener {
             void onMobDeath();
@@ -101,11 +98,11 @@
                 textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/chort/animation_chort.atlas"));
                 mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
                 mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
-//            mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
+                mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
                 mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
                 mIdle.setFrameDuration(FRAME_TIME);
                 mWalk.setFrameDuration(FRAME_TIME);
-//            mAttack.setFrameDuration(FRAME_TIME);
+                mAttack.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
             } else if (mobType == "necromancer") {
                 textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/necromancer/necromancer.atlas"));
@@ -154,12 +151,21 @@
                 if (currentState == State.DEAD) {
                     return;
                 }
+                float bulletSpeed = 180;
+
+                float velocityX;
+                float velocityY = 0;
+
+                if (!isLeft) {
+                    velocityX = bulletSpeed;
+                } else {
+                    velocityX = -bulletSpeed;
+                }
 
                 if (mobType == "necromancer") {
-                    Bullet bullet = new Bullet(getX(), getY(), 0, 0, false, 0, damage, "bullet/shadow_ball.png", 180);
+                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/shadow_ball.png", bulletSpeed);
                     // Calculate the angle towards the character
                     float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
-
                     bullet.setAngle(angle);
                     bullets.add(bullet);
                 }
@@ -181,6 +187,7 @@
         }
 
         public void update(float delta) {
+            Gdx.app.log("STATE", this.getState().toString());
             stateTime += delta;
 
             if (currentState == State.DEAD) {
@@ -222,11 +229,12 @@
                         bite(player);
                         biteCooldown = BITE_COOLDOWN; // Reset the biteCooldown to the cooldown duration
                     }
-
                 } else {
                     // Mob is about to hit a wall, stop moving towards the player
                     // You can add any necessary behavior here, such as changing direction or stopping completely
                 }
+                // Update movingRight based on the distance to the character
+                movingRight = distanceToPlayerX > 0;
             } else {
                 // Perform random left and right movement
                 randomMovement(delta);
@@ -264,8 +272,6 @@
 
                     if (distance < bulletRadius + playerRadius) {
                         player.takeDamage(bullet.getDamage());
-
-                        Gdx.app.log("MOBBULLET", "Bullet hits character");
                         bullets.removeIndex(i);
                         continue;
                     }
@@ -282,9 +288,11 @@
             }
 
             // Update the bite cooldown
-            if (isMelee) {
+            if (isMelee && this.getState() != State.ATTACKING) {
                 if (biteCooldown > 0.0f) {
                     biteCooldown -= delta;
+                } else {
+                    currentState = movingRight ? State.WALKING_RIGHT : State.WALKING_LEFT;
                 }
             }
         }
@@ -308,13 +316,12 @@
                 float distanceToCharacterY = character.getPosition().y - getY();
                 float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
-                float biteRange = 30;
-
-                if (totalDistanceToCharacter <= biteRange) {
+                float biteRange = 24;
+                if (Math.abs(totalDistanceToCharacter) <= biteRange) {
                     // Inflict damage to the character
                     character.takeDamage(damage);
-
                     //  add any additional behavior here, such as playing a sound effect or triggering an animation
+                    this.setState(State.ATTACKING);
                 }
             }
         }
@@ -437,14 +444,6 @@
             return topLeft || topRight || bottomLeft || bottomRight;
         }
 
-        public Array<Bullet> getBullets() {
-            return bullets;
-        }
-
-
-        public boolean getMeleeStatus() {
-            return isMelee;
-        }
         public TextureRegion getFrame(float deltaTime) {
             currentState = getState();
             TextureRegion region;
@@ -462,7 +461,6 @@
                     break;
                 case ATTACKING:
                     region = mAttack.getKeyFrame(stateTime, true);
-                    region = mAttack.getKeyFrame(stateTime, true);
                     break;
                 case DEAD:
                     region = mDie.getKeyFrame(stateTime, true);
@@ -472,11 +470,13 @@
             }
             return region;
         }
-
+        private void setState(State state) {
+            this.previousState = this.currentState;
+            this.currentState = state;
+        }
         public State getState() {
             return this.currentState;
         }
-
         public Vector2 getPosition() {
             return new Vector2(getX(), getY());
         }
