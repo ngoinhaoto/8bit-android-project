@@ -1,14 +1,15 @@
 {
-    "activeFile": "test-map.tmx",
+    "activeFile": "pixil-frame-0.tsx",
     "expandedProjectPaths": [
-        "tilemap",
+        ".",
         "tileset",
-        "."
+        "tilemap"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "0x72_DungeonTilesetII_v1.6.tsx": {
-            "scaleInDock": 3,
+            "dynamicWrapping": false,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "D:/8bit-android-project/assets/map/Tileset1.tsx": {
@@ -50,19 +51,33 @@
                 "y": 256.688436419516
             }
         },
+        "dungeon2.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 2,
+            "selectedLayer": 12,
+            "viewCenter": {
+                "x": 621.5,
+                "y": 660.25
+            }
+        },
         "pixil-frame-0.tsx": {
-            "scaleInDock": 2
+            "dynamicWrapping": true,
+            "scaleInDock": 2,
+            "scaleInEditor": 3
         },
         "t1.tsx": {
-            "scaleInDock": 3,
+            "dynamicWrapping": false,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "test-map.tmx": {
-            "scale": 4,
-            "selectedLayer": 10,
+            "scale": 2,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 1434.25,
-                "y": 150.125
+                "x": 1289,
+                "y": 564.75
             }
         },
         "tilemap/map/dungeon1/tileset/t1.tsx": {
@@ -83,15 +98,17 @@
     },
     "last.exportedFilePath": "D:/8bit-android-project/assets/map/dungeon1/tilemap",
     "last.externalTilesetPath": "D:/8bit-android-project/assets/map/dungeon1",
-    "last.imagePath": "D:/8bit-android-project/assets/map/tileset",
+    "last.imagePath": "D:/8bit-android-project/assets/map/dungeon1",
     "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
     "openFiles": [
-        "test-map.tmx"
+        "test-map.tmx",
+        "pixil-frame-0.tsx"
     ],
     "project": "dungeon1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
         "test-map.tmx",
+        "pixil-frame-0.tsx",
         "0x72_DungeonTilesetII_v1.6.tsx",
         "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/test-map.tmx",
         "D:/8bit-android-project/assets/map/test.tmx",
