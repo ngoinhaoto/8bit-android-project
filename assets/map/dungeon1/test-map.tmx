@@ -435,7 +435,7 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="2" x="248" y="240" width="7" height="223">
+  <object id="2" x="237.672" y="240" width="17.3279" height="223">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
@@ -445,12 +445,12 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="4" x="455.699" y="240.749" width="6.9375" height="63.9783">
+  <object id="4" x="455.699" y="240.749" width="12.6394" height="77.2827">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="5" x="456.591" y="385.091" width="6.27272" height="63.5455">
+  <object id="5" x="456.591" y="385.091" width="13.2093" height="77.3351">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
