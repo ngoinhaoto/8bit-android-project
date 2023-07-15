@@ -2,6 +2,8 @@ package com.voider.game.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,6 +25,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.voider.game.Bullet;
 import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -77,6 +80,9 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     private boolean characterEnteredPortal = false;
 
 
+    private Sound gameStartSound;
+
+    private Music backgroundMusic;
 
     public FirstLevelScreen(Voider game) {
         this.game = game;
@@ -88,6 +94,9 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
         bullets = new Array<>();
         mobsKilledThisLevel=0;
+
+        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
+
         loadPortal();
         loadCamera();
         loadCharacter();
@@ -108,6 +117,17 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     @Override
     public void show() {
         // Initialize resources or perform any setup
+        gameStartSound.play(1f);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/07 8-train.mp3"));
+                backgroundMusic.setLooping(true);
+                backgroundMusic.setVolume(0.35f);
+
+                backgroundMusic.play();
+            }
+        }, 1.5f);
     }
 
 
@@ -417,6 +437,9 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         touchpad.clearListeners();
         touchpad.remove();
         stage.dispose();
+
+        gameStartSound.dispose();
+        backgroundMusic.dispose();
     }
 }
 

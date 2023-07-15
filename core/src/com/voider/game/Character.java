@@ -1,6 +1,7 @@
 package com.voider.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -70,6 +71,10 @@ public class Character extends Sprite {
         this.timer = timer;
     }
 
+    private Array<Sound> shootingSounds;
+
+    private Sound takingDamageSound;
+
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
         setARM(getMaxARM());
@@ -89,6 +94,17 @@ public class Character extends Sprite {
         charDie.setFrameDuration(FRAME_TIME);
 
         this.tileMap = tileMap;
+
+
+        shootingSounds = new Array<>();
+        shootingSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/shootsound.wav")));
+        shootingSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/laserShoot.wav")));
+        shootingSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/laserShoot1.wav")));
+        shootingSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/laserShoot2.wav")));
+
+
+        takingDamageSound =  Gdx.audio.newSound(Gdx.files.internal("music/characterHurt.wav"));
+
 
         bullets = new Array<>();
         mobsInRange = new Array<>();
@@ -191,6 +207,9 @@ public class Character extends Sprite {
 
         this.gun.setState();
         this.gun.shoot();
+        int soundIndex = MathUtils.random(shootingSounds.size - 1); // Select a random shooting sound
+        Sound selectedSound = shootingSounds.get(soundIndex);
+        selectedSound.play();
     }
 
     public TileMap getTileMap() {
@@ -310,7 +329,11 @@ public class Character extends Sprite {
     }
 
     public void takeDamage(int damage) {
+
+
         isBeingAttacked = true;
+
+        takingDamageSound.play();
         attackTimer = ATTACK_DURATION;
         if (this.currentARM > 0) {
             this.currentARM -= damage;
@@ -414,6 +437,10 @@ public class Character extends Sprite {
     public void dispose() {
         // Dispose of any resources here if needed
         gun.dispose();
+        for (Sound sound : shootingSounds) {
+            sound.dispose();
+        }
+        takingDamageSound.dispose();
     }
 }
 

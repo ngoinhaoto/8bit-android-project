@@ -1,6 +1,7 @@
     package com.voider.game;
 
     import com.badlogic.gdx.Gdx;
+    import com.badlogic.gdx.audio.Sound;
     import com.badlogic.gdx.graphics.Color;
     import com.badlogic.gdx.graphics.g2d.Animation;
     import com.badlogic.gdx.graphics.g2d.Batch;
@@ -59,6 +60,8 @@
         private int shootingRadius;
         private boolean isLeft;
 
+        private Sound chortBiteSound;
+
 
         public interface MobDeathListener {
             void onMobDeath();
@@ -105,6 +108,8 @@
                 mWalk.setFrameDuration(FRAME_TIME);
                 mAttack.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
+
+                this.chortBiteSound = Gdx.audio.newSound(Gdx.files.internal("music/chortBite.mp3"));
             } else if (mobType == "necromancer") {
                 textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/necromancer/necromancer.atlas"));
 
@@ -170,7 +175,6 @@
                     bullet.setAngle(angle);
                     bullets.add(bullet);
                 }
-
             }
         }
 
@@ -333,6 +337,8 @@
                 if (Math.abs(totalDistanceToCharacter) <= biteRange) {
                     // Inflict damage to the character
                     character.takeDamage(damage);
+
+                    chortBiteSound.play();
 
                     //  add any additional behavior here, such as playing a sound effect or triggering an animation
                     this.setState(State.ATTACKING);
@@ -505,5 +511,10 @@
             float height = getHeight();
 
             return new Rectangle(x + 4, y, width + 23, height + 23);
+        }
+
+        public void dispose() {
+            chortBiteSound.dispose();
+            textureAtlas.dispose();
         }
     }

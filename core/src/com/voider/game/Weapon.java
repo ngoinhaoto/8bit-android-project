@@ -1,6 +1,7 @@
 package com.voider.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -18,12 +19,26 @@ public class Weapon {
     private Character character;
     private Array<Bullet> bullets;
 
+    private Array<Sound> hitWallSounds;
+    private Array<Sound> hitMobSounds;
+
     public Weapon(Texture texture, Character character) {
         this.texture = texture;
         this.position = new Vector2();
         this.angle = 0;
         this.character = character;
         this.bullets = new Array<>();
+        hitWallSounds = new Array<>();
+        hitMobSounds = new Array<>();
+
+        hitWallSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitWall2.wav")));
+        hitWallSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitWall3.wav")));
+        hitWallSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitWall4.wav")));
+
+        hitMobSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitMob.wav")));
+        hitMobSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitMob1.wav")));
+        hitMobSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitMob2.wav")));
+        hitMobSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/hitMob3.wav")));
     }
 
     public void setState() {
@@ -160,6 +175,10 @@ public class Weapon {
             for (Mob mob : this.character.getMobsInRange()) {
                 if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                     mob.takeDamage(bullet.getDamage());
+                    int soundIndex = MathUtils.random(hitMobSounds.size - 1); // Select a random shooting sound
+                    Sound selectedSound = hitMobSounds.get(soundIndex);
+                    selectedSound.play();
+
                     bullets.removeIndex(i);
                     bulletHit = true;
 //                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
@@ -172,6 +191,9 @@ public class Weapon {
                 for (Mob mob : allMobs) {
                     if (mob.getState() != Mob.State.DEAD && bullet.getBoundingRectangle().overlaps(mob.getBoundingRectangle())) {
                         mob.takeDamage(bullet.getDamage());
+                        int soundIndex = MathUtils.random(hitMobSounds.size - 1); // Select a random shooting sound
+                        Sound selectedSound = hitMobSounds.get(soundIndex);
+                        selectedSound.play();
                         bullets.removeIndex(i);
 //                        Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
                         break; // Exit the loop since the bullet can only hit one mob
@@ -182,6 +204,10 @@ public class Weapon {
             // Check for collision with boundaries or off-screen
             if (isColliding_b(bullet.getPosition().x, bullet.getPosition().y - 4) || isBulletOffScreen(bullet)) {
                 if (!bullets.isEmpty() && i < bullets.size) {
+
+                    int soundIndex = MathUtils.random(hitWallSounds.size - 1);
+                    Sound selectedSound = hitWallSounds.get(soundIndex);
+                    selectedSound.play();
                     bullets.removeIndex(i);
                 }
             }
@@ -276,5 +302,12 @@ public class Weapon {
 
     public void dispose() {
         texture.dispose();
+
+        for (Sound sound : hitWallSounds) {
+            sound.dispose();
+        }
+        for (Sound sound : hitMobSounds) {
+            sound.dispose();
+        }
     }
 }

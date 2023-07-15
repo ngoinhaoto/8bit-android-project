@@ -2,6 +2,7 @@ package com.voider.game.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.voider.game.Voider;
@@ -11,6 +12,8 @@ public class MenuScreen implements Screen {
     final Voider game;
 
     OrthographicCamera camera;
+
+    private Music backgroundMusic;
     public MenuScreen(final Voider game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -21,6 +24,12 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
 
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu/02 fat cat.mp3"));
+        backgroundMusic.setLooping(true); // Set the music to loop
+        backgroundMusic.setVolume(0.8f); // Set the volume (0.0f to 1.0f)
+
+        // Start playing the background music
+        backgroundMusic.play();
     }
 
     @Override
@@ -38,7 +47,7 @@ public class MenuScreen implements Screen {
         // if player touch the screen, go on to next screen and dispose current screen(which is mainmenuscreen)
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new ThirdLevelScreen(this.game));
+            game.setScreen(new FirstLevelScreen(this.game));
             dispose();
         }
 
@@ -66,6 +75,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        backgroundMusic.dispose();
     }
 }
