@@ -1,69 +1,69 @@
 
-big_demon.png
-size: 512, 64
+pumpkin.png
+size: 256, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 die
   rotate: false
-  xy: 274, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 110, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 idle
   rotate: false
-  xy: 206, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 56, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 idle
   rotate: false
-  xy: 70, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 128, 2
+  size: 16, 23
+  orig: 16, 23
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 92, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 idle
   rotate: false
   xy: 2, 2
-  size: 32, 36
-  orig: 32, 36
-  offset: 0, 0
-  index: -1
-idle
-  rotate: false
-  xy: 172, 2
-  size: 32, 36
-  orig: 32, 36
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 138, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 38, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 36, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 146, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 240, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 74, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 104, 2
-  size: 32, 36
-  orig: 32, 36
+  xy: 20, 2
+  size: 16, 23
+  orig: 16, 23
   offset: 0, 0
   index: -1
