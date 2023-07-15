@@ -66,33 +66,16 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
     private boolean gate1BoundaryEnabled = true;
     private boolean gate2BoundaryEnabled = true;
+    private boolean gate2ABoundaryEnabled = true;
     private boolean gate3BoundaryEnabled = true;
 
     private Portal portal;
     private boolean portalVisible = false;
 
 
-//    public SecondLevelScreen(Voider game, Character character) {
-//        this.game = game;
-//        this.character = character;
-//        //Get map
-//        tiledMap = new TmxMapLoader().load("map/dungeon1/level2.tmx");
-//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-//
-//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
-//
-//        bullets = new Array<>();
-//        mobsKilledThisLevel=0;
-//        loadPortal();
-//        loadCamera();
-//        loadCharacter();
-//        loadControls();
-//        initialiseMobs();
-//        loadHUD();
-//    }
-
-    public SecondLevelScreen(Voider game) {
+    public SecondLevelScreen(Voider game, Character character) {
         this.game = game;
+        this.character = character;
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -108,6 +91,24 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         initialiseMobs();
         loadHUD();
     }
+
+//    public SecondLevelScreen(Voider game) {
+//        this.game = game;
+//        //Get map
+//        tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
+//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+//
+//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
+//
+//        bullets = new Array<>();
+//        mobsKilledThisLevel=0;
+//        loadPortal();
+//        loadCamera();
+//        loadCharacter();
+//        loadControls();
+//        initialiseMobs();
+//        loadHUD();
+//    }
 
     private void loadPortal() {
         MapLayer portalLayer = tiledMap.getLayers().get("PortalPosition");
@@ -209,26 +210,28 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         gameCam.update();
     }
 
-//    public void loadCharacter() {
-//        batch = new SpriteBatch();
-//        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
-//
-//
-//
-//        character.setTileMap(tileMap);
-//        character.setState("IDLE");
-//
-//    }
-
     public void loadCharacter() {
         batch = new SpriteBatch();
         TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
 
-        character = new Character(tileMap);
+
+
+        character.setTileMap(tileMap);
+        character.setState("IDLE");
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
         character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+
     }
+
+//    public void loadCharacter() {
+//        batch = new SpriteBatch();
+//        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
+//
+//        character = new Character(tileMap);
+//        character.setPosition(initialCameraX - 137, initialCameraY - 10);
+//        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
+//        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+//    }
 
     private void initialiseMobs() {
         mobs = new Array<>();
@@ -265,18 +268,24 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
+        MapObject gate2AObject = gateLayer.getObjects().get("Gate2AObject");
+
         MapObject gate3Object = gateLayer.getObjects().get("Gate3Object");
 
         MapLayer gate1 = tiledMap.getLayers().get("Gate1");
         MapLayer gate2 = tiledMap.getLayers().get("Gate2");
+        MapLayer gate2A = tiledMap.getLayers().get("Gate2A");
+
         MapLayer gate3 = tiledMap.getLayers().get("Gate3");
 
 
         MapLayer gate1Broken = tiledMap.getLayers().get("Gate1Broken");
         MapLayer gate2Broken = tiledMap.getLayers().get("Gate2Broken");
+        MapLayer gate2ABroken = tiledMap.getLayers().get("Gate2ABroken");
+
         MapLayer gate3Broken = tiledMap.getLayers().get("Gate3Broken");
 
-        if (mobsKilledThisLevel >= 3 && gate1BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
@@ -284,14 +293,21 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             gate1Broken.setVisible(true);
         }
 
-        if (mobsKilledThisLevel >= 3 && gate2BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 9 && gate2BoundaryEnabled && gate2ABoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
+            character.getTileMap().updateGateBoundary(gate2AObject, false);
+
             gate2BoundaryEnabled = false;
+            gate2ABoundaryEnabled = false;
+
             gate2.setVisible(false);
+            gate2A.setVisible(false);
             gate2Broken.setVisible(true);
+            gate2ABroken.setVisible(true);
+
         }
 //         The portal appear
-        if (mobsKilledThisLevel >= 3 && gate3BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 14 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
             gate3.setVisible(false);
@@ -379,7 +395,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
 //                game.setScreen(new SecondLevelScreen(this.game, this.character));
 //                game.setScreen(new SecondLevelScreen(this.game, character));
-                game.setScreen(new SecondLevelScreen(this.game));
+                game.setScreen(new SecondLevelScreen(this.game, character));
 
             }
 
