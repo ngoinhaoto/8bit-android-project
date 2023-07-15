@@ -317,8 +317,8 @@
         private boolean isBulletOffScreen(Bullet bullet) {
             float screenWidth = Gdx.graphics.getWidth();
             float screenHeight = Gdx.graphics.getHeight();
-            float bulletWidth = bullet.getBulletTexture().getRegionWidth();
-            float bulletHeight = bullet.getBulletTexture().getRegionHeight();
+            float bulletWidth = bullet.getBulletTexture().getWidth();
+            float bulletHeight = bullet.getBulletTexture().getHeight();
 
             float bulletX = bullet.getPosition().x;
             float bulletY = bullet.getPosition().y;

@@ -14,7 +14,7 @@ public class Bullet {
 
     public int damage;
     private boolean isLeft;
-    private TextureRegion bulletTexture;
+    private Texture bulletTexture;
 
     private float angle;
     private float bulletSpeed; // Declare bullet speed
@@ -29,7 +29,7 @@ public class Bullet {
         this.bulletSpeed = bulletSpeed;
         float angleInRadians = (float) Math.toRadians(angle);
         velocity = new Vector2((float) Math.cos(angleInRadians), (float) Math.sin(angleInRadians)).nor().scl(bulletSpeed);
-        bulletTexture = new TextureRegion(new Texture(bulletPath));
+        bulletTexture = new Texture(bulletPath);
     }
 
     // Update the bullet's position
@@ -47,28 +47,40 @@ public class Bullet {
         if (!isLeft) {
             batch.draw(
                     bulletTexture,
-                    position.x + 1,
-                    position.y + 1,
-                    bulletTexture.getRegionWidth() / 2,
-                    bulletTexture.getRegionHeight() / 2,
-                    bulletTexture.getRegionWidth(),
-                    bulletTexture.getRegionHeight(),
+                    position.x,
+                    position.y,
+                    bulletTexture.getWidth() / 2,
+                    bulletTexture.getHeight() / 2,
+                    bulletTexture.getWidth(),
+                    bulletTexture.getHeight(),
                     1.0f,
                     1.0f,
-                    this.getAngle()
+                    angle,
+                    0,
+                    0,
+                    bulletTexture.getWidth(),
+                    bulletTexture.getHeight(),
+                    false,
+                    false
             );
         } else {
             batch.draw(
                     bulletTexture,
-                    position.x + 1,
-                    position.y + 1,
-                    bulletTexture.getRegionWidth() / 2,
-                    bulletTexture.getRegionHeight() / 2,
-                    bulletTexture.getRegionWidth(),
-                    bulletTexture.getRegionHeight(),
+                    position.x,
+                    position.y+2,
+                    bulletTexture.getWidth() / 2,
+                    bulletTexture.getHeight() / 2,
+                    bulletTexture.getWidth(),
+                    bulletTexture.getHeight(),
                     1.0f,
                     1.0f,
-                    this.getAngle()
+                    angle,
+                    0,
+                    0,
+                    bulletTexture.getWidth(),
+                    bulletTexture.getHeight(),
+                    false,
+                    true
             );
         }
     }
@@ -83,7 +95,7 @@ public class Bullet {
         return this.angle;
     }
 
-    public TextureRegion getBulletTexture() {
+    public Texture getBulletTexture() {
         return bulletTexture;
     }
 
@@ -92,11 +104,11 @@ public class Bullet {
     }
 
     public float getWidth() {
-        return bulletTexture.getRegionWidth();
+        return bulletTexture.getWidth();
     }
 
     public float getHeight() {
-        return bulletTexture.getRegionHeight();
+        return bulletTexture.getHeight();
     }
 
     public Rectangle getBoundingRectangle() {

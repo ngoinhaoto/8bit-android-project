@@ -69,9 +69,9 @@ public class Weapon {
         // Set the bullet's position, velocity, angle, damage, and other properties as needed
 
         if (!isLeft) {
-            bullet = new Bullet(this.getPosition().x + 20, this.getPosition().y + 9, velocityX, velocityY, false, getAngle(), 2, "bullet/bullet 5.png", bulletSpeed);
+            bullet = new Bullet(this.getPosition().x + 22, this.getPosition().y + 9, velocityX, velocityY, false, getAngle(), 2, "bullet/bullet 5.png", bulletSpeed);
         } else {
-            bullet = new Bullet(this.getPosition().x + 4, this.getPosition().y + 9, velocityX, velocityY, true, getAngle(), 2, "bullet/bullet 5.png", bulletSpeed);
+            bullet = new Bullet(this.getPosition().x + 2, this.getPosition().y + 9, velocityX, velocityY, true, getAngle(), 2, "bullet/bullet 5.png", bulletSpeed);
         }
 
         // Add the bullet to the bullets array
@@ -134,21 +134,21 @@ public class Weapon {
         } else {
             spriteBatch.draw(
                     texture,
-                    position.x + 0,
+                    position.x + 2,
                     position.y + 9,
                     texture.getWidth() / 2,
                     texture.getHeight() / 2,
                     texture.getWidth(),
                     texture.getHeight(),
                     1.0f,
-                    -1.0f,
+                    1.0f,
                     angle,
                     0,
                     0,
                     texture.getWidth(),
                     texture.getHeight(),
                     false,
-                    false
+                    true
             );
         }
         // Render the bullets
@@ -233,8 +233,8 @@ public class Weapon {
     private boolean isBulletOffScreen(Bullet bullet) {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
-        float bulletWidth = bullet.getBulletTexture().getRegionWidth();
-        float bulletHeight = bullet.getBulletTexture().getRegionHeight();
+        float bulletWidth = bullet.getBulletTexture().getWidth();
+        float bulletHeight = bullet.getBulletTexture().getHeight();
 
         float bulletX = bullet.getPosition().x;
         float bulletY = bullet.getPosition().y;
