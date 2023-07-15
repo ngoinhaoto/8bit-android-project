@@ -38,7 +38,7 @@ public class MenuScreen implements Screen {
         // if player touch the screen, go on to next screen and dispose current screen(which is mainmenuscreen)
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new FirstLevelScreen(this.game));
+            game.setScreen(new ThirdLevelScreen(this.game));
             dispose();
         }
 
