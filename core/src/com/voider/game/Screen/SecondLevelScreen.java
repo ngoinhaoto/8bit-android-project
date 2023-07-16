@@ -258,6 +258,30 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             mob.setPosition(x, y);
             mobs.add(mob);
         }
+
+        MapObjects bigDemonObjects = tiledMap.getLayers().get("BigDemonPosition").getObjects();
+
+        for (MapObject object : bigDemonObjects) {
+            float x = object.getProperties().get("x", Float.class);
+            float y = object.getProperties().get("y", Float.class);
+
+            Mob mob = new Mob(tileMap, x, y, "bigDemon", true, 120, 2, character, this);
+            mob.setPosition(x, y);
+            mobs.add(mob);
+        }
+
+
+        MapObjects pumpkinObjects = tiledMap.getLayers().get("PumpkinPosition").getObjects();
+
+        for (MapObject object : pumpkinObjects) {
+            float x = object.getProperties().get("x", Float.class);
+            float y = object.getProperties().get("y", Float.class);
+
+            Mob mob = new Mob(tileMap, x, y, "pumpkin", false, 50, 1, character, this);
+            mob.setPosition(x, y);
+            mobs.add(mob);
+        }
+
     }
     @Override
     public void onMobDeath() {

@@ -81,7 +81,6 @@
             this.mobDeathListener = mobDeathListener;
 
 
-
             // Set the movement speed based on the isMelee parameter
             if (isMelee) {
                 movementSpeed = 54; // Set a higher speed for melee mobs
@@ -121,6 +120,28 @@
                 mWalk.setFrameDuration(FRAME_TIME);
 //            mAttack.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
+            } else if (mobType == "bigDemon") {
+                textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/big_demon/big_demon.atlas"));
+
+                mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+
+                mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+                mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+
+                mIdle.setFrameDuration(FRAME_TIME);
+                mWalk.setFrameDuration(FRAME_TIME);
+                mDie.setFrameDuration(FRAME_TIME);
+            } else if (mobType == "pumpkin") {
+                textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/pumpkin/pumpkin.atlas"));
+
+                mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+                mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+                mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+
+                mIdle.setFrameDuration(FRAME_TIME);
+                mWalk.setFrameDuration(FRAME_TIME);
+                mDie.setFrameDuration(FRAME_TIME);
+
             }
         }
 
@@ -174,6 +195,12 @@
                     float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
                     bullet.setAngle(angle);
                     bullets.add(bullet);
+                } else if (mobType == "pumpkin") {
+                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/shadow_ball.png", bulletSpeed);
+                    // Calculate the angle towards the character
+                    float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
+                    bullet.setAngle(angle);
+                    bullets.add(bullet);
                 }
             }
         }
@@ -186,6 +213,12 @@
                     break;
                 case "necromancer":
                     maxHealth = 7;
+                    break;
+                case "bigDemon":
+                    maxHealth = 14;
+                    break;
+                case "pumpkin":
+                    maxHealth = 10;
                     break;
             }
             return maxHealth;
@@ -338,8 +371,10 @@
                     // Inflict damage to the character
                     character.takeDamage(damage);
 
-                    chortBiteSound.play();
+                    if (mobType == "chort") {
+                        chortBiteSound.play();
 
+                    }
                     //  add any additional behavior here, such as playing a sound effect or triggering an animation
                     this.setState(State.ATTACKING);
                 }
