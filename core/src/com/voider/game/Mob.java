@@ -5,6 +5,8 @@
     import com.badlogic.gdx.graphics.Color;
     import com.badlogic.gdx.graphics.g2d.Animation;
     import com.badlogic.gdx.graphics.g2d.Batch;
+    import com.badlogic.gdx.graphics.g2d.BitmapFont;
+    import com.badlogic.gdx.graphics.g2d.GlyphLayout;
     import com.badlogic.gdx.graphics.g2d.SpriteBatch;
     import com.badlogic.gdx.graphics.g2d.TextureAtlas;
     import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -61,6 +63,14 @@
         private boolean isLeft;
 
         private Sound chortBiteSound;
+        private BitmapFont damageFont;
+
+        private float damageDisplayTime = 0.25f;
+
+        private int damageTaken;
+
+        private boolean isCrit;
+
 
 
         public interface MobDeathListener {
@@ -80,6 +90,7 @@
             this.damage = damage;
             this.mobDeathListener = mobDeathListener;
 
+            damageFont = new BitmapFont(); // You can customize the font style and size
 
             // Set the movement speed based on the isMelee parameter
             if (isMelee) {
@@ -150,8 +161,14 @@
         @Override
         public void act(float delta) {
             super.act(delta);
+
             // Update the mob's behavior and attributes
             update(delta);
+
+            // Update the damage display time
+            if (damageDisplayTime > 0) {
+                damageDisplayTime -= delta;
+            }
         }
 
 
@@ -159,10 +176,26 @@
             if (currentState == State.DEAD) {
                 return; // If mob is already dead, ignore further damage
             }
-            this.setCurrentHP(this.getCurrentHP() - damage);
+
+            // Check if the mob will receive a critical hit
+            boolean isCriticalHit = MathUtils.randomBoolean(0.4f); // 40% chance for a critical hit
+
+            // Calculate the damage to be inflicted
+            int inflictedDamage = isCriticalHit ? damage * 2 : damage;
+
+            isCrit = isCriticalHit ? true : false;
+
+            damageTaken = inflictedDamage;
+
+            this.setCurrentHP(this.getCurrentHP() - inflictedDamage);
+
             // Set Mob as being attacked and start the attack timer
             isBeingAttacked = true;
             attackTimer = ATTACK_DURATION;
+
+            // Set the damage display time
+            damageDisplayTime = 0.15f; // Adjust the duration as needed
+
             // Check State of Mob when HP is 0
             if (this.getCurrentHP() <= 0) {
                 // Mob is dead, invoke the callback listener
@@ -172,6 +205,8 @@
                 this.currentState = State.DEAD;
             }
         }
+
+
 
         public void shoot(Character character) {
             if (!isMelee) {
@@ -449,6 +484,35 @@
             } else {
                 spriteBatch.draw(currentFrame, getX(), getY(), textureWidth, textureHeight);
             }
+
+            // Render the damage text if the damage display time is positive
+            if (damageDisplayTime > 0) {
+                // Set the font scale for the damage text
+                float fontScale = isCrit ? 0.85f : 0.65f; // Adjust the scale as needed
+                // Set the color and scale of the font
+                if (isCrit) {
+                    damageFont.setColor(Color.YELLOW); // if crit then yellow
+                } else {
+                    damageFont.setColor(Color.RED);
+                }
+                damageFont.getData().setScale(fontScale);
+
+                // Get the damage text dimensions
+                GlyphLayout glyphLayout = new GlyphLayout(damageFont, "-" + damageTaken);
+
+                float textWidth = glyphLayout.width;
+                float textHeight = glyphLayout.height;
+
+                // Calculate the position of the damage text
+                float textX = getX() + (getWidth() - textWidth) / 2 + 16;
+                float textY = getY() + getHeight() + textHeight + 32;
+
+                // Draw the damage text using the font
+                damageFont.draw(spriteBatch, "-" + damageTaken, textX, textY);
+
+
+            }
+
             // Reset the color back to normal
             spriteBatch.setColor(Color.WHITE);
 
@@ -467,6 +531,8 @@
                 }
             }
         }
+
+
 
         public boolean isColliding_b(float x, float y) {
             int tileXStart = (int) (x / tileMap.getTileWidth());
@@ -551,5 +617,6 @@
         public void dispose() {
             chortBiteSound.dispose();
             textureAtlas.dispose();
+            damageFont.dispose();
         }
     }
