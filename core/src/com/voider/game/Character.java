@@ -103,7 +103,7 @@ public class Character extends Sprite {
         shootingSounds.add(Gdx.audio.newSound(Gdx.files.internal("music/laserShoot2.wav")));
 
 
-        takingDamageSound =  Gdx.audio.newSound(Gdx.files.internal("music/characterHurt.wav"));
+        takingDamageSound =  Gdx.audio.newSound(Gdx.files.internal("music/oof sound.mp3"));
 
 
         bullets = new Array<>();

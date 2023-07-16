@@ -63,6 +63,8 @@
         private boolean isLeft;
 
         private Sound chortBiteSound;
+
+        private Sound bigDemonBiteSound;
         private BitmapFont damageFont;
 
         private float damageDisplayTime = 0.25f;
@@ -142,6 +144,9 @@
                 mIdle.setFrameDuration(FRAME_TIME);
                 mWalk.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
+                this.bigDemonBiteSound = Gdx.audio.newSound(Gdx.files.internal("music/bigdemon.mp3"));
+
+
             } else if (mobType == "pumpkin") {
                 textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/pumpkin/pumpkin.atlas"));
 
@@ -408,7 +413,10 @@
 
                     if (mobType == "chort") {
                         chortBiteSound.play();
+                    }
 
+                    if (mobType == "bigDemon") {
+                        bigDemonBiteSound.play();
                     }
                     //  add any additional behavior here, such as playing a sound effect or triggering an animation
                     this.setState(State.ATTACKING);
@@ -615,8 +623,14 @@
         }
 
         public void dispose() {
-            chortBiteSound.dispose();
             textureAtlas.dispose();
             damageFont.dispose();
+            if (mobType == "chort") {
+                chortBiteSound.dispose();
+            }
+            if (mobType == "bigDemon") {
+                bigDemonBiteSound.dispose();
+            }
+
         }
     }

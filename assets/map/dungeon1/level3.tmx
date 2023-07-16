@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="91" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="112">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="91" tilewidth="16" tileheight="16" infinite="0" nextlayerid="25" nextobjectid="113">
  <tileset firstgid="1" source="frostchill.tsx"/>
  <tileset firstgid="113" source="HiddenJungle.tsx"/>
  <tileset firstgid="225" source="0x72_16x16DungeonTileset.v5.tsx"/>
@@ -2175,6 +2175,11 @@
    <point/>
   </object>
   <object id="14" x="1295.71" y="1121.82">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="24" name="PortalPosition">
+  <object id="112" name="PortalPosition" x="969.095" y="1104.86">
    <point/>
   </object>
  </objectgroup>

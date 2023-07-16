@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="85">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="86">
  <tileset firstgid="1" source="DesertSands.tsx"/>
  <tileset firstgid="79" source="pixil-frame-0.tsx"/>
  <tileset firstgid="223" source="0x72_DungeonTilesetII_v1.6.tsx"/>
@@ -1504,9 +1504,6 @@
   <object id="83" x="1465.28" y="538.194">
    <point/>
   </object>
-  <object id="84" x="809.028" y="696.181">
-   <point/>
-  </object>
  </objectgroup>
  <objectgroup id="22" name="PumpkinPosition">
   <object id="77" x="1083.33" y="553.819">
@@ -1515,10 +1512,10 @@
   <object id="78" x="671.875" y="555.556">
    <point/>
   </object>
-  <object id="79" x="376.736" y="309.028">
+  <object id="80" x="628.472" y="1092.01">
    <point/>
   </object>
-  <object id="80" x="628.472" y="1092.01">
+  <object id="85" x="739.583" y="928.819">
    <point/>
   </object>
  </objectgroup>

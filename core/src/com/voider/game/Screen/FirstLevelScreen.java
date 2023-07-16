@@ -84,6 +84,9 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
     private Music backgroundMusic;
 
+    private Sound gateSound = Gdx.audio.newSound(Gdx.files.internal("music/gate open 2.mp3"));
+
+
     public FirstLevelScreen(Voider game) {
         this.game = game;
         //Get map
@@ -271,12 +274,14 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
             gate1.setVisible(false);
+            gateSound.play();
         }
 
         if (mobsKilledThisLevel >= 10 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2BoundaryEnabled = false;
             gate2.setVisible(false);
+            gateSound.play();
         }
 //         The portal appear
         if (mobsKilledThisLevel >= 16 && gate3BoundaryEnabled) {
@@ -284,6 +289,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
             gate3BoundaryEnabled = false;
             gate3.setVisible(false);
             portalVisible = true;
+            gateSound.play();
         }
     }
 
@@ -425,7 +431,18 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         if (portal != null) {
             portal.dispose();
         }
+
+        // Stop and dispose of the background music
+        if (backgroundMusic != null) {
+            backgroundMusic.stop();
+            backgroundMusic.dispose();
+        }
+
+        // Stop and dispose of any other sounds or resources used in the screen
+        gameStartSound.dispose();
+        gateSound.dispose();
     }
+
 
     @Override
     public void dispose() {
@@ -440,6 +457,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
         gameStartSound.dispose();
         backgroundMusic.dispose();
+        gateSound.dispose();
     }
 }
 

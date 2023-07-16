@@ -2,6 +2,8 @@ package com.voider.game.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.voider.game.Bullet;
 import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -72,6 +75,13 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
     private Portal portal;
     private boolean portalVisible = false;
 
+    private Sound gameStartSound;
+    private Music backgroundMusic;
+
+    private Sound gateSound = Gdx.audio.newSound(Gdx.files.internal("music/gate open 2.mp3"));
+
+
+
 
     public SecondLevelScreen(Voider game, Character character) {
         this.game = game;
@@ -81,6 +91,8 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
+
+        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
 
         bullets = new Array<>();
         mobsKilledThisLevel=0;
@@ -122,6 +134,18 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
     @Override
     public void show() {
         // Initialize resources or perform any setup
+
+        gameStartSound.play(1f);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/09 funny animals.mp3"));
+                backgroundMusic.setLooping(true);
+                backgroundMusic.setVolume(0.35f);
+                backgroundMusic.play();
+            }
+        }, 1.5f);
+
     }
 
 
@@ -315,6 +339,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             // make the gate disappear afterward
             gate1.setVisible(false);
             gate1Broken.setVisible(true);
+            gateSound.play();
         }
 
         if (mobsKilledThisLevel >= 9 && gate2BoundaryEnabled && gate2ABoundaryEnabled) {
@@ -328,6 +353,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             gate2A.setVisible(false);
             gate2Broken.setVisible(true);
             gate2ABroken.setVisible(true);
+            gateSound.play();
 
         }
 //         The portal appear
@@ -336,6 +362,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             gate3BoundaryEnabled = false;
             gate3.setVisible(false);
             gate3Broken.setVisible(true);
+            gateSound.play();
             portalVisible = true;
         }
     }
@@ -419,7 +446,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
 //                game.setScreen(new SecondLevelScreen(this.game, this.character));
 //                game.setScreen(new SecondLevelScreen(this.game, character));
-                game.setScreen(new SecondLevelScreen(this.game, character));
+                game.setScreen(new ThirdLevelScreen(this.game, character));
 
             }
 
@@ -478,6 +505,16 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         if (portal != null) {
             portal.dispose();
         }
+
+        // Stop and dispose of the background music
+        if (backgroundMusic != null) {
+            backgroundMusic.stop();
+            backgroundMusic.dispose();
+        }
+
+        // Stop and dispose of any other sounds or resources used in the screen
+        gameStartSound.dispose();
+        gateSound.dispose();
     }
 
     @Override
@@ -490,6 +527,8 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         touchpad.clearListeners();
         touchpad.remove();
         stage.dispose();
+        gateSound.dispose();
+        backgroundMusic.dispose();
     }
 }
 
