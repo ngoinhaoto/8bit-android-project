@@ -85,6 +85,9 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
     private Music backgroundMusic;
 
     private Sound gateSound = Gdx.audio.newSound(Gdx.files.internal("music/gate open 2.mp3"));
+    private Sound portalSound = Gdx.audio.newSound(Gdx.files.internal("music/portal.mp3"));
+
+    private float portalEnterTime;
 
 
 
@@ -151,6 +154,9 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
                 backgroundMusic.play();
             }
         }, 1.5f);
+
+        portalEnterTime = 0f;
+
     }
 
 
@@ -457,15 +463,22 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
             // Check if the character enters the portal
 
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
-//                game.setScreen(new ThirdLevelScreen(this.game, this.character));
-//                game.setScreen(new ThirdLevelScreen(this.game, character));
-                game.setScreen(new GameOverScreen(this.game));
-                // thay bằng winnerscreen
+                // Increase portalEnterTime by delta
+                portalEnterTime += delta;
 
+                // Check if the portal sound should play
+                if (portalEnterTime <= 1f) {
+                    portalSound.play();
+                }
+
+                // Check if the time limit has been reached
+                if (portalEnterTime >= 1f) {
+                    game.setScreen(new GameOverScreen(game));
+                    portalSound.stop();
+                }
             }
 
         }
-
 
 
         // Render the mobs
@@ -529,6 +542,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         // Stop and dispose of any other sounds or resources used in the screen
         gameStartSound.dispose();
         gateSound.dispose();
+        portalSound.dispose();
     }
 
 

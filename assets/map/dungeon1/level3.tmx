@@ -2142,13 +2142,41 @@
   </object>
  </objectgroup>
  <objectgroup id="5" name="ActualGate">
-  <object id="99" name="Gate1Object" x="1236.05" y="255.61" width="12.0005" height="64.8026"/>
-  <object id="101" name="Gate2Object" x="816.633" y="254.41" width="15.6006" height="66.6027"/>
-  <object id="103" name="Gate3Object" x="910.47" y="478.806" width="33.6148" height="32.7949"/>
-  <object id="104" name="Gate4Object" x="752.515" y="735.8" width="15.4296" height="64.933"/>
-  <object id="105" name="Gate5Object" x="1103.76" y="799.733" width="7.786" height="63.771"/>
-  <object id="106" name="Gate6Object" x="1184.9" y="1054.71" width="14.2826" height="68.1169"/>
-  <object id="107" name="Gate7Object" x="1471.82" y="958.639" width="14.9157" height="68.5318"/>
+  <object id="99" name="Gate1Object" x="1236.05" y="255.61" width="12.0005" height="64.8026">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="101" name="Gate2Object" x="816.633" y="254.41" width="15.6006" height="66.6027">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="103" name="Gate3Object" x="910.47" y="478.806" width="33.6148" height="32.7949">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="104" name="Gate4Object" x="752.515" y="735.8" width="15.4296" height="64.933">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="105" name="Gate5Object" x="1103.76" y="799.733" width="7.786" height="63.771">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="106" name="Gate6Object" x="1184.9" y="1054.71" width="14.2826" height="68.1169">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="107" name="Gate7Object" x="1471.82" y="958.639" width="14.9157" height="68.5318">
+   <properties>
+    <property name="boundary" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="6" name="ChortPosition">
   <object id="7" x="904.213" y="666.733">

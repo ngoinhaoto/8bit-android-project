@@ -80,6 +80,9 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
     private Sound gateSound = Gdx.audio.newSound(Gdx.files.internal("music/gate open 2.mp3"));
 
+    private Sound portalSound = Gdx.audio.newSound(Gdx.files.internal("music/portal.mp3"));
+
+    private float portalEnterTime;
 
 
 
@@ -145,6 +148,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
                 backgroundMusic.play();
             }
         }, 1.5f);
+        portalEnterTime = 0f;
 
     }
 
@@ -333,7 +337,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
         MapLayer gate3Broken = tiledMap.getLayers().get("Gate3Broken");
 
-        if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 6 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
@@ -342,22 +346,27 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             gateSound.play();
         }
 
-        if (mobsKilledThisLevel >= 9 && gate2BoundaryEnabled && gate2ABoundaryEnabled) {
-            character.getTileMap().updateGateBoundary(gate2Object, false);
+        if (mobsKilledThisLevel >= 10 && gate2ABoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2AObject, false);
 
-            gate2BoundaryEnabled = false;
+
             gate2ABoundaryEnabled = false;
 
-            gate2.setVisible(false);
             gate2A.setVisible(false);
-            gate2Broken.setVisible(true);
             gate2ABroken.setVisible(true);
             gateSound.play();
+        }
+
+        if (mobsKilledThisLevel >= 11 && gate2BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate2Object, false);
+            gate2.setVisible(false);
+            gate2Broken.setVisible(true);
+            gateSound.play();
+            gate2BoundaryEnabled = false;
 
         }
 //         The portal appear
-        if (mobsKilledThisLevel >= 14 && gate3BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 18 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
             gate3.setVisible(false);
@@ -446,7 +455,18 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             if (character.getCollisionRectangle().overlaps(portal.getCollisionRectangle())) {
 //                game.setScreen(new SecondLevelScreen(this.game, this.character));
 //                game.setScreen(new SecondLevelScreen(this.game, character));
-                game.setScreen(new ThirdLevelScreen(this.game, character));
+                portalEnterTime += delta;
+
+                // Check if the portal sound should play
+                if (portalEnterTime <= 1.5f) {
+                    portalSound.play();
+                }
+
+                // Check if the time limit has been reached
+                if (portalEnterTime >= 1.5f) {
+                    // Transition to the second level screen
+                    game.setScreen(new ThirdLevelScreen(game, character));
+                }
 
             }
 
@@ -515,6 +535,8 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         // Stop and dispose of any other sounds or resources used in the screen
         gameStartSound.dispose();
         gateSound.dispose();
+        portalSound.stop();
+        portalSound.dispose();
     }
 
     @Override

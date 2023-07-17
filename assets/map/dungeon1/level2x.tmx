@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="86">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="90">
  <tileset firstgid="1" source="DesertSands.tsx"/>
  <tileset firstgid="79" source="pixil-frame-0.tsx"/>
  <tileset firstgid="223" source="0x72_DungeonTilesetII_v1.6.tsx"/>
@@ -1502,6 +1502,15 @@
    <point/>
   </object>
   <object id="83" x="1465.28" y="538.194">
+   <point/>
+  </object>
+  <object id="86" x="525.246" y="517.43">
+   <point/>
+  </object>
+  <object id="87" x="1034.86" y="589.339">
+   <point/>
+  </object>
+  <object id="88" x="795.685" y="981.71">
    <point/>
   </object>
  </objectgroup>

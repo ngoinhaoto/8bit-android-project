@@ -137,13 +137,14 @@
                 textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/big_demon/big_demon.atlas"));
 
                 mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
-
                 mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+                mAttack = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("attack"));
                 mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
-
                 mIdle.setFrameDuration(FRAME_TIME);
                 mWalk.setFrameDuration(FRAME_TIME);
+                mAttack.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
+
                 this.bigDemonBiteSound = Gdx.audio.newSound(Gdx.files.internal("music/bigdemon.mp3"));
 
 
@@ -236,7 +237,7 @@
                     bullet.setAngle(angle);
                     bullets.add(bullet);
                 } else if (mobType == "pumpkin") {
-                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/shadow_ball.png", bulletSpeed);
+                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/pumpkin beam.png", bulletSpeed);
                     // Calculate the angle towards the character
                     float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
                     bullet.setAngle(angle);
@@ -486,6 +487,12 @@
             // Render the character at its current position
             float textureWidth = 32; // Set the desired texture width
             float textureHeight = 32; // Set the desired texture height
+
+            if (mobType == "bigDemon") {
+                textureWidth = 46;
+                textureHeight = 49;
+            }
+
             if (!movingRight) {
                 spriteBatch.draw(currentFrame, getX() + textureWidth, getY(),
                         -textureWidth, textureHeight);

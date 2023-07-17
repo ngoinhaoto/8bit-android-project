@@ -75,6 +75,12 @@ public class Character extends Sprite {
 
     private Sound takingDamageSound;
 
+    // Add these variables to the class
+    private static final float HEALING_INTERVAL = 7f;
+    private float lastHealTime;
+
+    private float regenHPTimer;
+
     public Character(TileMap tileMap) {
         setHP(getMaxHP());
         setARM(getMaxARM());
@@ -109,10 +115,22 @@ public class Character extends Sprite {
         bullets = new Array<>();
         mobsInRange = new Array<>();
         armorRegenTimer = ARMOR_REGEN_TICK; // Initialize the armor regeneration timer
+        regenHPTimer = ARMOR_REGEN_TICK;
         timer = 0;
         mobsKilled = 0;
+
+        lastHealTime = 0f;
     }
 
+
+    private void regenerateHP() {
+        if (currentHP < maxHP) {
+            currentHP += 1;
+            if (currentHP > maxHP) {
+                currentHP = maxHP;
+            }
+        }
+    }
     // Add this method to update the mobsInRange list based on the character's attacking radius
     public void updateMobsInRange(float attackingRadius, Array<Mob> allMobs) {
         mobsInRange.clear(); // Clear the current list of mobs in range
@@ -176,6 +194,20 @@ public class Character extends Sprite {
                 if (armorRegenTimer <= 0) {
                     regenerateArmor();
                     armorRegenTimer = ARMOR_REGEN_TICK;
+                }
+            }
+        }
+
+        // Check if enough time has passed since the last damage to start healing
+        if (currentHP < maxHP && currentHP > 0) {
+            lastHealTime += delta;
+
+            if (lastDamageTime >= HEALING_INTERVAL) {
+                regenHPTimer -= delta;
+
+                if (regenHPTimer <= 0) {
+                    regenerateHP();
+                    regenHPTimer = HEALING_INTERVAL;
                 }
             }
         }
