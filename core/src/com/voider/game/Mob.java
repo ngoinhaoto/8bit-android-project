@@ -54,7 +54,6 @@
         private static final float BITE_COOLDOWN = 1f; // Adjust the value as needed
 
         private float shootingCooldown;
-        private static final float SHOOTING_COOLDOWN = 1.5f;
 
         private MobDeathListener mobDeathListener;
 
@@ -73,6 +72,9 @@
 
         private boolean isCrit;
 
+        private final float SHOOTING_COOLDOWN_NECROMANCER = 1.25f;
+
+        private final float SHOOTING_COOLDOWN_PUMPKIN = 1.85f;
 
 
         public interface MobDeathListener {
@@ -96,15 +98,27 @@
 
             // Set the movement speed based on the isMelee parameter
             if (isMelee) {
-                movementSpeed = 54; // Set a higher speed for melee mobs
+                if (mobType == "chort") {
+                    movementSpeed = 54;
+                }
+                if (mobType == "bigDemon") {
+                    movementSpeed = 43;
+                }
                 biteCooldown = 0f;
             } else {
-                movementSpeed = 35; // Set the default speed for non-melee mobs
+                 // Set the default speed for non-melee mobs
                 this.bullets = new Array<>();
                 shootingCooldown = 0;
-                shootingRadius = 100;
-            }
 
+                if (mobType == "necromancer") {
+                    shootingRadius = 110;
+                    movementSpeed = 24;
+                }
+                if (mobType == "pumpkin") {
+                    shootingRadius = 140;
+                    movementSpeed = 35;
+                }
+            }
 
             currentState = State.IDLING;
             previousState = State.IDLING;
@@ -256,10 +270,10 @@
                     maxHealth = 7;
                     break;
                 case "bigDemon":
-                    maxHealth = 14;
+                    maxHealth = 25;
                     break;
                 case "pumpkin":
-                    maxHealth = 10;
+                    maxHealth = 12;
                     break;
             }
             return maxHealth;
@@ -336,7 +350,13 @@
             if (totalDistanceToPlayer <= shootingRadius && !isColliding && totalDistanceToPlayer > distanceThreshold && !isMelee) {
                 if (!isMelee && shootingCooldown <= 0.0f && player.getState() != Character.State.DEAD) {
                     shoot(player);
-                    shootingCooldown = SHOOTING_COOLDOWN;
+
+                    if (mobType == "necromancer") {
+                        shootingCooldown = SHOOTING_COOLDOWN_NECROMANCER;
+                    }
+                    if (mobType == "pumpkin") {
+                        shootingCooldown = SHOOTING_COOLDOWN_PUMPKIN;
+                    }
                 }
             }
 //

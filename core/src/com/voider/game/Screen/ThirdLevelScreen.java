@@ -337,7 +337,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
             gateSound.play();
         }
 
-        if (mobsKilledThisLevel >= 5 && gate2BoundaryEnabled && gate3BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 4 && gate2BoundaryEnabled && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             character.getTileMap().updateGateBoundary(gate3Object, false);
 
@@ -354,7 +354,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
 
         }
 //         The portal appear
-        if (mobsKilledThisLevel >= 8 && gate4BoundaryEnabled && gate5BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 6 && gate4BoundaryEnabled && gate5BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate4Object, false);
             character.getTileMap().updateGateBoundary(gate5Object, false);
 
@@ -370,7 +370,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         }
 
 
-        if (mobsKilledThisLevel >= 10 && gate6BoundaryEnabled && gate7BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 8 && gate6BoundaryEnabled && gate7BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate6Object, false);
             character.getTileMap().updateGateBoundary(gate7Object, false);
 
@@ -382,6 +382,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
             gate7.setVisible(false);
             gate7Broken.setVisible(true);
             gateSound.play();
+            portalVisible = true;
         }
 
     }
@@ -473,7 +474,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
 
                 // Check if the time limit has been reached
                 if (portalEnterTime >= 1f) {
-                    game.setScreen(new GameOverScreen(game));
+                    game.setScreen(new WinnerScreen(game, character));
                     portalSound.stop();
                 }
             }
