@@ -4,65 +4,93 @@ size: 512, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-die
+big_demon_attack_anim_f0
   rotate: false
-  xy: 274, 2
+  xy: 104, 2
   size: 32, 36
   orig: 32, 36
   offset: 0, 0
   index: -1
-idle
+big_demon_attack_anim_f1
+  rotate: false
+  xy: 376, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_attack_anim_f2
   rotate: false
   xy: 206, 2
   size: 32, 36
   orig: 32, 36
   offset: 0, 0
   index: -1
-idle
-  rotate: false
-  xy: 70, 2
-  size: 32, 36
-  orig: 32, 36
-  offset: 0, 0
-  index: -1
-idle
-  rotate: false
-  xy: 2, 2
-  size: 32, 36
-  orig: 32, 36
-  offset: 0, 0
-  index: -1
-idle
-  rotate: false
-  xy: 172, 2
-  size: 32, 36
-  orig: 32, 36
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 138, 2
-  size: 32, 36
-  orig: 32, 36
-  offset: 0, 0
-  index: -1
-walk
+big_demon_attack_anim_f3
   rotate: false
   xy: 36, 2
   size: 32, 36
   orig: 32, 36
   offset: 0, 0
   index: -1
-walk
+big_demon_die
+  rotate: false
+  xy: 410, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_idle_anim_f0
+  rotate: false
+  xy: 308, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_idle_anim_f1
+  rotate: false
+  xy: 138, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_idle_anim_f2
+  rotate: false
+  xy: 2, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_idle_anim_f3
+  rotate: false
+  xy: 274, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_run_anim_f0
   rotate: false
   xy: 240, 2
   size: 32, 36
   orig: 32, 36
   offset: 0, 0
   index: -1
-walk
+big_demon_run_anim_f1
   rotate: false
-  xy: 104, 2
+  xy: 70, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_run_anim_f2
+  rotate: false
+  xy: 342, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+big_demon_run_anim_f3
+  rotate: false
+  xy: 172, 2
   size: 32, 36
   orig: 32, 36
   offset: 0, 0
