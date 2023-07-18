@@ -181,7 +181,7 @@ public class Weapon {
 
                     bullets.removeIndex(i);
                     bulletHit = true;
-//                    Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
+                    bullet.dispose();
                     break; // Exit the inner loop since the bullet can only hit one mob
                 }
             }
@@ -195,7 +195,7 @@ public class Weapon {
                         Sound selectedSound = hitMobSounds.get(soundIndex);
                         selectedSound.play();
                         bullets.removeIndex(i);
-//                        Gdx.app.log("HP", "current mob HP: " + mob.getCurrentHP());
+                        bullet.dispose();
                         break; // Exit the loop since the bullet can only hit one mob
                     }
                 }
@@ -209,6 +209,7 @@ public class Weapon {
                     Sound selectedSound = hitWallSounds.get(soundIndex);
                     selectedSound.play();
                     bullets.removeIndex(i);
+                    bullet.dispose();
                 }
             }
         }

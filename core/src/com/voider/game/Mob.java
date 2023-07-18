@@ -387,12 +387,14 @@
 
                         shootHitCharacterSound.play();
                         bullets.removeIndex(i);
+                        bullet.dispose();
                         continue;
                     }
 
                     // Check for collision with obstacles
                     if (isColliding_b(bulletCenterX, bulletCenterY - 4) || isBulletOffScreen(bullet)) {
                         bullets.removeIndex(i);
+                        bullet.dispose();
                     }
                 }
 

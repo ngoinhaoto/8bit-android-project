@@ -480,6 +480,7 @@ public class Character extends Sprite {
 
     public void dispose() {
         // Dispose of any resources here if needed
+        textureAtlas.dispose();
         gun.dispose();
         for (Sound sound : shootingSounds) {
             sound.dispose();
