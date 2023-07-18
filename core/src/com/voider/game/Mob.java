@@ -253,7 +253,7 @@
                     bullet.setAngle(angle);
                     bullets.add(bullet);
                 } else if (mobType == "pumpkin") {
-                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/pumpkin beam.png", bulletSpeed);
+                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/pumpkin ball.png", bulletSpeed);
                     // Calculate the angle towards the character
                     float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
                     bullet.setAngle(angle);
@@ -282,7 +282,6 @@
         }
 
         public void update(float delta) {
-            Gdx.app.log("STATE", this.getState().toString());
             stateTime += delta;
 
             if (currentState == State.DEAD) {
@@ -513,8 +512,8 @@
             float textureHeight = 32; // Set the desired texture height
 
             if (mobType == "bigDemon") {
-                textureWidth = 46;
-                textureHeight = 49;
+                textureWidth = 43;
+                textureHeight = 45;
             }
 
             if (mobType == "pumpkin") {

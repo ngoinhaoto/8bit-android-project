@@ -43,6 +43,9 @@ public class MenuScreen implements Screen {
     private Music backgroundMusic;
 
     private Sound playButtonSound;
+    private Texture backgroundTexture;
+    private Texture playButtonTextureUp;
+    private Texture playButtonTextureDown;
     public MenuScreen(final Voider game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -63,7 +66,7 @@ public class MenuScreen implements Screen {
 
         //background image
 
-        Texture backgroundTexture = new Texture(Gdx.files.internal("menubackground.jpg"));
+        backgroundTexture = new Texture(Gdx.files.internal("menubackground.jpg"));
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
 
@@ -77,8 +80,8 @@ public class MenuScreen implements Screen {
 
         BitmapFont customFont = fontGenerator.generateFont(fontParameter);
 
-        Texture playButtonTextureUp = new Texture(Gdx.files.internal("skin/playbutton.png"));
-        Texture playButtonTextureDown = new Texture(Gdx.files.internal("skin/playbuttondown.png"));
+         playButtonTextureUp = new Texture(Gdx.files.internal("skin/playbutton.png"));
+         playButtonTextureDown = new Texture(Gdx.files.internal("skin/playbuttondown.png"));
 
         TextureRegionDrawable playButtonUp = new TextureRegionDrawable(new TextureRegion(playButtonTextureUp));
         TextureRegionDrawable playButtonDown = new TextureRegionDrawable(new TextureRegion(playButtonTextureDown));
@@ -175,5 +178,8 @@ public class MenuScreen implements Screen {
         stage.dispose();
         backgroundMusic.dispose();
         playButtonSound.dispose();
+        playButtonTextureDown.dispose();
+        playButtonTextureUp.dispose();
+
     }
 }

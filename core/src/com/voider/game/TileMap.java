@@ -170,7 +170,6 @@ public class TileMap {
             }
         }
 
-        Gdx.app.log("Gate Boundary", String.valueOf(gateBoundaryUpdate));
 
         TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
 
@@ -204,8 +203,6 @@ public class TileMap {
                         gateTiles[tileX][tileY] = isBoundary;
 
                         isBoundary(tileX, tileY);
-                        Gdx.app.log("TileMap", "Tile Position: (" + tileX + ", " + tileY + "), Gate Tile Value: " + gateTiles[tileX][tileY]);
-                        Gdx.app.log("TileMap", "Tile Position: (" + tileX + ", " + tileY + "), is Boundary: " + isBoundary(tileX, tileY));
 
                     }
                 }

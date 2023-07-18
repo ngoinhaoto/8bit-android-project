@@ -316,7 +316,6 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         mobsKilledThisLevel++;
         character.setMobsKilled(character.getMobsKilled() + 1);
 
-        Gdx.app.log("Mobs Killed", String.valueOf(mobsKilledThisLevel));
         MapLayer gateLayer = tiledMap.getLayers().get("ActualGate");
         MapObject gate1Object = gateLayer.getObjects().get("Gate1Object");
         MapObject gate2Object = gateLayer.getObjects().get("Gate2Object");
