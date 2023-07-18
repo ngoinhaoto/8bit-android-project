@@ -1312,13 +1312,13 @@
   </object>
  </objectgroup>
  <objectgroup id="6" name="ChortPosition">
-  <object id="43" x="818.666" y="303.103">
+  <object id="43" x="803.182" y="318.587">
    <point/>
   </object>
-  <object id="44" x="811.44" y="572.696">
+  <object id="44" x="795.956" y="567.065">
    <point/>
   </object>
-  <object id="45" x="901.28" y="462.557">
+  <object id="45" x="809.782" y="465.372">
    <point/>
   </object>
   <object id="46" x="901.646" y="1010.34">
@@ -1344,7 +1344,7 @@
   <object id="134" x="979.536" y="265.434">
    <point/>
   </object>
-  <object id="135" x="937.58" y="595.941">
+  <object id="135" x="940.395" y="543.858">
    <point/>
   </object>
   <object id="136" x="874.219" y="1119.1">

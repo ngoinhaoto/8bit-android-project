@@ -280,7 +280,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(tileMap, x, y, "chort", true, 95, 2, character, this);
+            Mob mob = new Mob(tileMap, x, y, "chort", true, 88, 2, character, this);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
