@@ -18,6 +18,8 @@ public class HUD extends Actor {
     private BitmapFont font;
 
     private BitmapFont timerFont;
+    private TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
+    private TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
 
 
     public HUD(Character character) {
@@ -46,8 +48,6 @@ public class HUD extends Actor {
         super.act(delta);
 
         // Update the bar based on the character's current HP and Armor values
-        TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
-        TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
         hpBar = new Sprite(atlasHP.findRegion("hpBar-"+loadCurrentHP()));
         armorBar = new Sprite(atlasARM.findRegion("armBar-"+loadCurrentARM()));
     }
