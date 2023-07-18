@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,8 @@ public class Character extends Sprite {
     private float timer;
     private static final int TIMER_INCREMENT = 1; // Timer increment in seconds
     public int mobsKilled;
+
+    private Sound dieSound;
 
     public void setMobsKilled(int mobsKilled) {
         this.mobsKilled = mobsKilled;
@@ -110,6 +113,8 @@ public class Character extends Sprite {
 
 
         takingDamageSound =  Gdx.audio.newSound(Gdx.files.internal("music/oof sound.mp3"));
+
+        dieSound = Gdx.audio.newSound(Gdx.files.internal("music/dead.mp3"));
 
 
         bullets = new Array<>();
@@ -380,6 +385,13 @@ public class Character extends Sprite {
         if (this.currentHP <= 0) {
             this.currentHP = 0; // Ensure HP is never negative
             this.setState("DIE"); // Set the state to "DEAD" if HP reaches 0
+
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    dieSound.play();
+                }
+            }, 1f); // Delay of 2 seconds
         }
 
         // Update the lastDamageTime of the character
@@ -473,6 +485,8 @@ public class Character extends Sprite {
             sound.dispose();
         }
         takingDamageSound.dispose();
+
+        dieSound.dispose();
     }
 }
 

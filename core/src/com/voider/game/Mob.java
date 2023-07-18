@@ -76,6 +76,8 @@
 
         private final float SHOOTING_COOLDOWN_PUMPKIN = 1.85f;
 
+        private Sound shootHitCharacterSound;
+
 
         public interface MobDeathListener {
             void onMobDeath();
@@ -109,6 +111,8 @@
                  // Set the default speed for non-melee mobs
                 this.bullets = new Array<>();
                 shootingCooldown = 0;
+
+                shootHitCharacterSound = Gdx.audio.newSound(Gdx.files.internal("music/ding1.wav"));
 
                 if (mobType == "necromancer") {
                     shootingRadius = 110;
@@ -175,8 +179,6 @@
 
             }
         }
-
-
 
         @Override
         public void act(float delta) {
@@ -383,6 +385,8 @@
 
                     if (distance < bulletRadius + playerRadius) {
                         player.takeDamage(bullet.getDamage());
+
+                        shootHitCharacterSound.play();
                         bullets.removeIndex(i);
                         continue;
                     }
@@ -659,5 +663,8 @@
                 bigDemonBiteSound.dispose();
             }
 
+            if (isMelee) {
+                shootHitCharacterSound.dispose();
+            }
         }
     }

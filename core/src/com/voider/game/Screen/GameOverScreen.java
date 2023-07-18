@@ -2,6 +2,7 @@ package com.voider.game.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +21,7 @@ public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Stage stage;
+
 
     public GameOverScreen(Voider game) {
         this.game = game;
