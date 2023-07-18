@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="90">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="120" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="92">
  <tileset firstgid="1" source="DesertSands.tsx"/>
  <tileset firstgid="79" source="pixil-frame-0.tsx"/>
  <tileset firstgid="223" source="0x72_DungeonTilesetII_v1.6.tsx"/>
@@ -1484,61 +1484,49 @@
   <object id="2" x="759.392" y="280.664">
    <point/>
   </object>
-  <object id="4" x="571.987" y="566.658">
-   <point/>
-  </object>
-  <object id="75" x="643.34" y="1015.48">
-   <point/>
-  </object>
   <object id="76" x="824.707" y="1112.16">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="21" name="BigDemonPosition">
-  <object id="81" x="583.333" y="609.375">
-   <point/>
-  </object>
-  <object id="82" x="708.333" y="1085.07">
-   <point/>
-  </object>
   <object id="83" x="1465.28" y="538.194">
    <point/>
   </object>
   <object id="86" x="525.246" y="517.43">
    <point/>
   </object>
-  <object id="87" x="1034.86" y="589.339">
+  <object id="87" x="1033.3" y="656.558">
    <point/>
   </object>
-  <object id="88" x="795.685" y="981.71">
+  <object id="88" x="640.925" y="1039.55">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="22" name="PumpkinPosition">
-  <object id="77" x="1083.33" y="553.819">
+  <object id="77" x="1192.76" y="445.956">
    <point/>
   </object>
-  <object id="78" x="671.875" y="555.556">
+  <object id="78" x="762.543" y="633.718">
    <point/>
   </object>
-  <object id="80" x="628.472" y="1092.01">
-   <point/>
-  </object>
-  <object id="85" x="739.583" y="928.819">
+  <object id="85" x="648.915" y="1124.22">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="7" name="NecromancerPosition">
-  <object id="7" x="1126.21" y="621.725">
+  <object id="7" x="1191.87" y="654.553">
    <point/>
   </object>
-  <object id="8" x="731.859" y="480.504">
+  <object id="8" x="747.491" y="514.895">
    <point/>
   </object>
-  <object id="70" x="1055.69" y="454.273">
+  <object id="72" x="789.809" y="922.064">
    <point/>
   </object>
-  <object id="72" x="628.796" y="956.455">
+  <object id="90" x="1070.81" y="425.199">
+   <point/>
+  </object>
+  <object id="91" x="689.386" y="936.376">
    <point/>
   </object>
  </objectgroup>

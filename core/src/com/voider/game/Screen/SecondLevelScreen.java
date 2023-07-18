@@ -337,7 +337,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
         MapLayer gate3Broken = tiledMap.getLayers().get("Gate3Broken");
 
-        if (mobsKilledThisLevel >= 6 && gate1BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 4 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
@@ -346,7 +346,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             gateSound.play();
         }
 
-        if (mobsKilledThisLevel >= 10 && gate2ABoundaryEnabled) {
+        if (mobsKilledThisLevel >= 8 && gate2ABoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2AObject, false);
 
 
@@ -357,7 +357,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             gateSound.play();
         }
 
-        if (mobsKilledThisLevel >= 11 && gate2BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 9 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2.setVisible(false);
             gate2Broken.setVisible(true);
@@ -366,7 +366,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
         }
 //         The portal appear
-        if (mobsKilledThisLevel >= 18 && gate3BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 14 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
             gate3.setVisible(false);
