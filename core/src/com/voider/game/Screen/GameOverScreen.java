@@ -2,6 +2,7 @@ package com.voider.game.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +21,7 @@ public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Stage stage;
+    private Music backgroundMusic;
 
     public GameOverScreen(Voider game) {
         this.game = game;
@@ -32,6 +34,10 @@ public class GameOverScreen implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Lose sound effects-YoutubeConvert.cc.wav")); // Load the background music
+//        backgroundMusic.setLooping(true); // Set the music to loop
+        backgroundMusic.play(); // Start playing the background music
 
         // GAME OVER LABEL
         Texture gameOverTexture = new Texture(Gdx.files.internal("skin/game_over.png"));
