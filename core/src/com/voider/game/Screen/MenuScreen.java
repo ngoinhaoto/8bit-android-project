@@ -81,7 +81,7 @@ public class MenuScreen implements Screen {
         Texture playButtonTextureDown = new Texture(Gdx.files.internal("skin/playbuttondown.png"));
 
         TextureRegionDrawable playButtonUp = new TextureRegionDrawable(new TextureRegion(playButtonTextureUp));
-        final TextureRegionDrawable playButtonDown = new TextureRegionDrawable(new TextureRegion(playButtonTextureDown));
+        TextureRegionDrawable playButtonDown = new TextureRegionDrawable(new TextureRegion(playButtonTextureDown));
 
         ImageButtonStyle playButtonStyle = new ImageButtonStyle();
         playButtonStyle.imageUp = playButtonUp;

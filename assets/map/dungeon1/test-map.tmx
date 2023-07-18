@@ -1233,7 +1233,7 @@
     <property name="boundary" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="35" x="1204.6" y="329.015" width="10.4016" height="421.079">
+  <object id="35" x="1195.42" y="329.015" width="19.5843" height="421.079">
    <properties>
     <property name="boundary" type="bool" value="true"/>
    </properties>
@@ -1353,7 +1353,7 @@
   <object id="137" x="1141.36" y="1124.24">
    <point/>
   </object>
-  <object id="138" x="1290.35" y="410.994">
+  <object id="138" x="1338.56" y="417.881">
    <point/>
   </object>
   <object id="139" x="1583.18" y="413.563">

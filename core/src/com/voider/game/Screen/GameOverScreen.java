@@ -8,11 +8,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.voider.game.Voider;
 
@@ -21,6 +26,9 @@ public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Stage stage;
+
+    private ImageButton replayButton;
+    private ImageButton homeButton;
 
 
     public GameOverScreen(Voider game) {
@@ -39,45 +47,56 @@ public class GameOverScreen implements Screen {
         Texture gameOverTexture = new Texture(Gdx.files.internal("skin/game_over.png"));
         Image gameOverImg = new Image(gameOverTexture);
 
-        // Play Again Button
-        BitmapFont font = new BitmapFont();
-        float fontSize = 48f; // Set the desired font size
-        font.getData().setScale(fontSize / font.getLineHeight()); // Scale the font size
-        TextButtonStyle buttonStyle = new TextButtonStyle();
-        buttonStyle.font = font;
-        buttonStyle.font.getData().setScale(2f); // Increase the font scale
+        Texture homeButtonTextureUp = new Texture(Gdx.files.internal("skin/homebuttonup.png"));
+        Texture homeButtonTextureDown = new Texture(Gdx.files.internal("skin/homebuttondown.png"));
 
-        TextButton returnHomeButton = new TextButton("RETURN HOME", buttonStyle);
-        TextButton playAgainButton = new TextButton("PLAY AGAIN", buttonStyle);
-        returnHomeButton.getLabel().setFontScale(3f);
-        playAgainButton.getLabel().setFontScale(3f); // Increase the font scale
+        TextureRegionDrawable homeButtonUp = new TextureRegionDrawable(new TextureRegion(homeButtonTextureUp));
+        TextureRegionDrawable homeButtonDown = new TextureRegionDrawable(new TextureRegion(homeButtonTextureDown));
 
-        returnHomeButton.addListener(new ClickListener() {
+        ImageButtonStyle homeButtonStyle = new ImageButtonStyle();
+        homeButtonStyle.imageUp = homeButtonUp;
+        homeButtonStyle.imageDown = homeButtonDown;
+
+        homeButton = new ImageButton(homeButtonStyle);
+
+
+        Texture replayButtonTextureUp = new Texture(Gdx.files.internal("skin/replaybuttonup.png"));
+        Texture replayButtonTextureDown = new Texture(Gdx.files.internal("skin/replaybuttondown.png"));
+
+        TextureRegionDrawable replayButtonUp = new TextureRegionDrawable(new TextureRegion(replayButtonTextureUp));
+        TextureRegionDrawable replayButtonDown = new TextureRegionDrawable(new TextureRegion(replayButtonTextureDown));
+
+        ImageButtonStyle replayButtonStyle = new ImageButtonStyle();
+        replayButtonStyle.imageUp = replayButtonUp;
+        replayButtonStyle.imageDown = replayButtonDown;
+
+
+        replayButton = new ImageButton(replayButtonStyle);
+
+        table.add(gameOverImg);
+        table.row();
+        table.add(homeButton).width(homeButton.getWidth()).height(homeButton.getHeight());
+        table.row();
+        table.add().height(40); // Add space between the buttons
+        table.row();
+        table.add(replayButton).width(replayButton.getWidth()).height(replayButton.getHeight());
+        table.setFillParent(true);
+
+        stage.addActor(table);
+
+        replayButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("RHC", "WORKED");
+                playAgain();
+            }
+        });
+        homeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
                 returnHomeScreen();
             }
         });
 
-        playAgainButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("GOC", "WORKED");
-                playAgain();
-            }
-        });
-
-        table.add(gameOverImg);
-        table.row();
-        table.add(returnHomeButton).width(200).height(60);
-        table.row();
-        table.add().height(40); // Add space between the buttons
-        table.row();
-        table.add(playAgainButton).width(200).height(60);
-        table.setFillParent(true);
-
-        stage.addActor(table);
     }
 
     private void returnHomeScreen() {

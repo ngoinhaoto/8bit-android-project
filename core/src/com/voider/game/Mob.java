@@ -101,7 +101,7 @@
             // Set the movement speed based on the isMelee parameter
             if (isMelee) {
                 if (mobType == "chort") {
-                    movementSpeed = 54;
+                    movementSpeed = 48;
                 }
                 if (mobType == "bigDemon") {
                     movementSpeed = 43;
@@ -515,6 +515,11 @@
             if (mobType == "bigDemon") {
                 textureWidth = 46;
                 textureHeight = 49;
+            }
+
+            if (mobType == "pumpkin") {
+                textureHeight = 24;
+                textureWidth = 26;
             }
 
             if (!movingRight) {

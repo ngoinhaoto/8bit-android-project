@@ -4,12 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -95,15 +97,23 @@ public class WinnerScreen implements Screen {
         });
 
 // Create the labels using the default skin
-        BitmapFont font = new BitmapFont();
+
+        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("skin/pixeboy-font/Pixeboy-z8XGD.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        fontParameter.size = 50;
+
+        BitmapFont customFont = fontGenerator.generateFont(fontParameter);
+
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = font;
+        labelStyle.fontColor = Color.valueOf("#fff893");
+        labelStyle.font = customFont;
 
         totalKilledLabel = new Label("MOBS KILLED: " + totalKilled, labelStyle);
-        totalKilledLabel.setFontScale(3f); // Increase the font scale
+        totalKilledLabel.setFontScale(2f); // Increase the font scale
 
         runtimeLabel = new Label("TIME: " + runtime + " GAME SECONDS", labelStyle);
-        runtimeLabel.setFontScale(3f); // Increase the font scale
+        runtimeLabel.setFontScale(2f); // Increase the font scale
 
         stage.addActor(backgroundImage);
 
