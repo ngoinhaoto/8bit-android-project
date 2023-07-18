@@ -1315,10 +1315,10 @@
   <object id="43" x="803.182" y="318.587">
    <point/>
   </object>
-  <object id="44" x="795.956" y="567.065">
+  <object id="44" x="819.886" y="507.943">
    <point/>
   </object>
-  <object id="45" x="809.782" y="465.372">
+  <object id="45" x="852.012" y="368.244">
    <point/>
   </object>
   <object id="46" x="901.646" y="1010.34">
@@ -1341,7 +1341,7 @@
   </object>
  </objectgroup>
  <objectgroup id="36" name="NecromancerPosition">
-  <object id="134" x="979.536" y="265.434">
+  <object id="134" x="962.644" y="287.957">
    <point/>
   </object>
   <object id="135" x="940.395" y="543.858">
