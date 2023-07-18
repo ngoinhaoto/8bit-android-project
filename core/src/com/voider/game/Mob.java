@@ -504,6 +504,11 @@
 
         public void render(SpriteBatch spriteBatch) {
             TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+            // Dispose of the previous frame
+            TextureRegion previousFrame = getFrame(stateTime - Gdx.graphics.getDeltaTime());
+            if (previousFrame != currentFrame) {
+                previousFrame.getTexture().dispose();
+            }
             // Check if the Mob is being attacked and modify the color accordingly
             if (isBeingAttacked && getState() != State.DEAD) {
                 // Set the color to red

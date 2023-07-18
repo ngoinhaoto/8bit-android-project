@@ -330,6 +330,13 @@ public class Character extends Sprite {
                 spriteBatch.setColor(Color.RED);
             }
             TextureRegion currentFrame = getFrame(Gdx.graphics.getDeltaTime());
+
+            // Dispose of the previous frame
+            TextureRegion previousFrame = getFrame(stateTime - Gdx.graphics.getDeltaTime());
+            if (previousFrame != currentFrame) {
+                previousFrame.getTexture().dispose();
+            }
+
             // Render the character at its current position
             float textureWidth = 32; // Set the desired texture width
             float textureHeight = 32; // Set the desired texture height

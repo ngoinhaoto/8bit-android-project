@@ -21,6 +21,8 @@ public class Weapon {
 
     private Array<Sound> hitWallSounds;
     private Array<Sound> hitMobSounds;
+    private Texture fireGunTexture = new Texture("weap/gun/gun fire.png");
+    private Texture gunTexture = new Texture("weap/gun/gun active.png");
 
     public Weapon(Texture texture, Character character) {
         this.texture = texture;
@@ -81,9 +83,9 @@ public class Weapon {
 
     private void updateTexture() {
         if (isShoot) {
-            this.texture = new Texture("weap/gun/gun fire.png");
+            this.texture = fireGunTexture;
         } else {
-            this.texture = new Texture("weap/gun/gun active.png");
+            this.texture = gunTexture;
         }
     }
 
