@@ -105,10 +105,10 @@ public class MenuScreen implements Screen {
         descriptionLabelStyle.fontColor = Color.valueOf("#bae100");
 
         introductionLabel = new Label("Welcome to Voider game", introductionLabelStyle);
-        introductionLabel.setFontScale(3.5f);
+        introductionLabel.setFontScale(2.4f);
 
         descriptionLabel = new Label("Your task is killing all the mobs to get the the portal to escape the dungeons", descriptionLabelStyle);
-        descriptionLabel.setFontScale(1.5f);
+        descriptionLabel.setFontScale(1.2f);
 
         stage.addActor(backgroundImage);
 
