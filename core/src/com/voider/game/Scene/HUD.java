@@ -18,8 +18,7 @@ public class HUD extends Actor {
     private BitmapFont font;
 
     private BitmapFont timerFont;
-    private TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
-    private TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
+
 
     public HUD(Character character) {
         this.character = character;
@@ -46,15 +45,9 @@ public class HUD extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        // Dispose old sprites to release resources
-        if (hpBar != null) {
-            hpBar.getTexture().dispose();
-        }
-        if (armorBar != null) {
-            armorBar.getTexture().dispose();
-        }
-
         // Update the bar based on the character's current HP and Armor values
+        TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
+        TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
         hpBar = new Sprite(atlasHP.findRegion("hpBar-"+loadCurrentHP()));
         armorBar = new Sprite(atlasARM.findRegion("armBar-"+loadCurrentARM()));
     }
@@ -62,6 +55,10 @@ public class HUD extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
+        TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
+
 
         hpBar.setPosition(40, Gdx.graphics.getHeight() - 30 - hpBar.getHeight()); // Top left corner
         armorBar.setPosition(40, Gdx.graphics.getHeight() - 80 - armorBar.getHeight()); // Below the HP bar
@@ -71,7 +68,7 @@ public class HUD extends Actor {
         armorBar.draw(batch);
 
         // draw number of mobs killed
-        String mobsKilledText = "Mobs Killed: " + character.getMobsKilled();
+        String mobsKilledText = "Mobs Killed: " +character.getMobsKilled();
         font.draw(batch, mobsKilledText, Gdx.graphics.getWidth() - 700, Gdx.graphics.getHeight() - 50);
 
 
@@ -86,6 +83,7 @@ public class HUD extends Actor {
     private String loadCurrentARM() {
         return  String.valueOf((int)(Math.round((float)this.character.getCurrentARM() / this.character.getMaxARM() *100)));
     }
+
 
 }
 
