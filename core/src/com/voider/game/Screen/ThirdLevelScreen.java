@@ -214,8 +214,9 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
                 if (touchpad.isTouched()) {
                     // Touchpad is being touched
                     isTouchpadActive = true;
-
-                    rotateGun(knobPercentX, knobPercentY);
+                    if (character.getMobsInRange().isEmpty()) {
+                        rotateGun(knobPercentX, knobPercentY);
+                    }
                 } else if (isTouchpadActive) {
                     // Touchpad was released after being touched
                     isTouchpadActive = false;

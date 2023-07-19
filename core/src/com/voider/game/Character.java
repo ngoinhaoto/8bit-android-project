@@ -141,15 +141,16 @@ public class Character extends Sprite {
         mobsInRange.clear(); // Clear the current list of mobs in range
 
         for (Mob mob : allMobs) {
-            Vector2 mobPosition = new Vector2(mob.getPosition().x, mob.getPosition().y);
-            Vector2 characterPosition = new Vector2(getPosition().x, getPosition().y);
-            float distance = characterPosition.dst(mobPosition);
+            if (mob.getState() != Mob.State.DEAD) {
+                Vector2 mobPosition = new Vector2(mob.getPosition().x, mob.getPosition().y);
+                Vector2 characterPosition = new Vector2(getPosition().x, getPosition().y);
+                float distance = characterPosition.dst(mobPosition);
 
-            if (distance <= attackingRadius) {
-                mobsInRange.add(mob);
+                if (distance <= attackingRadius) {
+                    mobsInRange.add(mob);
+                }
             }
         }
-
     }
 
     public void update(float delta, float joystickX, float joystickY, Array<Mob> allMobs) {
