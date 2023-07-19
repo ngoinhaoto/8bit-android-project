@@ -22,6 +22,15 @@
 
     public class Mob extends Actor {
         enum State { IDLING, WALKING_LEFT, WALKING_RIGHT, ATTACKING, DEAD };
+
+        public TileMap getTileMap() {
+            return tileMap;
+        }
+
+        public void setTileMap(TileMap tileMap) {
+            this.tileMap = tileMap;
+        }
+
         private TileMap tileMap;
         private String mobType;
 

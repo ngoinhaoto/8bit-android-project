@@ -95,7 +95,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playButtonSound.play();
-                game.setScreen(new SecondLevelScreen(game));
+                game.setScreen(new ThirdLevelScreen(game));
             }
         });
 

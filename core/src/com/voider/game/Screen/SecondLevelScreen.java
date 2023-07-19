@@ -86,29 +86,9 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
 
 
-//    public SecondLevelScreen(Voider game, Character character) {
-//        this.game = game;
-//        this.character = character;
-//        //Get map
-//        tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
-//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-//
-//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
-//
-//        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
-//
-//        bullets = new Array<>();
-//        mobsKilledThisLevel=0;
-//        loadPortal();
-//        loadCamera();
-//        loadCharacter();
-//        loadControls();
-//        initialiseMobs();
-//        loadHUD();
-//    }
-
-    public SecondLevelScreen(Voider game) {
+    public SecondLevelScreen(Voider game, Character character) {
         this.game = game;
+        this.character = character;
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -126,6 +106,26 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         initialiseMobs();
         loadHUD();
     }
+
+//    public SecondLevelScreen(Voider game) {
+//        this.game = game;
+//        //Get map
+//        tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
+//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+//
+//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
+//
+//        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
+//
+//        bullets = new Array<>();
+//        mobsKilledThisLevel=0;
+//        loadPortal();
+//        loadCamera();
+//        loadCharacter();
+//        loadControls();
+//        initialiseMobs();
+//        loadHUD();
+//    }
 
     private void loadPortal() {
         MapLayer portalLayer = tiledMap.getLayers().get("PortalPosition");
@@ -240,28 +240,28 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         gameCam.update();
     }
 
-//    public void loadCharacter() {
-//        batch = new SpriteBatch();
-//        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
-//
-//
-//
-//        character.setTileMap(tileMap);
-//        character.setState("IDLE");
-//        character.setPosition(initialCameraX - 137, initialCameraY - 10);
-//        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
-//
-//    }
-
     public void loadCharacter() {
         batch = new SpriteBatch();
         TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
 
-        character = new Character(tileMap);
+
+
+        character.setTileMap(tileMap);
+        character.setState("IDLE");
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
         character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+
     }
+
+//    public void loadCharacter() {
+//        batch = new SpriteBatch();
+//        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
+//
+//        character = new Character(tileMap);
+//        character.setPosition(initialCameraX - 137, initialCameraY - 10);
+//        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
+//        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+//    }
 
     private void initialiseMobs() {
         mobs = new Array<>();
@@ -342,6 +342,10 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate1Object, false);
+            }
+
             gate1.setVisible(false);
             gate1Broken.setVisible(true);
             gateSound.play();
@@ -350,6 +354,10 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         if (mobsKilledThisLevel >= 8 && gate2ABoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2AObject, false);
 
+
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate2AObject, false);
+            }
 
             gate2ABoundaryEnabled = false;
 
@@ -361,6 +369,10 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         if (mobsKilledThisLevel >= 9 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2.setVisible(false);
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate2Object, false);
+            }
+
             gate2Broken.setVisible(true);
             gateSound.play();
             gate2BoundaryEnabled = false;
@@ -370,6 +382,10 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         if (mobsKilledThisLevel >= 14 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate3Object, false);
+            }
+
             gate3.setVisible(false);
             gate3Broken.setVisible(true);
             gateSound.play();
@@ -466,7 +482,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
                 // Check if the time limit has been reached
                 if (portalEnterTime >= 1.5f) {
                     // Transition to the second level screen
-                    game.setScreen(new ThirdLevelScreen(game, character));
+//                    game.setScreen(new ThirdLevelScreen(game, character));
                 }
 
             }

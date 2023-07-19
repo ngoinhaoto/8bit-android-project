@@ -277,6 +277,10 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
 
         if (mobsKilledThisLevel >= 5 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
+
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate1Object, false);
+            }
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
             gate1.setVisible(false);
@@ -286,6 +290,11 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         if (mobsKilledThisLevel >= 10 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
             gate2BoundaryEnabled = false;
+
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate2Object, false);
+            }
+
             gate2.setVisible(false);
             gateSound.play();
         }
@@ -293,6 +302,11 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         if (mobsKilledThisLevel >= 16 && gate3BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate3Object, false);
             gate3BoundaryEnabled = false;
+
+            for (Mob mob : mobs) {
+                mob.getTileMap().updateGateBoundary(gate3Object, false);
+            }
+
             gate3.setVisible(false);
             portalVisible = true;
             gateSound.play();
@@ -389,7 +403,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
                 // Check if the time limit has been reached
                 if (portalEnterTime >= 1.5f) {
                     // Transition to the second level screen
-//                    game.setScreen(new SecondLevelScreen(game, character));
+                    game.setScreen(new SecondLevelScreen(game, character));
                 }
             }
 
