@@ -482,7 +482,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
                 // Check if the time limit has been reached
                 if (portalEnterTime >= 1.5f) {
                     // Transition to the second level screen
-//                    game.setScreen(new ThirdLevelScreen(game, character));
+                    game.setScreen(new ThirdLevelScreen(game, character));
                 }
 
             }

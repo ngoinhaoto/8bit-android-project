@@ -91,40 +91,20 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
 
 
 
-//    public ThirdLevelScreen(Voider game, Character character) {
-//        this.game = game;
-//        this.character = character;
-//        //Get map
-//        tiledMap = new TmxMapLoader().load("map/dungeon1/level3.tmx");
-//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-//
-//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
-//
-//
-//        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
-//
-//        bullets = new Array<>();
-//        mobsKilledThisLevel=0;
-//        loadPortal();
-//        loadCamera();
-//        loadCharacter();
-//        loadControls();
-//        initialiseMobs();
-//        loadHUD();
-//    }
-
-    public ThirdLevelScreen(Voider game) {
+    public ThirdLevelScreen(Voider game, Character character) {
         this.game = game;
+        this.character = character;
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/level3.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
 
-        bullets = new Array<>();
-        mobsKilledThisLevel=0;
+
         gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
 
+        bullets = new Array<>();
+        mobsKilledThisLevel=0;
         loadPortal();
         loadCamera();
         loadCharacter();
@@ -132,6 +112,26 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         initialiseMobs();
         loadHUD();
     }
+
+//    public ThirdLevelScreen(Voider game) {
+//        this.game = game;
+//        //Get map
+//        tiledMap = new TmxMapLoader().load("map/dungeon1/level3.tmx");
+//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+//
+//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
+//
+//        bullets = new Array<>();
+//        mobsKilledThisLevel=0;
+//        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
+//
+//        loadPortal();
+//        loadCamera();
+//        loadCharacter();
+//        loadControls();
+//        initialiseMobs();
+//        loadHUD();
+//    }
 
     private void loadPortal() {
         MapLayer portalLayer = tiledMap.getLayers().get("PortalPosition");
@@ -249,28 +249,28 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         gameCam.update();
     }
 
-//    public void loadCharacter() {
-//        batch = new SpriteBatch();
-//        TileMap tileMap = new TileMap("map/dungeon1/level3.tmx"); // Create the tileMap object
-//
-//
-//
-//        character.setTileMap(tileMap);
-//        character.setState("IDLE");
-//        character.setPosition(initialCameraX - 137, initialCameraY - 10);
-//        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
-//
-//    }
-
     public void loadCharacter() {
         batch = new SpriteBatch();
         TileMap tileMap = new TileMap("map/dungeon1/level3.tmx"); // Create the tileMap object
 
-        character = new Character(tileMap);
+
+
+        character.setTileMap(tileMap);
+        character.setState("IDLE");
         character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
         character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+
     }
+
+//    public void loadCharacter() {
+//        batch = new SpriteBatch();
+//        TileMap tileMap = new TileMap("map/dungeon1/level3.tmx"); // Create the tileMap object
+//
+//        character = new Character(tileMap);
+//        character.setPosition(initialCameraX - 137, initialCameraY - 10);
+//        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
+//        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+//    }
 
     private void initialiseMobs() {
         mobs = new Array<>();
