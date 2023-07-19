@@ -110,10 +110,10 @@ public class WinnerScreen implements Screen {
         labelStyle.font = customFont;
 
         totalKilledLabel = new Label("MOBS KILLED: " + totalKilled, labelStyle);
-        totalKilledLabel.setFontScale(1.75f); // Increase the font scale
+        totalKilledLabel.setFontScale(1.35f); // Increase the font scale
 
         runtimeLabel = new Label("TIME: " + runtime + " GAME SECONDS", labelStyle);
-        runtimeLabel.setFontScale(1.75f); // Increase the font scale
+        runtimeLabel.setFontScale(1.35f); // Increase the font scale
 
         stage.addActor(backgroundImage);
 
