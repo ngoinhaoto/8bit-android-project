@@ -123,7 +123,9 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
 //
 //        bullets = new Array<>();
 //        mobsKilledThisLevel=0;
-////        loadPortal();
+//        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
+//
+//        loadPortal();
 //        loadCamera();
 //        loadCharacter();
 //        loadControls();
@@ -275,23 +277,34 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
 
         // Create the tileMap object
         TileMap tileMap = new TileMap("map/dungeon1/level3.tmx");
-        MapObjects objects = tiledMap.getLayers().get("ChortPosition").getObjects();
+        MapObjects objects = tiledMap.getLayers().get("BigDemonPosition").getObjects();
         for (MapObject object : objects) {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(tileMap, x, y, "chort", true, 88, 2, character, this);
+            Mob mob = new Mob(tileMap, x, y, "bigDemon", true, 110, 2, character, this);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
 
-        MapObjects necromancerObjects = tiledMap.getLayers().get("NecromancerPosition").getObjects();
+        MapObjects wizardObjects = tiledMap.getLayers().get("WizardPosition").getObjects();
 
-        for (MapObject object: necromancerObjects) {
+        for (MapObject object: wizardObjects) {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(tileMap, x, y, "necromancer", false, 40, 1, character, this);
+            Mob mob = new Mob(tileMap, x, y, "wizard", false, 40, 2, character, this);
+            mob.setPosition(x, y);
+            mobs.add(mob);
+        }
+
+        MapObjects witchObjects = tiledMap.getLayers().get("WitchPosition").getObjects();
+
+        for (MapObject object: witchObjects) {
+            float x = object.getProperties().get("x", Float.class);
+            float y = object.getProperties().get("y", Float.class);
+
+            Mob mob = new Mob(tileMap, x, y, "witch", false, 40, 2, character, this);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
@@ -327,7 +340,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         MapLayer gate6Broken = tiledMap.getLayers().get("Gate6Broken");
         MapLayer gate7Broken = tiledMap.getLayers().get("Gate7Broken");
 
-        if (mobsKilledThisLevel >= 2 && gate1BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 3 && gate1BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate1Object, false);
             gate1BoundaryEnabled = false; // Update the flag to prevent repeated property setting
             // make the gate disappear afterward
@@ -336,30 +349,40 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
             gateSound.play();
         }
 
-        if (mobsKilledThisLevel >= 4 && gate2BoundaryEnabled && gate3BoundaryEnabled) {
+        if (mobsKilledThisLevel >= 5 && gate2BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate2Object, false);
-            character.getTileMap().updateGateBoundary(gate3Object, false);
 
             gate2BoundaryEnabled = false;
-            gate3BoundaryEnabled = false;
 
             gate2.setVisible(false);
             gate2Broken.setVisible(true);
+
+            gateSound.play();
+        }
+
+        if (mobsKilledThisLevel >= 6 && gate3BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate3Object, false);
+
+            gate3BoundaryEnabled = false;
 
             gate3.setVisible(false);
             gate3Broken.setVisible(true);
 
             gateSound.play();
-
         }
-//         The portal appear
-        if (mobsKilledThisLevel >= 6 && gate4BoundaryEnabled && gate5BoundaryEnabled) {
+
+        if (mobsKilledThisLevel >= 9 && gate4BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate4Object, false);
-            character.getTileMap().updateGateBoundary(gate5Object, false);
 
             gate4BoundaryEnabled = false;
             gate4.setVisible(false);
             gate4Broken.setVisible(true);
+
+            gateSound.play();
+        }
+
+        if (mobsKilledThisLevel >= 11 && gate5BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate5Object, false);
 
             gate5BoundaryEnabled = false;
             gate5.setVisible(false);
@@ -369,18 +392,26 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         }
 
 
-        if (mobsKilledThisLevel >= 8 && gate6BoundaryEnabled && gate7BoundaryEnabled) {
-            character.getTileMap().updateGateBoundary(gate6Object, false);
+
+        if (mobsKilledThisLevel >= 15 && gate7BoundaryEnabled) {
             character.getTileMap().updateGateBoundary(gate7Object, false);
+
+            gate7BoundaryEnabled = false;
+            gate7.setVisible(false);
+            gate7Broken.setVisible(true);
+
+            gateSound.play();
+        }
+
+        if (mobsKilledThisLevel >= 16 && gate6BoundaryEnabled) {
+            character.getTileMap().updateGateBoundary(gate6Object, false);
 
             gate6BoundaryEnabled = false;
             gate6.setVisible(false);
             gate6Broken.setVisible(true);
 
-            gate7BoundaryEnabled = false;
-            gate7.setVisible(false);
-            gate7Broken.setVisible(true);
             gateSound.play();
+
             portalVisible = true;
         }
 

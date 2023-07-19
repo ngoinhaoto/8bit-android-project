@@ -76,7 +76,13 @@
 
         private final float SHOOTING_COOLDOWN_PUMPKIN = 1.85f;
 
+        private final float SHOOTING_COOLDOWN_WIZARD = 2f;
+        private final float SHOOTING_COOLDOWN_WITCH = 2f;
+
         private Sound shootHitCharacterSound;
+
+
+        private float randomMovementStartRadius = 285;
 
 
         public interface MobDeathListener {
@@ -112,15 +118,30 @@
                 this.bullets = new Array<>();
                 shootingCooldown = 0;
 
-                shootHitCharacterSound = Gdx.audio.newSound(Gdx.files.internal("music/ding1.wav"));
 
                 if (mobType == "necromancer") {
                     shootingRadius = 110;
                     movementSpeed = 24;
+                    shootHitCharacterSound = Gdx.audio.newSound(Gdx.files.internal("music/ding1.wav"));
+
                 }
                 if (mobType == "pumpkin") {
                     shootingRadius = 140;
                     movementSpeed = 35;
+                    shootHitCharacterSound = Gdx.audio.newSound(Gdx.files.internal("music/ding1.wav"));
+
+                }
+
+                if (mobType == "witch") {
+                    shootingRadius = 125;
+                    movementSpeed = 30;
+                    shootHitCharacterSound = Gdx.audio.newSound(Gdx.files.internal("music/Electricity_SFX.wav"));
+
+                }
+                if (mobType == "wizard") {
+                    shootingRadius = 125;
+                    movementSpeed = 35;
+                    shootHitCharacterSound = Gdx.audio.newSound(Gdx.files.internal("music/Electricity_SFX.wav"));
                 }
             }
 
@@ -176,10 +197,31 @@
                 mIdle.setFrameDuration(FRAME_TIME);
                 mWalk.setFrameDuration(FRAME_TIME);
                 mDie.setFrameDuration(FRAME_TIME);
+            }
 
+            else if (mobType == "witch") {
+                textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/wizard_f/wizard_f.atlas"));
+
+                mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+                mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+                mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+
+                mIdle.setFrameDuration(FRAME_TIME);
+                mWalk.setFrameDuration(FRAME_TIME);
+                mDie.setFrameDuration(FRAME_TIME);
+            }
+            else if (mobType == "wizard") {
+                textureAtlas = new TextureAtlas(Gdx.files.internal("mobs/wizard_m/wizard_m.atlas"));
+
+                mIdle = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("idle"));
+                mWalk = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("walk"));
+                mDie = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("die"));
+
+                mIdle.setFrameDuration(FRAME_TIME);
+                mWalk.setFrameDuration(FRAME_TIME);
+                mDie.setFrameDuration(FRAME_TIME);
             }
         }
-
         @Override
         public void act(float delta) {
             super.act(delta);
@@ -192,7 +234,6 @@
                 damageDisplayTime -= delta;
             }
         }
-
 
         public void takeDamage(int damage) {
             if (currentState == State.DEAD) {
@@ -236,6 +277,19 @@
                     return;
                 }
                 float bulletSpeed = 180;
+                if (mobType == "necromancer") {
+                    bulletSpeed = 180;
+                }
+                if (mobType == "pumpkin") {
+                    bulletSpeed = 220;
+                }
+                if (mobType == "wizard") {
+                    bulletSpeed = 400;
+                }
+                if (mobType == "witch") {
+                    bulletSpeed = 400;
+                }
+
 
                 float velocityX;
                 float velocityY = 0;
@@ -258,6 +312,18 @@
                     float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
                     bullet.setAngle(angle);
                     bullets.add(bullet);
+                } else if (mobType == "witch") {
+                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/lightning_f.png", bulletSpeed);
+                    // Calculate the angle towards the character
+                    float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
+                    bullet.setAngle(angle);
+                    bullets.add(bullet);
+                } else if (mobType == "wizard") {
+                    Bullet bullet = new Bullet(getX(), getY(), velocityX, velocityY, movingRight, 0, damage, "bullet/lightning_m.png", bulletSpeed);
+                    // Calculate the angle towards the character
+                    float angle = MathUtils.atan2(character.getPosition().y - getY(), character.getPosition().x - getX()) * MathUtils.radiansToDegrees;
+                    bullet.setAngle(angle);
+                    bullets.add(bullet);
                 }
             }
         }
@@ -276,6 +342,12 @@
                     break;
                 case "pumpkin":
                     maxHealth = 12;
+                    break;
+                case "witch":
+                    maxHealth = 10;
+                    break;
+                case "wizard":
+                    maxHealth = 11;
                     break;
             }
             return maxHealth;
@@ -304,7 +376,14 @@
 
             float biteRange = 28;
 
-            if (isMelee && Math.abs(totalDistanceToPlayer) <= biteRange && !isColliding && biteCooldown <= 0.0f
+            if (mobType == "chort") {
+                biteRange = 28;
+            }
+            if (mobType == "bigDemon") {
+                biteRange = 37;
+            }
+
+            if (isMelee && Math.abs(totalDistanceToPlayer) <= biteRange && biteCooldown <= 0.0f
             && player.getState() != Character.State.DEAD) {
                 // Inflict damage to the character
                 // Add any additional behavior here, such as playing a sound effect or triggering an animation
@@ -341,8 +420,9 @@
                 // Update movingRight based on the distance to the character
                 movingRight = distanceToPlayerX > 0;
             } else {
-                // Perform random left and right movement
-                randomMovement(delta);
+                if (totalDistanceToPlayer <= randomMovementStartRadius) {
+                    randomMovement(delta);
+                }
             }
 
 
@@ -357,6 +437,12 @@
                     }
                     if (mobType == "pumpkin") {
                         shootingCooldown = SHOOTING_COOLDOWN_PUMPKIN;
+                    }
+                    if (mobType == "wizard") {
+                        shootingCooldown = SHOOTING_COOLDOWN_WIZARD;
+                    }
+                    if (mobType == "witch") {
+                        shootingCooldown = SHOOTING_COOLDOWN_WITCH;
                     }
                 }
             }
@@ -433,6 +519,13 @@
                 float totalDistanceToCharacter = (float) Math.sqrt(distanceToCharacterX * distanceToCharacterX + distanceToCharacterY * distanceToCharacterY);
 
                 float biteRange = 28;
+
+                if (mobType == "chort") {
+                    biteRange = 28;
+                }
+                if (mobType == "bigDemon") {
+                    biteRange = 37;
+                }
                 if (Math.abs(totalDistanceToCharacter) <= biteRange) {
                     // Inflict damage to the character
                     character.takeDamage(damage);
@@ -519,8 +612,8 @@
             float textureHeight = 32; // Set the desired texture height
 
             if (mobType == "bigDemon") {
-                textureWidth = 43;
-                textureHeight = 45;
+                textureWidth = 40;
+                textureHeight = 43;
             }
 
             if (mobType == "pumpkin") {
@@ -528,6 +621,10 @@
                 textureWidth = 26;
             }
 
+            if (mobType == "wizard" || mobType == "witch") {
+                textureHeight = 36;
+                textureWidth = 32;
+            }
             if (!movingRight) {
                 spriteBatch.draw(currentFrame, getX() + textureWidth, getY(),
                         -textureWidth, textureHeight);
@@ -674,7 +771,7 @@
                 bigDemonBiteSound.dispose();
             }
 
-            if (isMelee) {
+            if (!isMelee) {
                 shootHitCharacterSound.dispose();
             }
         }

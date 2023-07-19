@@ -293,7 +293,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(tileMap, x, y, "bigDemon", true, 120, 2, character, this);
+            Mob mob = new Mob(tileMap, x, y, "bigDemon", true, 110, 2, character, this);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
@@ -305,7 +305,7 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
 
-            Mob mob = new Mob(tileMap, x, y, "pumpkin", false, 50, 1, character, this);
+            Mob mob = new Mob(tileMap, x, y, "pumpkin", false, 40, 1, character, this);
             mob.setPosition(x, y);
             mobs.add(mob);
         }
