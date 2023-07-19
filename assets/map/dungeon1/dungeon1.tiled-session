@@ -73,6 +73,7 @@
             }
         },
         "DesertSands.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1
         },
         "Dungeon Tileset + Spikes.tsx": {
