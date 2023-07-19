@@ -41,7 +41,7 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
     private final Voider game;
     private float initialCameraX = 1750; // Adjust this value to set the initial x-coordinate of the camera
-    private float initialCameraY = 1200; // Adjust this value to set the initial y-coordinate of the camera
+    private float initialCameraY = 1050; // Adjust this value to set the initial y-coordinate of the camera
     private OrthographicCamera gameCam;
     private SpriteBatch batch;
 

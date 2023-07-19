@@ -1,9 +1,9 @@
 {
-    "activeFile": "level2x.tmx",
+    "activeFile": "level3.tmx",
     "expandedProjectPaths": [
-        ".",
         "tileset",
-        "tilemap"
+        "tilemap",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -15,6 +15,9 @@
             "dynamicWrapping": false,
             "scaleInDock": 2,
             "scaleInEditor": 1
+        },
+        "AcidDungeon.tsx": {
+            "scaleInDock": 1
         },
         "D:/8bit-android-project/assets/map/Tileset1.tsx": {
             "scaleInDock": 1
@@ -81,31 +84,58 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "HiddenJungle.tsx": {
+            "scaleInDock": 1
+        },
+        "MysticChroma.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
         "dungeon2.tmx": {
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 2,
+            "scale": 0.0625,
             "selectedLayer": 12,
             "viewCenter": {
-                "x": 621.5,
-                "y": 660.25
+                "x": 1664,
+                "y": 1032
             }
+        },
+        "dungeon3.tmx": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -23.333333333333343,
+                "y": -73.16666666666669
+            }
+        },
+        "frostchill.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3
         },
         "level2.tmx": {
             "scale": 0.23583749999999998,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1999.2579636402186,
-                "y": 1363.2267981131079
+                "x": 1997.137859755128,
+                "y": 1363.2267981131076
             }
         },
         "level2x.tmx": {
-            "scale": 1.5,
+            "scale": 4,
             "selectedLayer": 19,
             "viewCenter": {
-                "x": 1011.9999999999999,
-                "y": 1331
+                "x": 1086.75,
+                "y": 1507.875
+            }
+        },
+        "level3.tmx": {
+            "scale": 1,
+            "selectedLayer": 24,
+            "viewCenter": {
+                "x": 1309,
+                "y": 1313.5
             }
         },
         "pixil-frame-0.tsx": {
@@ -147,25 +177,25 @@
     "last.imagePath": "D:/8bit-android-project/assets/map/dungeon1",
     "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
     "openFiles": [
-        "pixil-frame-0.tsx",
-        "level2.tmx",
-        "level2x.tmx"
+        "dungeon3.tmx",
+        "dungeon2.tmx",
+        "level3.tmx"
     ],
     "project": "dungeon1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "level2x.tmx",
+        "dungeon3.tmx",
+        "dungeon2.tmx",
+        "level3.tmx",
         "pixil-frame-0.tsx",
         "level2.tmx",
-        "level2x.tmx",
         "test-map.tmx",
         "Dungeon Tileset + Spikes.tsx",
         "D:/Artwork/8bit/map/dungeon1/test-map.tmx",
         "0x72_DungeonTilesetII_v1.6.tsx",
         "D:/8bit-android-project3/8bit-android-project/assets/map/dungeon1/test-map.tmx",
-        "D:/8bit-android-project/assets/map/test.tmx",
-        "D:/Artwork/8bit/map/test.tmx",
-        "t1.tsx",
-        "tileset/t1.tsx"
+        "D:/8bit-android-project/assets/map/test.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
