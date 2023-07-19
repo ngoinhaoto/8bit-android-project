@@ -40,8 +40,8 @@ import com.voider.game.Weapon;
 public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
     private static final float DEFAULT_ZOOM = 0.17f; //default zoom
     private final Voider game;
-    private float initialCameraX = 500; // Adjust this value to set the initial x-coordinate of the camera
-    private float initialCameraY = 1180; // Adjust this value to set the initial y-coordinate of the camera
+    private float initialCameraX = 600; // Adjust this value to set the initial x-coordinate of the camera
+    private float initialCameraY = 1030; // Adjust this value to set the initial y-coordinate of the camera
     private OrthographicCamera gameCam;
     private SpriteBatch batch;
 
@@ -86,9 +86,29 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
 
 
 
-    public SecondLevelScreen(Voider game, Character character) {
+//    public SecondLevelScreen(Voider game, Character character) {
+//        this.game = game;
+//        this.character = character;
+//        //Get map
+//        tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
+//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+//
+//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
+//
+//        gameStartSound = Gdx.audio.newSound(Gdx.files.internal("music/game-start-6104.mp3"));
+//
+//        bullets = new Array<>();
+//        mobsKilledThisLevel=0;
+//        loadPortal();
+//        loadCamera();
+//        loadCharacter();
+//        loadControls();
+//        initialiseMobs();
+//        loadHUD();
+//    }
+
+    public SecondLevelScreen(Voider game) {
         this.game = game;
-        this.character = character;
         //Get map
         tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -106,24 +126,6 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         initialiseMobs();
         loadHUD();
     }
-
-//    public SecondLevelScreen(Voider game) {
-//        this.game = game;
-//        //Get map
-//        tiledMap = new TmxMapLoader().load("map/dungeon1/level2x.tmx");
-//        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-//
-//        overlayColor = new Color(0, 0, 0, 0); // Initial color with full transparency
-//
-//        bullets = new Array<>();
-//        mobsKilledThisLevel=0;
-//        loadPortal();
-//        loadCamera();
-//        loadCharacter();
-//        loadControls();
-//        initialiseMobs();
-//        loadHUD();
-//    }
 
     private void loadPortal() {
         MapLayer portalLayer = tiledMap.getLayers().get("PortalPosition");
@@ -238,28 +240,28 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         gameCam.update();
     }
 
-    public void loadCharacter() {
-        batch = new SpriteBatch();
-        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
-
-
-
-        character.setTileMap(tileMap);
-        character.setState("IDLE");
-        character.setPosition(initialCameraX - 137, initialCameraY - 10);
-        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
-
-    }
-
 //    public void loadCharacter() {
 //        batch = new SpriteBatch();
 //        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
 //
-//        character = new Character(tileMap);
+//
+//
+//        character.setTileMap(tileMap);
+//        character.setState("IDLE");
 //        character.setPosition(initialCameraX - 137, initialCameraY - 10);
-//        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
 //        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+//
 //    }
+
+    public void loadCharacter() {
+        batch = new SpriteBatch();
+        TileMap tileMap = new TileMap("map/dungeon1/level2x.tmx"); // Create the tileMap object
+
+        character = new Character(tileMap);
+        character.setPosition(initialCameraX - 137, initialCameraY - 10);
+        character.setGun(new Weapon(new Texture("weap/gun/gun active.png"), this.character));
+        character.getGun().setPosition(initialCameraX - 137, initialCameraY - 10);
+    }
 
     private void initialiseMobs() {
         mobs = new Array<>();
