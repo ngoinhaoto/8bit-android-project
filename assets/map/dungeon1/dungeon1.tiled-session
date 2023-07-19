@@ -1,12 +1,16 @@
 {
-    "activeFile": "pixil-frame-0.tsx",
+    "activeFile": "level2x.tmx",
     "expandedProjectPaths": [
         "tileset",
-        "tilemap",
-        "."
+        ".",
+        "tilemap"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "0x72_16x16DungeonTileset.v5.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
         "0x72_DungeonTilesetII_v1.6.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 2,
@@ -68,6 +72,9 @@
                 "y": 256.688436419516
             }
         },
+        "DesertSands.tsx": {
+            "scaleInDock": 1
+        },
         "Dungeon Tileset + Spikes.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 1,
@@ -84,6 +91,22 @@
                 "y": 660.25
             }
         },
+        "level2.tmx": {
+            "scale": 0.23583749999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1999.2579636402186,
+                "y": 1363.2267981131079
+            }
+        },
+        "level2x.tmx": {
+            "scale": 3,
+            "selectedLayer": 14,
+            "viewCenter": {
+                "x": 993.3333333333333,
+                "y": 690.5
+            }
+        },
         "pixil-frame-0.tsx": {
             "dynamicWrapping": true,
             "scaleInDock": 2,
@@ -95,11 +118,11 @@
             "scaleInEditor": 1
         },
         "test-map.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 7,
+            "scale": 0.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1189.3333333333333,
-                "y": 555.6666666666666
+                "x": 1054,
+                "y": 793
             }
         },
         "tilemap/map/dungeon1/tileset/t1.tsx": {
@@ -123,14 +146,17 @@
     "last.imagePath": "D:/8bit-android-project/assets/map/dungeon1",
     "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
     "openFiles": [
-        "test-map.tmx",
-        "pixil-frame-0.tsx"
+        "pixil-frame-0.tsx",
+        "level2.tmx",
+        "level2x.tmx"
     ],
     "project": "dungeon1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "test-map.tmx",
         "pixil-frame-0.tsx",
+        "level2.tmx",
+        "level2x.tmx",
+        "test-map.tmx",
         "Dungeon Tileset + Spikes.tsx",
         "D:/Artwork/8bit/map/dungeon1/test-map.tmx",
         "0x72_DungeonTilesetII_v1.6.tsx",
@@ -138,8 +164,7 @@
         "D:/8bit-android-project/assets/map/test.tmx",
         "D:/Artwork/8bit/map/test.tmx",
         "t1.tsx",
-        "tileset/t1.tsx",
-        "tilemap/test-map.tmx"
+        "tileset/t1.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
