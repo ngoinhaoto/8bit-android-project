@@ -56,10 +56,6 @@ public class HUD extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        TextureAtlas atlasHP = new TextureAtlas("hud/HP Bar/HP_Bar.atlas");
-        TextureAtlas atlasARM = new TextureAtlas("hud/Armor Bar/Arm_Bar.atlas");
-
-
         hpBar.setPosition(40, Gdx.graphics.getHeight() - 30 - hpBar.getHeight()); // Top left corner
         armorBar.setPosition(40, Gdx.graphics.getHeight() - 80 - armorBar.getHeight()); // Below the HP bar
 
