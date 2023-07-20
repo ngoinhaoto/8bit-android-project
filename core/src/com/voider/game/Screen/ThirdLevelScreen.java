@@ -259,11 +259,10 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         // Calculate the device's aspect ratio (width / height)
         float aspectRatio = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
 
-        Gdx.app.log("RATIO", "ratio: " + aspectRatio);
         // Adjust the zoom based on the aspect ratio
         float zoom = DEFAULT_ZOOM;
 
-        if (aspectRatio < 1.5f) { // if device is too narrow, decrease the zoom
+        if (aspectRatio < 1.78f) { // if device is too narrow, decrease the zoom
             zoom = DEFAULT_ZOOM * 0.85f;
         } else if (aspectRatio > 2.3f) { // if device is too wide, increase the zoom
             zoom = DEFAULT_ZOOM * 1.2f;
@@ -281,7 +280,8 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         gameCam.update();
     }
 
-    
+
+
     public void loadCharacter() {
         batch = new SpriteBatch();
         TileMap tileMap = new TileMap("map/dungeon1/level3.tmx"); // Create the tileMap object
