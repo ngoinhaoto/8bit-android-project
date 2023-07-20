@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.voider.game.Bullet;
 import com.voider.game.Character;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -145,7 +146,11 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
     // only allowing one stage so we have to load both in one function
 
     public void loadControls() {
-        stage = new Stage();
+        float touchpadSize = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) * 0.25f;
+        float touchpadX = touchpadSize * 0.5f;
+        float touchpadY = touchpadSize * 0.5f;
+
+        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
 
         // Create the joystick
@@ -161,13 +166,13 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         touchpadStyle.knob = touchpadSkin.getDrawable("touchpadKnob");
 
         touchpad = new Touchpad(10, touchpadStyle);
-        touchpad.setBounds(120, 120, 250, 250);
+        touchpad.setBounds(touchpadX, touchpadY, touchpadSize, touchpadSize);
 
         touchpad.addListener(new ChangeListener() {
             private boolean isTouchpadActive = false; // Track if the touchpad is active
 
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (character.getState() == Character.State.DEAD) {
                     return; // Return early if the character is dead
                 }
@@ -201,7 +206,7 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         });
 
         // Create the shooting button
-        shootingButton = new ShootingButton(character);
+        shootingButton = new ShootingButton(character, stage, stage.getViewport());
 
         stage.addActor(touchpad);
         stage.addActor(shootingButton);
@@ -215,10 +220,26 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         stage.addActor(hud);
     }
 
-    public void loadCamera() {
+    private void loadCamera() {
         gameCam = new OrthographicCamera();
+
+        // Calculate the device's aspect ratio (width / height)
+        float aspectRatio = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
+
+        // Adjust the zoom based on the aspect ratio
+        float zoom = DEFAULT_ZOOM;
+
+        if (aspectRatio < 1.5f) { // Narrower screens
+            zoom = DEFAULT_ZOOM * 1.5f;
+        } else if (aspectRatio > 2.5f) { // Wider screens
+            zoom = DEFAULT_ZOOM * 0.8f;
+        }
+
+        // Set the calculated zoom level
+        gameCam.zoom = zoom;
+
+        // Set other camera properties as before
         gameCam.setToOrtho(false);
-        gameCam.zoom = DEFAULT_ZOOM;
 
         // Set the initial camera position to a custom value
         gameCam.position.set(initialCameraX, initialCameraY, 0);
@@ -444,6 +465,8 @@ public class FirstLevelScreen implements Screen, Mob.MobDeathListener {
         gameCam.viewportWidth = width;
         gameCam.viewportHeight = height;
         gameCam.update();
+
+        // Update the stage's viewport
         stage.getViewport().update(width, height, true);
     }
 

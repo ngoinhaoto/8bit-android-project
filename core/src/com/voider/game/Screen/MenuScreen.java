@@ -111,7 +111,7 @@ public class MenuScreen implements Screen {
         introductionLabel.setFontScale(2.4f);
 
         descriptionLabel = new Label("Your task is killing all the mobs to get the the portal to escape the dungeons", descriptionLabelStyle);
-        descriptionLabel.setFontScale(1.2f);
+        descriptionLabel.setFontScale(0.9f);
 
         stage.addActor(backgroundImage);
 
