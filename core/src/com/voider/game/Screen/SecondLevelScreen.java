@@ -161,9 +161,11 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
     // only allowing one stage so we have to load both in one function
 
     public void loadControls() {
-        float touchpadSize = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) * 0.25f;
+        float touchpadSizePercentage = 0.2f; // 20% of the screen height
+        float touchpadSize = Gdx.graphics.getHeight() * touchpadSizePercentage;
         float touchpadX = touchpadSize * 0.5f;
         float touchpadY = touchpadSize * 0.5f;
+
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
@@ -220,12 +222,20 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
             }
         });
 
+        // Set the scaled size of the touchpad
+        touchpad.setSize(touchpadSize, touchpadSize);
+
         // Create the shooting button
         shootingButton = new ShootingButton(character, stage, stage.getViewport());
+        float shootingButtonSizePercentage = 0.25f; // set to 25%
+        float shootingButtonSize = Gdx.graphics.getHeight() * shootingButtonSizePercentage;
+        shootingButton.setSize(shootingButtonSize, shootingButtonSize);
 
         stage.addActor(touchpad);
         stage.addActor(shootingButton);
     }
+
+
 
     private void loadHUD() {
         hud = new HUD(character);
@@ -240,13 +250,14 @@ public class SecondLevelScreen  implements Screen, Mob.MobDeathListener {
         // Calculate the device's aspect ratio (width / height)
         float aspectRatio = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
 
+        Gdx.app.log("RATIO", "ratio: " + aspectRatio);
         // Adjust the zoom based on the aspect ratio
         float zoom = DEFAULT_ZOOM;
 
-        if (aspectRatio < 1.5f) { // Narrower screens
-            zoom = DEFAULT_ZOOM * 1.5f;
-        } else if (aspectRatio > 2.5f) { // Wider screens
-            zoom = DEFAULT_ZOOM * 0.8f;
+        if (aspectRatio < 1.5f) { // if device is too narrow, decrease the zoom
+            zoom = DEFAULT_ZOOM * 0.85f;
+        } else if (aspectRatio > 2.3f) { // if device is too wide, increase the zoom
+            zoom = DEFAULT_ZOOM * 1.2f;
         }
 
         // Set the calculated zoom level

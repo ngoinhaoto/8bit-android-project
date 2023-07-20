@@ -19,7 +19,7 @@ public class ShootingButton extends ImageButton {
         stage.addActor(this);
 
         // Set the position using the viewport's virtual coordinates
-        setPosition(viewport.getWorldWidth() - getWidth() - 150, 150);
+        setPosition(viewport.getWorldWidth() - viewport.getWorldWidth() * 0.23f, viewport.getWorldHeight() * 0.15f);
 
         this.character = character;
 
@@ -41,5 +41,10 @@ public class ShootingButton extends ImageButton {
         buttonStyle.down = buttonStyle.imageDown = new TextureRegionDrawable(new TextureRegion(buttonDown));
 
         return buttonStyle;
+    }
+
+    public void setSize(float width, float height) {
+        this.setWidth(width);
+        this.setHeight(height);
     }
 }
