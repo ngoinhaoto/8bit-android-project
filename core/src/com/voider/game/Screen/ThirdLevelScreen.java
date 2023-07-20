@@ -191,6 +191,12 @@ public class ThirdLevelScreen  implements Screen, Mob.MobDeathListener {
         touchpadStyle.background = touchpadSkin.getDrawable("touchpadBackground");
         touchpadStyle.knob = touchpadSkin.getDrawable("touchpadKnob");
 
+        // Dynamically set the knob size based on the touchpad background size
+        float knobSizePercentage = 0.35f; // Set the knob size to 60% of the touchpad background size
+        float knobSize = touchpadSize * knobSizePercentage;
+        touchpadStyle.knob.setMinWidth(knobSize);
+        touchpadStyle.knob.setMinHeight(knobSize);
+
         touchpad = new Touchpad(10, touchpadStyle);
         touchpad.setBounds(touchpadX, touchpadY, touchpadSize, touchpadSize);
 
